@@ -1,0 +1,117 @@
+$var1: #071426;
+$var2: #0b213f;
+
+.p-column-filter-row .p-column-filter-menu-button, .p-column-filter-row .p-column-filter-clear-button {
+    margin-left: 0.5rem;
+}
+.p-column-filter-menu-button {
+    width: 2rem;
+    height: 2rem;
+    color: rgba(255, 255, 255, 0.6);
+    border: 0 none;
+    background: transparent;
+    border-radius: 50%;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    &:hover {
+        color: rgba(255, 255, 255, 0.87);
+        border-color: transparent;
+        background: rgba(255, 255, 255, 0.03);
+    }
+    &.p-column-filter-menu-button-open, &.p-column-filter-menu-button-open:hover {
+        background: rgba(255, 255, 255, 0.03);
+        color: rgba(255, 255, 255, 0.87);
+    }
+    &.p-column-filter-menu-button-active, &.p-column-filter-menu-button-active:hover {
+        background: rgba(147, 197, 253, 0.16);
+        color: rgba(255, 255, 255, 0.87);
+    }
+    &:focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: 0 0 0 0.2rem rgba(147, 197, 253, 0.5);
+    }
+}
+.p-column-filter-clear-button {
+    width: 2rem;
+    height: 2rem;
+    color: rgba(255, 255, 255, 0.6);
+    border: 0 none;
+    background: transparent;
+    border-radius: 50%;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    &:hover {
+        color: rgba(255, 255, 255, 0.87);
+        border-color: transparent;
+        background: rgba(255, 255, 255, 0.03);
+    }
+    &:focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: 0 0 0 0.2rem rgba(147, 197, 253, 0.5);
+    }
+}
+.p-column-filter-overlay {
+    background: $var1;
+    color: rgba(255, 255, 255, 0.87);
+    border: 1px solid $var2;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+    min-width: 12.5rem;
+    .p-column-filter-row-items {
+        padding: 0.75rem 0;
+        .p-column-filter-row-item {
+            margin: 0;
+            padding: 0.75rem 1.25rem;
+            border: 0 none;
+            color: rgba(255, 255, 255, 0.87);
+            background: transparent;
+            transition: box-shadow 0.2s;
+            border-radius: 0;
+            &.p-highlight {
+                color: rgba(255, 255, 255, 0.87);
+                background: rgba(147, 197, 253, 0.16);
+            }
+            &:not(.p-highlight):not(.p-disabled):hover {
+                color: rgba(255, 255, 255, 0.87);
+                background: rgba(255, 255, 255, 0.03);
+            }
+            &:focus {
+                outline: 0 none;
+                outline-offset: 0;
+                box-shadow: inset 0 0 0 0.15rem rgba(147, 197, 253, 0.5);
+            }
+        }
+        .p-column-filter-separator {
+            border-top: 1px solid $var2;
+            margin: 0.25rem 0;
+        }
+    }
+    &-menu .p-column-filter-operator {
+        padding: 0.75rem 1.25rem;
+        border-bottom: 1px solid $var2;
+        color: rgba(255, 255, 255, 0.87);
+        background: $var1;
+        margin: 0;
+        border-top-right-radius: 6px;
+        border-top-left-radius: 6px;
+    }
+    &-menu .p-column-filter-constraint {
+        padding: 1.25rem;
+        border-bottom: 1px solid $var2;
+        .p-column-filter-matchmode-dropdown {
+            margin-bottom: 0.5rem;
+        }
+        .p-column-filter-remove-button {
+            margin-top: 0.5rem;
+        }
+        &:last-child {
+            border-bottom: 0 none;
+        }
+    }
+    &-menu .p-column-filter-add-rule {
+        padding: 0.75rem 1.25rem;
+    }
+    &-menu .p-column-filter-buttonbar {
+        padding: 1.25rem;
+    }
+}

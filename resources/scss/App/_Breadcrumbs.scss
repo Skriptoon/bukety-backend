@@ -1,0 +1,45 @@
+.p-breadcrumb {
+    padding: 1rem;
+
+    .p-breadcrumb-list {
+        li {
+            .p-menuitem-link {
+                transition: box-shadow 0.2s;
+
+                &:focus {
+                    outline: 0 none;
+                    outline-offset: 0;
+                    box-shadow: 0 0 0 0.2rem rgba(147, 197, 253, 0.5);
+                }
+            }
+
+            .p-menuitem-text {
+                color: $primary-color-text;
+            }
+
+            .p-menuitem-icon {
+                color: $primary-color-text;
+            }
+
+            &.p-menuitem-separator {
+                margin: 0 0.5rem 0 0.5rem;
+                color: $primary-color-text;
+            }
+
+            &:last-child {
+                .p-menuitem-text {
+                    color: $primary-color-text;
+                }
+
+                .p-menuitem-icon {
+                    color: $primary-color-text;
+                }
+            }
+        }
+
+        .p-menuitem-link{
+            color: $primary-color-text;
+            text-decoration: none;
+        }
+    }
+}

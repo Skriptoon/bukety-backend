@@ -1,0 +1,80 @@
+.sidebar {
+    &__content {
+        background: var(--surface-0);
+        padding-top: 50px;
+        width: 100px;
+
+        @include styleclass('z-5 border-round-right-3xl transition-duration-200 min-h-screen fixed overflow-hidden');
+
+        @include not-sm {
+            &:hover {
+                width: 350px;
+
+                .sidebar__link-text {
+                    display: inline;
+                }
+
+                .sidebar__section-selector {
+                    opacity: 1 !important;
+                }
+            }
+        }
+
+        @include sm {
+            width: 0;
+        }
+
+        &--open {
+            width: 80vw;
+            display: block !important;
+
+            .sidebar__link-text {
+                display: inline !important;
+            }
+        }
+    }
+
+    &__back-button {
+        @include styleclass('mb-5 pl-5 mt-5 text-4xl');
+
+        @include not-sm {
+            display: none;
+        }
+    }
+
+    &__link {
+        padding: 15px;
+        overflow: hidden;
+        text-decoration: none;
+        @include styleclass('pl-5 text-xl');
+
+        a {
+            color: var(--text-color) !important;
+
+            @include styleclass('no-underline')
+        }
+
+    }
+
+    &__link-text:not(&__content--open) {
+        display: none;
+        @include styleclass('ml-4 white-space-nowrap text-overflow-clip');
+    }
+
+    &__link-text {
+        @include styleclass('ml-3');
+    }
+
+    &__section-selector {
+        opacity: 0;
+        width: 90%;
+        @include styleclass('ml-3 mb-3 mt-5');
+
+    }
+
+    &__content--open {
+        .sidebar__section-selector {
+            opacity: 1 !important;
+        }
+    }
+}

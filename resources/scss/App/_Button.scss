@@ -1,0 +1,577 @@
+.p-button {
+    color: var(--primary-color-text);
+    background: $primary-background-color;
+    border: 1px solid $primary-background-color;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    border-radius: 6px;
+
+    &:enabled:hover {
+        background: $primary-hover-color;
+        color: var(--primary-color-text);
+        border-color: $primary-hover-color;
+    }
+
+    &:enabled:active {
+        background: $primary-active-color;
+        color: var(--primary-color-text);
+        border-color: $primary-active-color;
+    }
+
+    &.p-button-outlined {
+        background-color: transparent;
+        color: $primary-background-color;
+        border: 1px solid;
+
+        &:enabled:hover {
+            background: rgba(147, 197, 253, 0.04);
+            color: $primary-background-color;
+            border: 1px solid;
+        }
+
+        &:enabled:active {
+            background: rgba(147, 197, 253, 0.16);
+            color: $primary-background-color;
+            border: 1px solid;
+        }
+
+        &.p-button-plain {
+            color: rgba(255, 255, 255, 0.6);
+            border-color: rgba(255, 255, 255, 0.6);
+
+            &:enabled:hover {
+                background: rgba(255, 255, 255, 0.03);
+                color: rgba(255, 255, 255, 0.6);
+            }
+
+            &:enabled:active {
+                background: rgba(255, 255, 255, 0.16);
+                color: rgba(255, 255, 255, 0.6);
+            }
+        }
+    }
+
+    &.p-button-text {
+        background-color: transparent;
+        color: $primary-background-color;
+        border-color: transparent;
+
+        &:enabled:hover {
+            background: rgba(147, 197, 253, 0.04);
+            color: $primary-background-color;
+            border-color: transparent;
+        }
+
+        &:enabled:active {
+            background: rgba(147, 197, 253, 0.16);
+            color: $primary-background-color;
+            border-color: transparent;
+        }
+
+        &.p-button-plain {
+            color: rgba(255, 255, 255, 0.6);
+
+            &:enabled:hover {
+                background: rgba(255, 255, 255, 0.03);
+                color: rgba(255, 255, 255, 0.6);
+            }
+
+            &:enabled:active {
+                background: rgba(255, 255, 255, 0.16);
+                color: rgba(255, 255, 255, 0.6);
+            }
+        }
+    }
+
+    &:focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: 0 0 0 0.2rem rgba(147, 197, 253, 0.5);
+    }
+
+    .p-button-label {
+        transition-duration: 0.2s;
+    }
+
+    .p-button-icon-left {
+        margin-right: 0.5rem;
+    }
+
+    .p-button-icon-right {
+        margin-left: 0.5rem;
+    }
+
+    .p-button-icon-bottom {
+        margin-top: 0.5rem;
+    }
+
+    .p-button-icon-top {
+        margin-bottom: 0.5rem;
+    }
+
+    .p-badge {
+        margin-left: 0.5rem;
+        min-width: 1rem;
+        height: 1rem;
+        line-height: 1rem;
+        color: $primary-background-color;
+        background-color: var(--primary-color-text);
+    }
+
+    &.p-button-raised {
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    &.p-button-rounded {
+        border-radius: 2rem;
+    }
+
+    &.p-button-icon-only {
+        width: 3rem;
+        padding: 0.75rem 0;
+
+        .p-button-icon-left, .p-button-icon-right {
+            margin: 0;
+        }
+
+        &.p-button-rounded {
+            border-radius: 50%;
+            height: 3rem;
+        }
+    }
+
+    &.p-button-sm {
+        font-size: 0.875rem;
+        padding: 0.65625rem 1.09375rem;
+
+        .p-button-icon {
+            font-size: 0.875rem;
+        }
+    }
+
+    &.p-button-lg {
+        font-size: 1.25rem;
+        padding: 0.9375rem 1.5625rem;
+
+        .p-button-icon {
+            font-size: 1.25rem;
+        }
+    }
+
+    &.p-button-loading-label-only .p-button-label {
+        margin-left: 0.5rem;
+    }
+
+    &.p-button-loading-label-only .p-button-loading-icon {
+        margin-right: 0;
+    }
+
+    &.p-button-link {
+        color: $primary-background-color;
+        background: transparent;
+        border: transparent;
+
+        &:enabled:hover {
+            background: transparent;
+            color: $primary-background-color;
+            border-color: transparent;
+
+            .p-button-label {
+                text-decoration: underline;
+            }
+        }
+
+        &:enabled:focus {
+            background: transparent;
+            box-shadow: 0 0 0 1px rgba(147, 197, 253, 0.5);
+            border-color: transparent;
+        }
+
+        &:enabled:active {
+            background: transparent;
+            color: $primary-background-color;
+            border-color: transparent;
+        }
+    }
+
+    &-label {
+        font-weight: 700;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px var(--primary-color-text), 0 0 0 4px rgba(147, 197, 253, 0.7), 0 1px 2px 0 rgba(0, 0, 0, 0);
+    }
+
+    &.p-button-secondary:enabled:focus {
+        box-shadow: 0 0 0 2px var(--primary-color-text), 0 0 0 4px rgba(203, 213, 225, 0.7), 0 1px 2px 0 rgba(0, 0, 0, 0);
+    }
+
+    &.p-button-success:enabled:focus {
+        box-shadow: 0 0 0 2px var(--primary-color-text), 0 0 0 4px rgba(134, 239, 172, 0.7), 0 1px 2px 0 rgba(0, 0, 0, 0);
+    }
+
+    &.p-button-info:enabled:focus {
+        box-shadow: 0 0 0 2px var(--primary-color-text), 0 0 0 4px rgba(147, 197, 253, 0.7), 0 1px 2px 0 rgba(0, 0, 0, 0);
+    }
+
+    &.p-button-warning:enabled:focus {
+        box-shadow: 0 0 0 2px var(--primary-color-text), 0 0 0 4px rgba(252, 211, 77, 0.7), 0 1px 2px 0 rgba(0, 0, 0, 0);
+    }
+
+    &.p-button-help:enabled:focus {
+        box-shadow: 0 0 0 2px var(--primary-color-text), 0 0 0 4px rgba(216, 180, 254, 0.7), 0 1px 2px 0 rgba(0, 0, 0, 0);
+    }
+
+    &.p-button-danger:enabled:focus {
+        box-shadow: 0 0 0 2px var(--primary-color-text), 0 0 0 4px rgba(252, 165, 165, 0.7), 0 1px 2px 0 rgba(0, 0, 0, 0);
+    }
+}
+
+.p-button.p-button-secondary, .p-buttonset.p-button-secondary > .p-button, .p-splitbutton.p-button-secondary > .p-button {
+    color: var(--primary-color-text);
+    background: $var145;
+    border: 1px solid $var145;
+
+    &:enabled:hover {
+        background: $var146;
+        color: var(--primary-color-text);
+        border-color: $var146;
+    }
+
+    &:enabled:focus {
+        box-shadow: 0 0 0 1px $var147;
+    }
+
+    &:enabled:active {
+        background: $var148;
+        color: var(--primary-color-text);
+        border-color: $var148;
+    }
+
+    &.p-button-outlined {
+        background-color: transparent;
+        color: $var145;
+        border: 1px solid;
+
+        &:enabled:hover {
+            background: rgba(203, 213, 225, 0.04);
+            color: $var145;
+            border: 1px solid;
+        }
+
+        &:enabled:active {
+            background: rgba(203, 213, 225, 0.16);
+            color: $var145;
+            border: 1px solid;
+        }
+    }
+
+    &.p-button-text {
+        background-color: transparent;
+        color: $var145;
+        border-color: transparent;
+
+        &:enabled:hover {
+            background: rgba(203, 213, 225, 0.04);
+            border-color: transparent;
+            color: $var145;
+        }
+
+        &:enabled:active {
+            background: rgba(203, 213, 225, 0.16);
+            border-color: transparent;
+            color: $var145;
+        }
+    }
+}
+
+.p-button.p-button-info, .p-buttonset.p-button-info > .p-button, .p-splitbutton.p-button-info > .p-button {
+    color: var(--primary-color-text);
+    background: $primary-background-color;
+    border: 1px solid $primary-background-color;
+
+    &:enabled:hover {
+        background: $primary-active-color;
+        color: var(--primary-color-text);
+        border-color: $primary-active-color;
+    }
+
+    &:enabled:focus {
+        box-shadow: 0 0 0 1px $var149;
+    }
+
+    &:enabled:active {
+        background: $var150;
+        color: var(--primary-color-text);
+        border-color: $var150;
+    }
+
+    &.p-button-outlined {
+        background-color: transparent;
+        color: $primary-background-color;
+        border: 1px solid;
+
+        &:enabled:hover {
+            background: rgba(147, 197, 253, 0.04);
+            color: $primary-background-color;
+            border: 1px solid;
+        }
+
+        &:enabled:active {
+            background: rgba(147, 197, 253, 0.16);
+            color: $primary-background-color;
+            border: 1px solid;
+        }
+    }
+
+    &.p-button-text {
+        background-color: transparent;
+        color: $primary-background-color;
+        border-color: transparent;
+
+        &:enabled:hover {
+            background: rgba(147, 197, 253, 0.04);
+            border-color: transparent;
+            color: $primary-background-color;
+        }
+
+        &:enabled:active {
+            background: rgba(147, 197, 253, 0.16);
+            border-color: transparent;
+            color: $primary-background-color;
+        }
+    }
+}
+
+.p-button.p-button-success, .p-buttonset.p-button-success > .p-button, .p-splitbutton.p-button-success > .p-button {
+    color: var(--primary-color-text);
+    background: $success-background;
+    border: 1px solid $success-background;
+
+    &:enabled:hover {
+        background: $var152;
+        color: var(--primary-color-text);
+        border-color: $var152;
+    }
+
+    &:enabled:focus {
+        box-shadow: 0 0 0 1px $var153;
+    }
+
+    &:enabled:active {
+        background: $var154;
+        color: var(--primary-color-text);
+        border-color: $var154;
+    }
+
+    &.p-button-outlined {
+        background-color: transparent;
+        color: $success-background;
+        border: 1px solid;
+
+        &:enabled:hover {
+            background: rgba(134, 239, 172, 0.04);
+            color: $success-background;
+            border: 1px solid;
+        }
+
+        &:enabled:active {
+            background: rgba(134, 239, 172, 0.16);
+            color: $success-background;
+            border: 1px solid;
+        }
+    }
+
+    &.p-button-text {
+        background-color: transparent;
+        color: $success-background;
+        border-color: transparent;
+
+        &:enabled:hover {
+            background: rgba(134, 239, 172, 0.04);
+            border-color: transparent;
+            color: $success-background;
+        }
+
+        &:enabled:active {
+            background: rgba(134, 239, 172, 0.16);
+            border-color: transparent;
+            color: $success-background;
+        }
+    }
+}
+
+.p-button.p-button-warning, .p-buttonset.p-button-warning > .p-button, .p-splitbutton.p-button-warning > .p-button {
+    color: var(--primary-color-text);
+    background: $var155;
+    border: 1px solid $var155;
+
+    &:enabled:hover {
+        background: $var156;
+        color: var(--primary-color-text);
+        border-color: $var156;
+    }
+
+    &:enabled:focus {
+        box-shadow: 0 0 0 1px $var157;
+    }
+
+    &:enabled:active {
+        background: $var158;
+        color: var(--primary-color-text);
+        border-color: $var158;
+    }
+
+    &.p-button-outlined {
+        background-color: transparent;
+        color: $var155;
+        border: 1px solid;
+
+        &:enabled:hover {
+            background: rgba(252, 211, 77, 0.04);
+            color: $var155;
+            border: 1px solid;
+        }
+
+        &:enabled:active {
+            background: rgba(252, 211, 77, 0.16);
+            color: $var155;
+            border: 1px solid;
+        }
+    }
+
+    &.p-button-text {
+        background-color: transparent;
+        color: $var155;
+        border-color: transparent;
+
+        &:enabled:hover {
+            background: rgba(252, 211, 77, 0.04);
+            border-color: transparent;
+            color: $var155;
+        }
+
+        &:enabled:active {
+            background: rgba(252, 211, 77, 0.16);
+            border-color: transparent;
+            color: $var155;
+        }
+    }
+}
+
+.p-button.p-button-help, .p-buttonset.p-button-help > .p-button, .p-splitbutton.p-button-help > .p-button {
+    color: var(--primary-color-text);
+    background: $var159;
+    border: 1px solid $var159;
+
+    &:enabled:hover {
+        background: $var160;
+        color: var(--primary-color-text);
+        border-color: $var160;
+    }
+
+    &:enabled:focus {
+        box-shadow: 0 0 0 1px $var161;
+    }
+
+    &:enabled:active {
+        background: $var162;
+        color: var(--primary-color-text);
+        border-color: $var162;
+    }
+
+    &.p-button-outlined {
+        background-color: transparent;
+        color: $var159;
+        border: 1px solid;
+
+        &:enabled:hover {
+            background: rgba(216, 180, 254, 0.04);
+            color: $var159;
+            border: 1px solid;
+        }
+
+        &:enabled:active {
+            background: rgba(216, 180, 254, 0.16);
+            color: $var159;
+            border: 1px solid;
+        }
+    }
+
+    &.p-button-text {
+        background-color: transparent;
+        color: $var159;
+        border-color: transparent;
+
+        &:enabled:hover {
+            background: rgba(216, 180, 254, 0.04);
+            border-color: transparent;
+            color: $var159;
+        }
+
+        &:enabled:active {
+            background: rgba(216, 180, 254, 0.16);
+            border-color: transparent;
+            color: $var159;
+        }
+    }
+}
+
+.p-button.p-button-danger, .p-buttonset.p-button-danger > .p-button, .p-splitbutton.p-button-danger > .p-button {
+    color: var(--primary-color-text);
+    background: $danger-background;
+    border: 1px solid $danger-background;
+
+    &:enabled:hover {
+        background: $var163;
+        color: var(--primary-color-text);
+        border-color: $var163;
+    }
+
+    &:enabled:focus {
+        box-shadow: 0 0 0 1px $var164;
+    }
+
+    &:enabled:active {
+        background: $var165;
+        color: var(--primary-color-text);
+        border-color: $var165;
+    }
+
+    &.p-button-outlined {
+        background-color: transparent;
+        color: $danger-background;
+        border: 1px solid;
+
+        &:enabled:hover {
+            background: rgba(252, 165, 165, 0.04);
+            color: $danger-background;
+            border: 1px solid;
+        }
+
+        &:enabled:active {
+            background: rgba(252, 165, 165, 0.16);
+            color: $danger-background;
+            border: 1px solid;
+        }
+    }
+
+    &.p-button-text {
+        background-color: transparent;
+        color: $danger-background;
+        border-color: transparent;
+
+        &:enabled:hover {
+            background: rgba(252, 165, 165, 0.04);
+            border-color: transparent;
+            color: $danger-background;
+        }
+
+        &:enabled:active {
+            background: rgba(252, 165, 165, 0.16);
+            border-color: transparent;
+            color: $danger-background;
+        }
+    }
+}

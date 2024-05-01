@@ -1,0 +1,31 @@
+.authenticated-layout {
+    &__content, &__header {
+        @include styleclass('p-4');
+        margin-left: 100px;
+
+        @include sm {
+            padding: 1.5rem;
+            margin-left: 0;
+        }
+    }
+
+    &__bar-icon {
+        margin-top: 25px;
+        margin-left: 10px;
+        float: left;
+        @include styleclass('text-4xl')
+    }
+
+    &__header {
+        @include styleclass('flex flex-row-reverse justify-content-between flex-wrap')
+    }
+
+    &__breadcrumbs, &__user-menu {
+        @include styleclass('flex align-items-center justify-content-center')
+
+    }
+
+    &__usermenu {
+        @include styleclass('pr-2')
+    }
+}

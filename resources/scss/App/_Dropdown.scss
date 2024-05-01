@@ -1,0 +1,127 @@
+.p-dropdown {
+    background: $form-element-color;
+    border: 1px solid $form-element-border;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    border-radius: 6px;
+
+    &:not(.p-disabled):hover {
+        border-color: $primary-background-color;
+    }
+
+    &:not(.p-disabled).p-focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: 0 0 0 0.2rem rgba(147, 197, 253, 0.5);
+        border-color: $primary-background-color;
+    }
+
+    &.p-dropdown-clearable .p-dropdown-label {
+        padding-right: 1.75rem;
+    }
+
+    .p-dropdown-label {
+        background: transparent;
+        border: 0 none;
+
+        &.p-placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        &:focus, &:enabled:focus {
+            outline: 0 none;
+            box-shadow: none;
+        }
+    }
+
+    .p-dropdown-trigger {
+        background: transparent;
+        color: rgba(255, 255, 255, 0.6);
+        width: 3rem;
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
+
+    .p-dropdown-clear-icon {
+        color: rgba(255, 255, 255, 0.6);
+        right: 3rem;
+    }
+
+    &.p-invalid.p-component {
+        border-color: $danger-background;
+    }
+
+    &-panel {
+        background: $primary-color;
+        color: rgba(255, 255, 255, 0.87);
+        border: 1px solid $form-element-border;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+
+        .p-dropdown-header {
+            padding: 0.75rem 1.25rem;
+            border-bottom: 1px solid $form-element-border;
+            color: rgba(255, 255, 255, 0.87);
+            background: $primary-color;
+            margin: 0;
+            border-top-right-radius: 6px;
+            border-top-left-radius: 6px;
+
+            .p-dropdown-filter {
+                padding-right: 1.75rem;
+                margin-right: -1.75rem;
+
+                &-icon {
+                    right: 0.75rem;
+                    color: rgba(255, 255, 255, 0.6);
+                }
+            }
+        }
+
+        .p-dropdown-items {
+            padding: 0.75rem 0;
+
+            .p-dropdown-item {
+                margin: 0;
+                padding: 0.75rem 1.25rem;
+                border: 0 none;
+                color: rgba(255, 255, 255, 0.87);
+                background: transparent;
+                transition: box-shadow 0.2s;
+                border-radius: 0;
+
+                &.p-highlight {
+                    color: rgba(255, 255, 255, 0.87);
+                    background: rgba(147, 197, 253, 0.16);
+
+                    &.p-focus {
+                        background: rgba(147, 197, 253, 0.24);
+                    }
+                }
+
+                &:not(.p-highlight):not(.p-disabled).p-focus {
+                    color: rgba(255, 255, 255, 0.87);
+                    background: $form-element-border;
+                }
+
+                &:not(.p-highlight):not(.p-disabled):hover {
+                    color: rgba(255, 255, 255, 0.87);
+                    background: rgba(255, 255, 255, 0.03);
+                }
+
+                &-group {
+                    margin: 0;
+                    padding: 0.75rem 1.25rem;
+                    color: rgba(255, 255, 255, 0.87);
+                    background: $secondary-background;
+                    font-weight: 700;
+                }
+            }
+
+            .p-dropdown-empty-message {
+                padding: 0.75rem 1.25rem;
+                color: rgba(255, 255, 255, 0.87);
+                background: transparent;
+            }
+        }
+    }
+}
