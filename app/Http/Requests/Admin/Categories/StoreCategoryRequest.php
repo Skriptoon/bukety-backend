@@ -38,6 +38,10 @@ class StoreCategoryRequest extends FormRequest
                 'required',
                 'boolean',
             ],
+            'is_hidden' => [
+                'required',
+                'boolean',
+            ],
             'show_in_main' => [
                 'required',
                 'boolean',
