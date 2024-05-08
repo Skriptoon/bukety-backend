@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->integer('sort');
             $table->boolean('is_active');
             $table->boolean('show_in_main');
+            $table->boolean('is_hidden');
             $table->timestamps();
         });
 

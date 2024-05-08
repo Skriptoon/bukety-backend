@@ -34,7 +34,7 @@ readonly class StoreProductCase
             'is_active' => $data->is_active,
         ]);
 
-        $imagePath = $this->imageOptimizeCase->handle($data->image->path(), 'product');
+        $imagePath = $this->imageOptimizeCase->handle($data->image?->path(), 'product');
         $product->image = $imagePath;
 
         $gallery = [];

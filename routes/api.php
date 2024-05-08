@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ServerController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +19,12 @@ $domain = env('APP_ENV') === 'testing' ? env('APP_DOMAIN') : env('API_DOMAIN');
 Route::domain($domain)->group(static function (): void {
     Route::middleware('api')->group(function (): void {
         Route::middleware('guest')->group(function (): void {
+
+            Route::get('categories', [CategoryController::class, 'index']);
+            Route::get('categories/{category:slug}', [CategoryController::class, 'show']);
+
+            Route::get('products', [ProductController::class, 'index']);
+            Route::get('products/{product:slug}', [ProductController::class, 'show']);
         });
     });
 });

@@ -27,8 +27,6 @@ function updateFiles() {
 
   const form = {...props.modelValue}
   form[props.name] = props.multiple ? files.value.files : files.value.files[0]
-  console.log(files.value.files)
-  console.log(form)
   emit('update:modelValue', form)
 }
 </script>

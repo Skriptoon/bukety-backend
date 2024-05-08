@@ -19,6 +19,7 @@ const form = useForm({
   sort: props.category?.sort ?? null,
   is_active: props.category?.is_active ?? false,
   show_in_main: props.category?.show_in_main ?? false,
+  is_hidden: props.category?.is_hidden ?? false,
   _method: undefined,
 })
 
@@ -91,8 +92,16 @@ function updateImage(val) {
     <div class="mt-5">
       <SpCheckbox
           v-model="form"
+          name="is_hidden"
+          label="Скрытая"
+          switcher
+      />
+    </div>
+    <div class="mt-5">
+      <SpCheckbox
+          v-model="form"
           name="is_active"
-          label="Активен"
+          label="Активна"
           switcher
       />
     </div>

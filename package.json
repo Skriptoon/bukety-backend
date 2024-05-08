@@ -23,11 +23,11 @@
         "@fortawesome/free-solid-svg-icons": "^6.5.1",
         "@fortawesome/vue-fontawesome": "^3.0.5",
         "@nuxtjs/eslint-config-typescript": "^12.1.0",
-        "@tinymce/tinymce-vue": "^5.1.1",
         "chart.js": "^4.3.3",
         "primeflex": "^3.3.0",
         "primeicons": "^6.0.1",
         "primevue": "^3.22.4",
+        "quill": "^2.0.1",
         "vite": "^4.0.0",
         "vue": "^3.2.41"
     }

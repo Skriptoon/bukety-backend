@@ -8,6 +8,8 @@ import Image from 'primevue/image'
 import Icon from '@/Components/Icon.vue'
 import { ref } from 'vue'
 import SpMultiSelect from '@/Components/Form/SpMultiSelect.vue'
+import SpTextarea from '@/Components/Form/SpTextarea.vue'
+import SpWysiwyg from '@/Components/Form/SpWysiwyg.vue'
 
 const props = defineProps({
   product: Object,
@@ -34,14 +36,15 @@ const gallery = ref(props.product?.gallery ?? [])
 function sendForm() {
   const tempGallery = [...form.gallery]
   form.gallery = [
-      ...form.gallery,
-      ...gallery.value,
+    ...form.gallery,
+    ...gallery.value,
   ]
 
   if (props.product?.id) {
     form._method = 'PUT'
     form.post(route('products.update', props.product.id))
   } else {
+    form._method = 'POST'
     form.post(route('products.store'))
   }
 
@@ -93,7 +96,7 @@ function deleteImage(index) {
       />
     </div>
     <div class="mt-5">
-      <SpInput
+      <SpWysiwyg
           v-model="form"
           name="description"
           label="Описание"
@@ -107,7 +110,7 @@ function deleteImage(index) {
       />
     </div>
     <div class="mt-5">
-      <SpInput
+      <SpTextarea
           v-model="form"
           name="seo_description"
           label="SEO описание"
@@ -173,13 +176,13 @@ function deleteImage(index) {
                 v-if="index !== 0"
                 @click="imageUp(index)"
             >
-              <Icon icon="caret-up"/>
+              <Icon icon="caret-up" />
             </Button>
             <Button
                 v-if="index + 1 !== gallery.length"
                 @click="imageDown(index)"
             >
-              <Icon icon="caret-down"/>
+              <Icon icon="caret-down" />
             </Button>
           </div>
         </div>
@@ -188,7 +191,7 @@ function deleteImage(index) {
               severity="danger"
               @click="deleteImage(index)"
           >
-            <Icon icon="trash"/>
+            <Icon icon="trash" />
           </Button>
         </div>
       </div>

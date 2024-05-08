@@ -16,12 +16,12 @@ RUN apt update && apt install -y \
     unzip \
     libpq-dev \
     git \
-    libgmp-dev
+    libgmp-dev \
+    libicu-dev
 
 RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev libwebp-dev
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp
+RUN docker-php-ext-configure intl
 
-RUN docker-php-ext-install zip gd
-RUN docker-php-ext-install gmp
-RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql pgsql
+RUN docker-php-ext-install intl zip gd gmp pdo pdo_mysql pdo_pgsql pgsql

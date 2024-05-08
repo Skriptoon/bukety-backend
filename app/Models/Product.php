@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Lacodix\LaravelModelFilter\Traits\HasFilters;
 use Storage;
 
 /**
@@ -49,10 +50,15 @@ use Storage;
  * @method static Builder|Product whereUpdatedAt($value)
  * @method static Builder|Product whereVkUrl($value)
  * @method static Builder|Product whereSeoDescription($value)
+ * @method static Builder|Product active()
+ * @method static Builder|Product filter(array $values, string $group = '__default')
+ * @method static Builder|Product filterByQueryString(string $group = '__default')
  * @mixin Eloquent
  */
 class Product extends Model
 {
+    use HasFilters;
+
     protected $fillable = [
         'name',
         'slug',
@@ -68,6 +74,10 @@ class Product extends Model
     protected $casts = [
         'gallery' => 'array',
         'price' => 'float',
+    ];
+
+    protected $filters = [
+        \App\Filters\Product\Category::class,
     ];
 
     public function categories(): BelongsToMany
@@ -88,5 +98,10 @@ class Product extends Model
         }
 
         return $gallery;
+    }
+
+    public function scopeActive(Builder $builder): Builder
+    {
+        return $builder->where('is_active', true);
     }
 }
