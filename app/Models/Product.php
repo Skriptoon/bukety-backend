@@ -76,7 +76,7 @@ class Product extends Model
         'price' => 'float',
     ];
 
-    protected $filters = [
+    protected array $filters = [
         \App\Filters\Product\Category::class,
     ];
 

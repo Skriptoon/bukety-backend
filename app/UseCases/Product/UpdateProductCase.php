@@ -7,6 +7,7 @@ namespace App\UseCases\Product;
 use App\DTO\Product\ProductDTO;
 use App\Models\Product;
 use App\UseCases\Image\ImageOptimizeCase;
+use App\UseCases\Sitemap\SitemapGenerator;
 use Nette\Utils\ImageException;
 use Nette\Utils\UnknownImageFileException;
 use Storage;
@@ -14,7 +15,10 @@ use Str;
 
 readonly class UpdateProductCase
 {
-    public function __construct(private ImageOptimizeCase $imageOptimizeCase)
+    public function __construct(
+        private ImageOptimizeCase $imageOptimizeCase,
+        private SitemapGenerator $sitemapGenerator,
+    )
     {
     }
 
@@ -60,5 +64,7 @@ readonly class UpdateProductCase
 
         $product->save();
         $product->categories()->sync($data->categories);
+
+        $this->sitemapGenerator->handle();
     }
 }

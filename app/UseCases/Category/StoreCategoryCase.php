@@ -7,14 +7,17 @@ namespace App\UseCases\Category;
 use App\DTO\Category\CategoryDTO;
 use App\Models\Category;
 use App\UseCases\Image\ImageOptimizeCase;
+use App\UseCases\Sitemap\SitemapGenerator;
 use Nette\Utils\ImageException;
 use Nette\Utils\UnknownImageFileException;
 use Str;
 
 readonly class StoreCategoryCase
 {
-    public function __construct(private ImageOptimizeCase $imageOptimize)
-    {
+    public function __construct(
+        private ImageOptimizeCase $imageOptimize,
+        private SitemapGenerator $sitemapGenerator,
+    ) {
     }
 
     /**
@@ -38,5 +41,7 @@ readonly class StoreCategoryCase
             'is_active' => $data->is_active,
             'show_in_main' => $data->show_in_main,
         ]);
+
+        $this->sitemapGenerator->handle();
     }
 }

@@ -7,14 +7,17 @@ namespace App\UseCases\Product;
 use App\DTO\Product\ProductDTO;
 use App\Models\Product;
 use App\UseCases\Image\ImageOptimizeCase;
+use App\UseCases\Sitemap\SitemapGenerator;
 use Nette\Utils\ImageException;
 use Nette\Utils\UnknownImageFileException;
 use Str;
 
 readonly class StoreProductCase
 {
-    public function __construct(private ImageOptimizeCase $imageOptimizeCase)
-    {
+    public function __construct(
+        private ImageOptimizeCase $imageOptimizeCase,
+        private SitemapGenerator $sitemapGenerator,
+    ) {
     }
 
     /**
@@ -34,22 +37,28 @@ readonly class StoreProductCase
             'is_active' => $data->is_active,
         ]);
 
-        $imagePath = $this->imageOptimizeCase->handle($data->image?->path(), 'product');
-        $product->image = $imagePath;
-
-        $gallery = [];
-        foreach ($data->gallery as $image) {
-            if (is_string($image)) {
-                $gallery[] = $image;
-            } else {
-                $imagePath = $this->imageOptimizeCase->handle($image->path(), 'product');
-                $gallery[] = $imagePath;
-            }
+        if ($data->image) {
+            $imagePath = $this->imageOptimizeCase->handle($data->image->path(), 'product');
+            $product->image = $imagePath;
         }
 
-        $product->gallery = $gallery;
+        if ($data->gallery) {
+            $gallery = [];
+            foreach ($data->gallery as $image) {
+                if (is_string($image)) {
+                    $gallery[] = $image;
+                } else {
+                    $imagePath = $this->imageOptimizeCase->handle($image->path(), 'product');
+                    $gallery[] = $imagePath;
+                }
+            }
+
+            $product->gallery = $gallery;
+        }
 
         $product->save();
         $product->categories()->sync($data->categories);
+
+        $this->sitemapGenerator->handle();
     }
 }

@@ -26,7 +26,7 @@ use Storage;
  * @property bool $is_active
  * @property bool $show_in_main
  * @property Carbon|null $created_at
- * @property string|null $slug
+ * @property string $slug
  * @property Carbon|null $updated_at
  * @property-read Collection<int, Product> $products
  * @property-read int|null $products_count
@@ -67,7 +67,7 @@ class Category extends Model
         'show_in_main',
     ];
 
-    protected $filters = [
+    protected array $filters = [
         IsMain::class,
     ];
 
