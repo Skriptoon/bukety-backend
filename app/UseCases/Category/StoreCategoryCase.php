@@ -40,6 +40,7 @@ readonly class StoreCategoryCase
             'sort' => $data->sort,
             'is_active' => $data->is_active,
             'show_in_main' => $data->show_in_main,
+            'is_hidden' => $data->is_hidden,
         ]);
 
         $this->sitemapGenerator->handle();

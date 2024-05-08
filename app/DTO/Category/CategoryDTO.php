@@ -17,6 +17,7 @@ class CategoryDTO extends Data
         public int $sort,
         public bool $is_active,
         public bool $show_in_main,
+        public bool $is_hidden,
     ) {
     }
 }
