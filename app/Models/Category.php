@@ -65,6 +65,7 @@ class Category extends Model
         'image',
         'is_active',
         'show_in_main',
+        'is_hidden',
     ];
 
     protected array $filters = [
