@@ -1,5 +1,6 @@
 <script setup>
 import Editor from 'primevue/editor'
+import { onMounted, ref } from 'vue'
 
 defineProps({
   modelValue: Object,
@@ -7,11 +8,16 @@ defineProps({
   label: String,
 })
 
-defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue'])
+
+const editor = ref()
+onMounted(() =>{
+})
+// editor.value.renderValue('234234234234234')
 </script>
 
 <template>
-  <div>
+  <div v-if="modelValue[name]">
     <label :for="name">{{ label }}</label>
     <Editor
         v-model="modelValue[name]"
