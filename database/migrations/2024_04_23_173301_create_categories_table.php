@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('slug');
             $table->text('description')->nullable();
             $table->string('image')->nullable();
-            $table->string('seo_description')->nullable();
+            $table->text('seo_description')->nullable();
             $table->integer('sort');
             $table->boolean('is_active');
             $table->boolean('show_in_main');

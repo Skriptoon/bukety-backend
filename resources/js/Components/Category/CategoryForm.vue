@@ -5,6 +5,7 @@ import SpFileInput from '@/Components/Form/SpFileInput.vue'
 import Image from 'primevue/image'
 import Button from 'primevue/button'
 import SpCheckbox from '@/Components/Form/SpCheckbox.vue'
+import SpTextarea from '@/Components/Form/SpTextarea.vue'
 
 const props = defineProps({
   category: Object,
@@ -46,14 +47,14 @@ function updateImage(val) {
       />
     </div>
     <div class="mt-5">
-      <SpInput
+      <SpTextarea
           v-model="form"
           name="description"
           label="Описание"
       />
     </div>
     <div class="mt-5">
-      <SpInput
+      <SpTextarea
           v-model="form"
           name="seo_description"
           label="SEO описание"
