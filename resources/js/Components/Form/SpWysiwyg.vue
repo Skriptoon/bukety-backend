@@ -17,7 +17,7 @@ onMounted(() =>{
 </script>
 
 <template>
-  <div v-if="modelValue[name]">
+  <div>
     <label :for="name">{{ label }}</label>
     <Editor
         v-model="modelValue[name]"
