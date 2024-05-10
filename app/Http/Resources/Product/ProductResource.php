@@ -20,6 +20,7 @@ class ProductResource extends JsonResource
             'slug' => $this->resource->slug,
             'preview_description' => $this->resource->preview_description,
             'description' => $this->resource->description,
+            'seo_description' => $this->resource->seo_description,
             'price' => $this->resource->price,
             'image' => $this->resource->image_url,
             'url' => $this->resource->vk_url,
