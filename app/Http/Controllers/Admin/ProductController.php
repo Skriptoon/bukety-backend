@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\DTO\Product\ProductDTO;
+use App\Enums\OccasionEnum;
+use App\Enums\WhomEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Products\StoreProductRequest;
 use App\Http\Requests\Admin\Products\UpdateProductRequest;
@@ -42,9 +44,15 @@ class ProductController extends Controller
         return Inertia::render('Product/Edit', [
             'product' => $product,
             'categories' => $categoryOptions,
+            'whomOptions' => WhomEnum::getOptions(),
+            'occasionOptions' => OccasionEnum::getOptions(),
         ]);
     }
 
+    /**
+     * @throws ImageException
+     * @throws UnknownImageFileException
+     */
     public function update(Product $product, UpdateProductRequest $request, UpdateProductCase $case): RedirectResponse
     {
         $dto = ProductDTO::from($request);
@@ -65,7 +73,11 @@ class ProductController extends Controller
             ];
         }
 
-        return Inertia::render('Product/Create', ['categories' => $categoryOptions]);
+        return Inertia::render('Product/Create', [
+            'categories' => $categoryOptions,
+            'whomOptions' => WhomEnum::getOptions(),
+            'occasionOptions' => OccasionEnum::getOptions(),
+        ]);
     }
 
     /**

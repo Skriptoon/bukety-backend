@@ -53,6 +53,10 @@ use Storage;
  * @method static Builder|Product active()
  * @method static Builder|Product filter(array $values, string $group = '__default')
  * @method static Builder|Product filterByQueryString(string $group = '__default')
+ * @property array $whom
+ * @property array $occasion
+ * @method static Builder|Product whereOccasion($value)
+ * @method static Builder|Product whereWhom($value)
  * @mixin Eloquent
  */
 class Product extends Model
@@ -66,6 +70,8 @@ class Product extends Model
         'preview_description',
         'seo_description',
         'price',
+        'whom',
+        'occasion',
         'image',
         'vk_url',
         'is_active',
@@ -74,6 +80,8 @@ class Product extends Model
     protected $casts = [
         'gallery' => 'array',
         'price' => 'float',
+        'whom' => 'array',
+        'occasion' => 'array',
     ];
 
     protected array $filters = [

@@ -54,6 +54,20 @@ class StoreProductRequest extends FormRequest
                 'array',
                 'min:1',
             ],
+            'whom' => [
+                'required',
+                'array',
+            ],
+            'whom.*' => [
+                'string',
+            ],
+            'occasion' => [
+                'required',
+                'array',
+            ],
+            'occasion.*' => [
+                'string',
+            ],
             'gallery.*' => [
                 function ($attribute, $value, $fail) {
                     $isImage = Validator::make(['value' => $value], ['value' => 'image'])->passes();

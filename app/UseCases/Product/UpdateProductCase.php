@@ -18,8 +18,7 @@ readonly class UpdateProductCase
     public function __construct(
         private ImageOptimizeCase $imageOptimizeCase,
         private SitemapGenerator $sitemapGenerator,
-    )
-    {
+    ) {
     }
 
     /**
@@ -36,6 +35,8 @@ readonly class UpdateProductCase
             'price' => $data->price,
             'vk_url' => $data->vk_url,
             'slug' => Str::slug($data->name),
+            'whom' => $data->whom,
+            'occasion' => $data->occasion,
         ]);
 
         if ($data->image !== null) {

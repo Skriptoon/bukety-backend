@@ -14,6 +14,8 @@ import SpWysiwyg from '@/Components/Form/SpWysiwyg.vue'
 const props = defineProps({
   product: Object,
   categories: Array,
+  whomOptions: Array,
+  occasionOptions: Array,
 })
 
 const form = useForm({
@@ -28,6 +30,8 @@ const form = useForm({
   gallery: [],
   is_active: props.product?.is_active ?? false,
   categories: props.product?.categories.map((category) => category.id) ?? [],
+  whom: props.product?.whom ?? null,
+  occasion: props.product?.occasion ?? null,
   _method: undefined,
 })
 
@@ -132,6 +136,22 @@ function deleteImage(index) {
           mode="currency"
           currency="RUB"
           locale="ru-RU"
+      />
+    </div>
+    <div class="mt-5">
+      <SpMultiSelect
+          v-model="form"
+          name="whom"
+          label="Для кого"
+          :options="whomOptions"
+      />
+    </div>
+    <div class="mt-5">
+      <SpMultiSelect
+          v-model="form"
+          name="occasion"
+          label="Повод"
+          :options="occasionOptions"
       />
     </div>
     <div class="mt-5">

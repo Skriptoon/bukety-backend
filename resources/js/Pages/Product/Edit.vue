@@ -8,6 +8,8 @@ import { Head } from '@inertiajs/vue3'
 const props = defineProps({
   product: Object,
   categories: Array,
+  whomOptions: Array,
+  occasionOptions: Array,
 })
 
 const breadcrumbs = computed(() => {
@@ -34,7 +36,12 @@ const breadcrumbs = computed(() => {
   <AuthenticatedLayout :breadcrumb="breadcrumbs">
     <h2>Редактирование товара</h2>
     <Block>
-      <ProductForm :product="product" :categories="categories"/>
+      <ProductForm
+          :product="product"
+          :categories="categories"
+          :occasion-options="occasionOptions"
+          :whom-options="whomOptions"
+      />
     </Block>
   </AuthenticatedLayout>
 </template>

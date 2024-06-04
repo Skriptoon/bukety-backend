@@ -35,6 +35,8 @@ readonly class StoreProductCase
             'price' => $data->price,
             'vk_url' => $data->vk_url,
             'is_active' => $data->is_active,
+            'whom' => $data->whom,
+            'occasion' => $data->occasion,
         ]);
 
         if ($data->image) {

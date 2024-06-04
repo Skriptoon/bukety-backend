@@ -19,6 +19,8 @@ class ProductDTO extends Data
         public int $price,
         public ?UploadedFile $image,
         public array $gallery,
+        public array $whom,
+        public array $occasion,
         public bool $is_active,
     ) {
     }

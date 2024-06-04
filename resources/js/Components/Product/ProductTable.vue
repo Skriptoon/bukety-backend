@@ -47,7 +47,12 @@ function deleteConfirm(event, id) {
         :show-filter-menu="false"
         field="name"
         header="Название"
-    />
+    >
+      <template #body="{ data }">
+        <h4>{{ data.name }}</h4>
+        <p>{{ data.preview_description }}</p>
+      </template>
+    </Column>
     <Column style="width: 200px">
       <template #body="{ data }">
         <Link :href="route('products.edit', data.id)">
