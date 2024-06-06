@@ -22,8 +22,8 @@ class ProductResource extends JsonResource
             $whom = array_slice($this->resource->whom, 0, 4);
             $occasion = array_slice($this->resource->occasion, 0, 4);
 
-            $whom = array_map(static fn (string $item): string => WhomEnum::tryFrom($item)->label(), $whom);
-            $occasion = array_map(static fn (string $item): string => OccasionEnum::tryFrom($item)->label(), $occasion);
+            $whom = array_map(static fn(string $item): string => WhomEnum::tryFrom($item)->label(), $whom);
+            $occasion = array_map(static fn(string $item): string => OccasionEnum::tryFrom($item)->label(), $occasion);
 
             $seoDescription = $this->resource->preview_description . ".\n"
                 . 'Отличный подарок ' . implode(', ', $whom)
@@ -40,6 +40,14 @@ class ProductResource extends JsonResource
             'price' => $this->resource->price,
             'image' => $this->resource->image_url,
             'url' => $this->resource->vk_url,
+            'whom' => array_map(
+                static fn(string $item): string => WhomEnum::tryFrom($item)->label(),
+                $this->resource->whom
+            ),
+            'occasion' => array_map(
+                static fn(string $item): string => OccasionEnum::tryFrom($item)->label(),
+                $this->resource->occasion
+            ),
         ];
     }
 }
