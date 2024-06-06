@@ -26,8 +26,8 @@ class ProductResource extends JsonResource
             $occasion = array_map(static fn (string $item): string => OccasionEnum::tryFrom($item)->label(), $occasion);
 
             $seoDescription = $this->resource->preview_description . ".\n"
-                . 'Отличный подарок ' . implode(',', $whom)
-                . ' на ' . implode(',', $occasion) . ".\n"
+                . 'Отличный подарок ' . implode(', ', $whom)
+                . ' на ' . implode(', ', $occasion) . ".\n"
                 . 'Цена: ' . $this->resource->price . '₽';
         }
 
