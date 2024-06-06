@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\Product;
 
+use App\Enums\WhomEnum;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -19,6 +20,9 @@ class ProductResource extends JsonResource
         if ($seoDescription === null) {
             $whom = array_slice($this->resource->whom, 0, 4);
             $occasion = array_slice($this->resource->occasion, 0, 4);
+
+            $whom = array_map(static fn (string $item): WhomEnum => WhomEnum::tryFrom($item), $whom);
+            $occasion = array_map(static fn (string $item): WhomEnum => WhomEnum::tryFrom($item), $occasion);
 
             $seoDescription = $this->resource->preview_description . ".\n"
                 . 'Отличный подарок ' . implode(',', $whom)
