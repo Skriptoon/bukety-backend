@@ -24,7 +24,7 @@
         border: 0 none;
 
         &.p-placeholder {
-            color: rgba(255, 255, 255, 0.6);
+            color: $primary-color-text;
         }
 
         &:focus, &:enabled:focus {
@@ -35,7 +35,7 @@
 
     .p-dropdown-trigger {
         background: transparent;
-        color: rgba(255, 255, 255, 0.6);
+        color: var(--text-color);
         width: 3rem;
         border-top-right-radius: 6px;
         border-bottom-right-radius: 6px;

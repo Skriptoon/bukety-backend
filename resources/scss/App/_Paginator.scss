@@ -1,12 +1,12 @@
 .p-paginator {
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-color);
     padding: 0.5rem 1rem;
     border-radius: 6px;
 
     .p-paginator-first, .p-paginator-prev, .p-paginator-next, .p-paginator-last {
         background-color: transparent;
         border: 0 none;
-        color: rgba(255, 255, 255, 0.6);
+        color: var(--text-color);
         min-width: 3rem;
         height: 3rem;
         margin: 0.143rem;
@@ -16,7 +16,7 @@
         &:not(.p-disabled):not(.p-highlight):hover {
             background: rgba(255, 255, 255, 0.03);
             border-color: transparent;
-            color: rgba(255, 255, 255, 0.87);
+            color: var(--text-color);
         }
     }
 
@@ -52,7 +52,7 @@
     .p-paginator-current {
         background-color: transparent;
         border: 0 none;
-        color: rgba(255, 255, 255, 0.6);
+        color: var(--text-color);
         min-width: 3rem;
         height: 3rem;
         margin: 0.143rem;
@@ -62,7 +62,7 @@
     .p-paginator-pages .p-paginator-page {
         background-color: transparent;
         border: 0 none;
-        color: rgba(255, 255, 255, 0.6);
+        color: var(--text-color);
         min-width: 3rem;
         height: 3rem;
         margin: 0.143rem;
@@ -70,15 +70,15 @@
         border-radius: 6px;
 
         &.p-highlight {
-            background: rgba(147, 197, 253, 0.16);
-            border-color: rgba(147, 197, 253, 0.16);
-            color: rgba(255, 255, 255, 0.87);
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--text-color)
         }
 
         &:not(.p-highlight):hover {
             background: rgba(255, 255, 255, 0.03);
             border-color: transparent;
-            color: rgba(255, 255, 255, 0.87);
+            color: var(--text-color);
         }
     }
 }

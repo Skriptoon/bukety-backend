@@ -15,6 +15,7 @@ use App\Models\Product;
 use App\UseCases\Product\StoreProductCase;
 use App\UseCases\Product\UpdateProductCase;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Nette\Utils\ImageException;
@@ -22,11 +23,27 @@ use Nette\Utils\UnknownImageFileException;
 
 class ProductController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $products = Product::orderBy('id')->get();
+        $perPage = $request->get('per_page', 10);
+        $page = $request->get('page', 1);
 
-        return Inertia::render('Product/Index', ['products' => $products]);
+        $products = Product::filter($request->toArray())
+            ->with('categories')
+            ->orderBy('id')
+            ->paginate($perPage, page: $page);
+
+        $categories = Category::orderBy('sort')
+            ->get(['id', 'name'])
+            ->map(fn($category) => [
+                'id' => (string)$category->id,
+                'name' => $category->name,
+            ]);
+
+        return Inertia::render('Product/Index', [
+            'products' => $products,
+            'categories' => $categories,
+        ]);
     }
 
     public function edit(int $product): Response

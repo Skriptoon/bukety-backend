@@ -31,6 +31,7 @@ export default defineComponent({
 
   props: {
     products: Array,
+    categories: Array,
   },
 })
 </script>
@@ -46,7 +47,7 @@ export default defineComponent({
       </Link>
     </ActionButtonGroup>
     <Block>
-      <ProductTable :products="products"/>
+      <ProductTable :products="products" :categories="categories"/>
     </Block>
   </AuthenticatedLayout>
 </template>

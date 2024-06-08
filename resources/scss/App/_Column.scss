@@ -7,23 +7,23 @@ $var2: #0b213f;
 .p-column-filter-menu-button {
     width: 2rem;
     height: 2rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: $primary-color-text;
     border: 0 none;
     background: transparent;
     border-radius: 50%;
     transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
     &:hover {
-        color: rgba(255, 255, 255, 0.87);
+        color: $primary-color-text;
         border-color: transparent;
         background: rgba(255, 255, 255, 0.03);
     }
     &.p-column-filter-menu-button-open, &.p-column-filter-menu-button-open:hover {
         background: rgba(255, 255, 255, 0.03);
-        color: rgba(255, 255, 255, 0.87);
+        color: $primary-color-text;
     }
     &.p-column-filter-menu-button-active, &.p-column-filter-menu-button-active:hover {
         background: rgba(147, 197, 253, 0.16);
-        color: rgba(255, 255, 255, 0.87);
+        color: $primary-color-text;
     }
     &:focus {
         outline: 0 none;
@@ -34,13 +34,13 @@ $var2: #0b213f;
 .p-column-filter-clear-button {
     width: 2rem;
     height: 2rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: $primary-color-text;
     border: 0 none;
     background: transparent;
     border-radius: 50%;
     transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
     &:hover {
-        color: rgba(255, 255, 255, 0.87);
+        color: $primary-color-text;
         border-color: transparent;
         background: rgba(255, 255, 255, 0.03);
     }
@@ -52,7 +52,7 @@ $var2: #0b213f;
 }
 .p-column-filter-overlay {
     background: $var1;
-    color: rgba(255, 255, 255, 0.87);
+    color: $primary-color-text;
     border: 1px solid $var2;
     border-radius: 6px;
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
@@ -63,16 +63,16 @@ $var2: #0b213f;
             margin: 0;
             padding: 0.75rem 1.25rem;
             border: 0 none;
-            color: rgba(255, 255, 255, 0.87);
+            color: $primary-color-text;
             background: transparent;
             transition: box-shadow 0.2s;
             border-radius: 0;
             &.p-highlight {
-                color: rgba(255, 255, 255, 0.87);
+                color: $primary-color-text;
                 background: rgba(147, 197, 253, 0.16);
             }
             &:not(.p-highlight):not(.p-disabled):hover {
-                color: rgba(255, 255, 255, 0.87);
+                color: $primary-color-text;
                 background: rgba(255, 255, 255, 0.03);
             }
             &:focus {
@@ -89,7 +89,7 @@ $var2: #0b213f;
     &-menu .p-column-filter-operator {
         padding: 0.75rem 1.25rem;
         border-bottom: 1px solid $var2;
-        color: rgba(255, 255, 255, 0.87);
+        color: $primary-color-text;
         background: $var1;
         margin: 0;
         border-top-right-radius: 6px;
