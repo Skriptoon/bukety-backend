@@ -21,6 +21,7 @@ class CategoryResource extends JsonResource
             'slug' => $this->resource->slug,
             'description' => $this->resource->description,
             'seo_description' => $this->resource->seo_description,
+            'is_hidden' => $this->resource->is_hidden,
         ];
     }
 }
