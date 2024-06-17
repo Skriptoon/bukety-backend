@@ -64,7 +64,7 @@ readonly class UpdateProductCase
         $product->gallery = $gallery;
 
         $product->save();
-        $product->categories()->sync($data->categories);
+        $product->categories()->withoutGlobalScope('visible')->sync($data->categories);
 
         $this->sitemapGenerator->handle();
     }

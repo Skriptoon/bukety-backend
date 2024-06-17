@@ -72,13 +72,6 @@ class Category extends Model
         IsMain::class,
     ];
 
-    protected static function booted(): void
-    {
-        static::addGlobalScope('visible', function (Builder $builder) {
-            $builder->where('is_hidden', false);
-        });
-    }
-
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class);
@@ -92,5 +85,10 @@ class Category extends Model
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
+    }
+
+    public function scopeVisible(Builder $query): Builder
+    {
+        return $query->where('is_hidden', false);
     }
 }

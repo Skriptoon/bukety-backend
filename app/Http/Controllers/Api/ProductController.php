@@ -14,13 +14,17 @@ class ProductController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection
     {
-        $products = Product::filter($request->toArray())->get();
+        $products = Product::active()
+            ->filter($request->toArray())
+            ->get();
 
         return ProductResource::collection($products);
     }
 
-    public function show(Product $product): ProductResource
+    public function show(string $product): ProductResource
     {
+        $product = Product::active()->where('slug', $product)->firstOrFail();
+
         return new ProductResource($product);
     }
 }

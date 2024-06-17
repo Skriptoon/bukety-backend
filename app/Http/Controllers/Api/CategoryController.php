@@ -15,16 +15,19 @@ class CategoryController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection
     {
-        $categories = Category::filter($request->toArray())
-            ->withoutGlobalScope('visible')
+        $categories = Category::active()
+            ->visible()
+            ->filter($request->toArray())
             ->orderBy('sort')
             ->get();
 
         return CategoryListResource::collection($categories);
     }
 
-    public function show(Category $category): CategoryResource
+    public function show(string $category): CategoryResource
     {
+        $category = Category::active()->where('slug', $category)->firstOrFail();
+
         return new CategoryResource($category);
     }
 }

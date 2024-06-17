@@ -33,8 +33,7 @@ class ProductController extends Controller
             ->orderBy('id')
             ->paginate($perPage, page: $page);
 
-        $categories = Category::withoutGlobalScope('visible')
-            ->orderBy('sort')
+        $categories = Category::orderBy('sort')
             ->get(['id', 'name'])
             ->map(fn($category) => [
                 'id' => $category->id,
@@ -50,8 +49,7 @@ class ProductController extends Controller
     public function edit(int $product): Response
     {
         $product = Product::with('categories')->find($product);
-        $categories = Category::withoutGlobalScope('visible')
-            ->orderBy('sort')
+        $categories = Category::orderBy('sort')
             ->get()
             ->map(fn($category) => [
                 'value' => $category->id,
@@ -81,8 +79,7 @@ class ProductController extends Controller
 
     public function create(): Response
     {
-        $categories = Category::withoutGlobalScope('visible')
-            ->orderBy('sort')
+        $categories = Category::orderBy('sort')
             ->get()
             ->map(fn($category) => [
                 'value' => (string)$category->id,
