@@ -22,13 +22,17 @@ class CategoryController extends Controller
 {
     public function index(): Response
     {
-        $categories = Category::orderBy('sort')->get();
+        $categories = Category::withoutGlobalScope('visible')
+            ->orderBy('sort')
+            ->get();
 
         return Inertia::render('Categories/Index', ['categories' => $categories]);
     }
 
-    public function edit(Category $category): Response
+    public function edit(int $category): Response
     {
+        $category = Category::withoutGlobalScope('visible')->findOrFail($category);
+
         return Inertia::render('Categories/Edit', ['category' => $category]);
     }
 
@@ -38,9 +42,11 @@ class CategoryController extends Controller
      */
     public function update(
         UpdateCategoryRequest $request,
-        Category $category,
+        int $category,
         UpdateCategoryCase $case
     ): RedirectResponse {
+        $category = Category::withoutGlobalScope('visible')->findOrFail($category);
+
         $dto = CategoryDTO::from($request);
 
         $case->handle($category, $dto);
@@ -66,8 +72,10 @@ class CategoryController extends Controller
         return redirect(route('categories.index'));
     }
 
-    public function destroy(Category $category): RedirectResponse
+    public function destroy(int $category): RedirectResponse
     {
+        $category = Category::withoutGlobalScope('visible')->findOrFail($category);
+
         $category->delete();
 
         return redirect(route('categories.index'));

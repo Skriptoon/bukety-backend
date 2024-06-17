@@ -33,7 +33,8 @@ class ProductController extends Controller
             ->orderBy('id')
             ->paginate($perPage, page: $page);
 
-        $categories = Category::orderBy('sort')
+        $categories = Category::withoutGlobalScope('visible')
+            ->orderBy('sort')
             ->get(['id', 'name'])
             ->map(fn($category) => [
                 'id' => (string)$category->id,
@@ -49,18 +50,17 @@ class ProductController extends Controller
     public function edit(int $product): Response
     {
         $product = Product::with('categories')->find($product);
-        $categories = Category::orderBy('sort')->get();
-        $categoryOptions = [];
-        foreach ($categories as $category) {
-            $categoryOptions[] = [
+        $categories = Category::withoutGlobalScope('visible')
+            ->orderBy('sort')
+            ->get()
+            ->map(fn($category) => [
+                'id' => (string)$category->id,
                 'name' => $category->name,
-                'value' => $category->id,
-            ];
-        }
+            ]);
 
         return Inertia::render('Product/Edit', [
             'product' => $product,
-            'categories' => $categoryOptions,
+            'categories' => $categories,
             'whomOptions' => WhomEnum::getOptions(),
             'occasionOptions' => OccasionEnum::getOptions(),
         ]);
@@ -81,17 +81,16 @@ class ProductController extends Controller
 
     public function create(): Response
     {
-        $categories = Category::orderBy('sort')->get();
-        $categoryOptions = [];
-        foreach ($categories as $category) {
-            $categoryOptions[] = [
+        $categories = Category::withoutGlobalScope('visible')
+            ->orderBy('sort')
+            ->get()
+            ->map(fn($category) => [
+                'id' => (string)$category->id,
                 'name' => $category->name,
-                'value' => $category->id,
-            ];
-        }
+            ]);
 
         return Inertia::render('Product/Create', [
-            'categories' => $categoryOptions,
+            'categories' => $categories,
             'whomOptions' => WhomEnum::getOptions(),
             'occasionOptions' => OccasionEnum::getOptions(),
         ]);

@@ -15,7 +15,10 @@ class CategoryController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection
     {
-        $categories = Category::filter($request->toArray())->orderBy('sort')->get();
+        $categories = Category::filter($request->toArray())
+            ->withoutGlobalScope('visible')
+            ->orderBy('sort')
+            ->get();
 
         return CategoryListResource::collection($categories);
     }
