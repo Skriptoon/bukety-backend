@@ -37,7 +37,7 @@ class ProductController extends Controller
             ->orderBy('sort')
             ->get(['id', 'name'])
             ->map(fn($category) => [
-                'id' => (string)$category->id,
+                'id' => $category->id,
                 'name' => $category->name,
             ]);
 
@@ -54,7 +54,7 @@ class ProductController extends Controller
             ->orderBy('sort')
             ->get()
             ->map(fn($category) => [
-                'value' => (string)$category->id,
+                'value' => $category->id,
                 'name' => $category->name,
             ]);
 
