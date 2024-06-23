@@ -11,6 +11,7 @@ import Tag from 'primevue/tag'
 import Dropdown from 'primevue/dropdown'
 import { ref } from 'vue'
 import { FilterMatchMode } from 'primevue/api'
+import InputText from 'primevue/inputtext'
 
 defineProps({
   products: {
@@ -20,7 +21,7 @@ defineProps({
   categories: {
     type: Array,
     required: true,
-  }
+  },
 })
 
 const confirm = useConfirm()
@@ -28,7 +29,8 @@ const confirm = useConfirm()
 let getParams = (new URL(document.location)).searchParams;
 
 const filters = ref({
-  category: { value: getParams.get('category'), matchMode: FilterMatchMode.CONTAINS }
+  category: { value: getParams.get('category'), matchMode: FilterMatchMode.CONTAINS },
+  name: { value: getParams.get('name'), matchMode: FilterMatchMode.CONTAINS },
 })
 
 function deleteConfirm(event, id) {
@@ -104,6 +106,9 @@ function page(data) {
       field="name"
       header="Название"
     >
+      <template #filter="{ filterModel, filterCallback }">
+        <InputText v-model.trim="filterModel.value" @input="filterCallback" />
+      </template>
       <template #body="{ data }">
         <h4>{{ data.name }}</h4>
         <p>{{ data.preview_description }}</p>
