@@ -40,6 +40,7 @@ class ProductController extends Controller
             ->whereHas('categories', static function (Builder $query) use ($categoryIds) {
                 $query->whereIn('categories.id', $categoryIds);
             })
+            ->whereNot('id', $product->id)
             ->orderBy(new Expression('RANDOM()'))
             ->limit(10)
             ->get();
