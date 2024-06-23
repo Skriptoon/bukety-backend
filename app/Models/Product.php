@@ -33,6 +33,8 @@ use Storage;
  * @property Carbon|null $updated_at
  * @property string $image_url
  * @property string $gallery_urls
+ * @property array $whom
+ * @property array $occasion
  * @property-read Collection<int, Category> $categories
  * @property-read int|null $categories_count
  * @method static Builder|Product newModelQuery()
@@ -54,8 +56,6 @@ use Storage;
  * @method static Builder|Product active()
  * @method static Builder|Product filter(array $values, string $group = '__default')
  * @method static Builder|Product filterByQueryString(string $group = '__default')
- * @property array $whom
- * @property array $occasion
  * @method static Builder|Product whereOccasion($value)
  * @method static Builder|Product whereWhom($value)
  * @mixin Eloquent

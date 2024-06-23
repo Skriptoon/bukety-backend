@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Admin\Auth;
 
-use App\Enums\UserStatusEnum;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;

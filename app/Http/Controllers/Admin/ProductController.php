@@ -48,7 +48,7 @@ class ProductController extends Controller
 
     public function edit(int $product): Response
     {
-        $product = Product::with('categories')->find($product);
+        $productModel = Product::with('categories')->find($product);
         $categories = Category::orderBy('sort')
             ->get()
             ->map(fn($category) => [
@@ -57,7 +57,7 @@ class ProductController extends Controller
             ]);
 
         return Inertia::render('Product/Edit', [
-            'product' => $product,
+            'product' => $productModel,
             'categories' => $categories,
             'whomOptions' => WhomEnum::getOptions(),
             'occasionOptions' => OccasionEnum::getOptions(),

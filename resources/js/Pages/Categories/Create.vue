@@ -5,10 +5,6 @@ import { computed } from 'vue'
 import CategoryForm from '@/Components/Category/CategoryForm.vue'
 import Block from '@/Components/Block.vue'
 
-const props = defineProps({
-  category: Object,
-})
-
 const breadcrumbs = computed(() => {
   return [
     {

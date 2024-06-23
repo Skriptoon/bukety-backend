@@ -23,7 +23,7 @@ class ImageOptimizeCase
 
         $img = Image::fromFile($imagePath);
 
-        $filename = $outputPath . '/' . uniqid() . '.webp';
+        $filename = $outputPath . '/' . uniqid('', true) . '.webp';
         $img->save(Storage::disk('public')->path($filename));
 
         return $filename;

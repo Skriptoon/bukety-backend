@@ -26,8 +26,8 @@ class CategoryController extends Controller
 
     public function show(string $category): CategoryResource
     {
-        $category = Category::active()->where('slug', $category)->firstOrFail();
+        $categoryModel = Category::active()->where('slug', $category)->firstOrFail();
 
-        return new CategoryResource($category);
+        return new CategoryResource($categoryModel);
     }
 }

@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Product\ProductResource;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -23,8 +24,23 @@ class ProductController extends Controller
 
     public function show(string $product): ProductResource
     {
-        $product = Product::active()->where('slug', $product)->firstOrFail();
+        $product = Product::active()
+            ->where('slug', $product)
+            ->firstOrFail();
 
         return new ProductResource($product);
+    }
+
+    public function recommended(Product $product): AnonymousResourceCollection
+    {
+        $categoryIds = $product->categories()->pluck('id');
+
+        $recommended = Product::whereHas('categories', static function (Builder $query) use ($categoryIds) {
+            $query->whereIn('categories.id', $categoryIds);
+        })
+            ->limit(10)
+            ->get();
+
+        return ProductResource::collection($recommended);
     }
 }

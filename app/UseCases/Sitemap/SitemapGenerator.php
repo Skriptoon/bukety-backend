@@ -23,30 +23,30 @@ readonly class SitemapGenerator
 
         foreach ($staticPages as $staticPage) {
             $url = $xml->addChild('url');
-            $url->addChild('loc', $this->getFrontendUrl($staticPage));
-            $url->addChild('lastmod', date('c'));
-            $url->addChild('changefreq', 'weekly');
-            $url->addChild('priority', '0.8');
+            $url?->addChild('loc', $this->getFrontendUrl($staticPage));
+            $url?->addChild('lastmod', date('c'));
+            $url?->addChild('changefreq', 'weekly');
+            $url?->addChild('priority', '0.8');
         }
 
         $categories = Category::active()->get();
 
         foreach ($categories as $category) {
             $url = $xml->addChild('url');
-            $url->addChild('loc', $this->getFrontendUrl($category->slug));
-            $url->addChild('lastmod', date('c'));
-            $url->addChild('changefreq', 'weekly');
-            $url->addChild('priority', '0.8');
+            $url?->addChild('loc', $this->getFrontendUrl($category->slug));
+            $url?->addChild('lastmod', date('c'));
+            $url?->addChild('changefreq', 'weekly');
+            $url?->addChild('priority', '0.8');
         }
 
         $products = Product::active()->get();
 
         foreach ($products as $product) {
             $url = $xml->addChild('url');
-            $url->addChild('loc', $this->getFrontendUrl('product/' . $product->slug));
-            $url->addChild('lastmod', date('c'));
-            $url->addChild('changefreq', 'weekly');
-            $url->addChild('priority', '0.8');
+            $url?->addChild('loc', $this->getFrontendUrl('product/' . $product->slug));
+            $url?->addChild('lastmod', date('c'));
+            $url?->addChild('changefreq', 'weekly');
+            $url?->addChild('priority', '0.8');
         }
 
         $xml->asXML(Storage::path('/sitemap.xml'));

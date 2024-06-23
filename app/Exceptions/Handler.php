@@ -59,13 +59,13 @@ class Handler extends ExceptionHandler
                     ? $e->getMessage()
                     : 'Произошла ошибка во время выполнения запроса.',
             ])->setStatusCode($response->getStatusCode());
-        } else {
-            if ($response->getStatusCode() === 419) {
-                return response()->json([
-                    'success' => false,
-                    'error' => 'Срок действия страницы истек, обновите страницу',
-                ])->setStatusCode($response->getStatusCode());
-            }
+        }
+
+        if ($response->getStatusCode() === 419) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Срок действия страницы истек, обновите страницу',
+            ])->setStatusCode($response->getStatusCode());
         }
 
         return $response;

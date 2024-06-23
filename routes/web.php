@@ -1,16 +1,7 @@
 <?php
 
-use App\Enums\PermissionEnum;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\BanController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\MainController;
-use App\Http\Controllers\Admin\PlayerController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\PromoCodeController;
-use App\Http\Controllers\Admin\ServerController;
-use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
