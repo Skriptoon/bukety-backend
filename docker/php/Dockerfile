@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY . .
 
-ARG USER_ID=1000
+ARG USER_ID=1001
 RUN chown -R www-data:www-data /app
 RUN usermod -o -u ${USER_ID} -g www-data www-data
 
