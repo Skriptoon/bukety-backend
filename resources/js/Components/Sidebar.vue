@@ -55,6 +55,11 @@ export default {
         title: 'Категории',
         icon: 'list',
       },
+      {
+        url: route('orders.index'),
+        title: 'Заказы',
+        icon: 'cart-shopping',
+      }
     ],
   }),
 
