@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     private const string TABLE_NAME = 'orders';
 
     /**
@@ -20,12 +21,10 @@ return new class extends Migration
             $table->string('communication_method');
             $table->string('status');
 
-            Schema::table(self::TABLE_NAME, static function (Blueprint $table): void {
-                $table->foreignId('product_id')
-                    ->constrained('products')
-                    ->cascadeOnDelete()
-                    ->cascadeOnUpdate();
-            });
+            $table->foreignId('product_id')
+                ->constrained('products')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
 
             $table->timestamps();
         });
