@@ -22,6 +22,7 @@ const form = useForm({
   id: props.product?.id ?? null,
   name: props.product?.name ?? null,
   description: props.product?.description ?? null,
+  vk_description: props.product?.vk_description ?? null,
   preview_description: props.product?.preview_description ?? null,
   seo_description: props.product?.seo_description ?? null,
   vk_url: props.product?.vk_url ?? null,
@@ -104,6 +105,13 @@ function deleteImage(index) {
           v-model="form"
           name="description"
           label="Описание"
+      />
+    </div>
+    <div class="mt-5">
+      <SpTextarea
+          v-model="form"
+          name="vk_description"
+          label="Описание для ВК"
       />
     </div>
     <div class="mt-5">

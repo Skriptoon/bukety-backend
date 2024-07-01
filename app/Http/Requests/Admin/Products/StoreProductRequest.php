@@ -29,6 +29,10 @@ class StoreProductRequest extends FormRequest
                 'required',
                 'string',
             ],
+            'vk_description' => [
+                'nullable',
+                'string'
+            ],
             'preview_description' => [
                 'required',
                 'string',
@@ -38,7 +42,7 @@ class StoreProductRequest extends FormRequest
                 'string',
             ],
             'vk_url' => [
-                'required',
+                'nullable',
                 'string',
             ],
             'price' => [

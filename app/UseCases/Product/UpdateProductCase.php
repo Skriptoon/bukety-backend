@@ -18,6 +18,7 @@ readonly class UpdateProductCase
     public function __construct(
         private ImageOptimizeCase $imageOptimizeCase,
         private SitemapGenerator $sitemapGenerator,
+        private GenerateVkYmlCase $generateVkYmlCase,
     ) {
     }
 
@@ -30,6 +31,7 @@ readonly class UpdateProductCase
         $product->fill([
             'name' => $data->name,
             'description' => $data->description,
+            'vk_description' => $data->vk_description,
             'preview_description' => $data->preview_description,
             'seo_description' => $data->seo_description,
             'price' => $data->price,
@@ -67,5 +69,6 @@ readonly class UpdateProductCase
         $product->categories()->withoutGlobalScope('visible')->sync($data->categories);
 
         $this->sitemapGenerator->handle();
+        $this->generateVkYmlCase->handle();
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,8 @@ Route::domain($domain)->group(static function (): void {
                 Route::get('{product:slug}', [ProductController::class, 'show']);
                 Route::get('{product:slug}/recommended', [ProductController::class, 'recommended']);
             });
+
+            Route::post('order', [OrderController::class, 'store']);
         });
     });
 });

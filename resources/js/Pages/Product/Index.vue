@@ -32,6 +32,7 @@ export default defineComponent({
   props: {
     products: Array,
     categories: Array,
+    vkProductFeed: String,
   },
 })
 </script>
@@ -41,6 +42,7 @@ export default defineComponent({
     <title>Товары</title>
   </Head>
   <AuthenticatedLayout :breadcrumb="breadcrumbs">
+    Сслыка на товары для ВК: {{ vkProductFeed }}
     <ActionButtonGroup>
       <Link :href="route('products.create')">
         <Button severity="success">Добавить</Button>

@@ -43,6 +43,7 @@ class ProductController extends Controller
         return Inertia::render('Product/Index', [
             'products' => $products,
             'categories' => $categories,
+            'vkProductFeed' => \Storage::disk('public')->url('feeds/vk.yml'),
         ]);
     }
 

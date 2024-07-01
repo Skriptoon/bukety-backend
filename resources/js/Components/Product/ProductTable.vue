@@ -29,7 +29,7 @@ const confirm = useConfirm()
 let getParams = (new URL(document.location)).searchParams;
 
 const filters = ref({
-  category: { value: getParams.get('category'), matchMode: FilterMatchMode.CONTAINS },
+  category: { value: Number(getParams.get('category')), matchMode: FilterMatchMode.CONTAINS },
   name: { value: getParams.get('name'), matchMode: FilterMatchMode.CONTAINS },
 })
 

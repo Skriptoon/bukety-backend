@@ -22,6 +22,7 @@ use Storage;
  * @property string $name
  * @property string $slug
  * @property string $description
+ * @property string|null $vk_description
  * @property string $preview_description
  * @property string|null $seo_description
  * @property string $price
@@ -68,6 +69,7 @@ class Product extends Model
         'name',
         'slug',
         'description',
+        'vk_description',
         'preview_description',
         'seo_description',
         'price',

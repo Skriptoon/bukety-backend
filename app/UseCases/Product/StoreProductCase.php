@@ -17,6 +17,7 @@ readonly class StoreProductCase
     public function __construct(
         private ImageOptimizeCase $imageOptimizeCase,
         private SitemapGenerator $sitemapGenerator,
+        private GenerateVkYmlCase $generateVkYmlCase,
     ) {
     }
 
@@ -30,6 +31,7 @@ readonly class StoreProductCase
             'name' => $data->name,
             'slug' => Str::slug($data->name),
             'description' => $data->description,
+            'vk_description' => $data->vk_description,
             'preview_description' => $data->preview_description,
             'seo_description' => $data->seo_description,
             'price' => $data->price,
@@ -62,5 +64,6 @@ readonly class StoreProductCase
         $product->categories()->sync($data->categories);
 
         $this->sitemapGenerator->handle();
+        $this->generateVkYmlCase->handle();
     }
 }
