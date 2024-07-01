@@ -59,6 +59,7 @@ use Storage;
  * @method static Builder|Product filterByQueryString(string $group = '__default')
  * @method static Builder|Product whereOccasion($value)
  * @method static Builder|Product whereWhom($value)
+ * @method static Builder|Product whereVkDescription($value)
  * @mixin Eloquent
  */
 class Product extends Model

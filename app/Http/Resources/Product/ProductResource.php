@@ -32,6 +32,7 @@ class ProductResource extends JsonResource
         }
 
         return [
+            'id' => $this->resource->id,
             'name' => $this->resource->name,
             'slug' => $this->resource->slug,
             'preview_description' => $this->resource->preview_description,

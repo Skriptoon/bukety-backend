@@ -27,6 +27,11 @@ class StoreOrderRequest extends FormRequest
                 Rule::enum(CommunicationsMethodsEnum::class),
                 'string',
             ],
+            'product_id' => [
+                'required',
+                'integer',
+                Rule::exists('products','id'),
+            ]
         ];
     }
 

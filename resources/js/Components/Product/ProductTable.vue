@@ -65,7 +65,6 @@ function filter() {
 }
 
 function page(data) {
-  console.log(data)
   const params = getRouteParams()
   params.page = data.page + 1
   params.per_page = data.rows

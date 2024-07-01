@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,6 +25,9 @@ Route::domain(env('APP_DOMAIN'))->group(static function () {
 
         Route::resource('products', ProductController::class);
         Route::resource('categories', CategoryController::class);
+
+        Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::patch('orders/{order}/complete', [OrderController::class, 'complete'])->name('orders.complete');
     });
 
     require __DIR__ . '/auth.php';

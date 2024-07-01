@@ -2,6 +2,8 @@
 
 namespace App\Enums;
 
+use App\Traits\Enums\OptionsTrait;
+
 enum CommunicationsMethodsEnum: string
 {
     case Call = 'call';

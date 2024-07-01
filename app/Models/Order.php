@@ -7,6 +7,7 @@ use App\Enums\OrderStatusEnum;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -17,8 +18,10 @@ use Illuminate\Support\Carbon;
  * @property string $phone
  * @property CommunicationsMethodsEnum $communication_method
  * @property OrderStatusEnum $status
+ * @property int $product_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read Product|null $product
  * @method static Builder|Order newModelQuery()
  * @method static Builder|Order newQuery()
  * @method static Builder|Order query()
@@ -29,6 +32,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Order wherePhone($value)
  * @method static Builder|Order whereStatus($value)
  * @method static Builder|Order whereUpdatedAt($value)
+ * @method static Builder|Order whereProductId($value)
  * @mixin Eloquent
  */
 class Order extends Model
@@ -38,10 +42,16 @@ class Order extends Model
         'phone',
         'communication_method',
         'status',
+        'product_id',
     ];
 
     protected $casts = [
         'status' => OrderStatusEnum::class,
         'communication_method' => CommunicationsMethodsEnum::class,
     ];
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

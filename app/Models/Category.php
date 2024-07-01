@@ -50,6 +50,7 @@ use Storage;
  * @method static Builder|Category filter(array $values, string $group = '__default')
  * @method static Builder|Category filterByQueryString(string $group = '__default')
  * @method static Builder|Category whereIsHidden($value)
+ * @method static Builder|Category visible()
  * @mixin Eloquent
  */
 class Category extends Model

@@ -17,6 +17,7 @@ class StoreOrderCase
             'phone' => $orderDto->phone,
             'communication_method' => $orderDto->communication_method,
             'status' => OrderStatusEnum::New,
+            'product_id' => $orderDto->product_id,
         ]);
     }
 }

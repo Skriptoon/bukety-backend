@@ -6,19 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    private const string TABLE = 'orders';
+    private const string TABLE_NAME = 'orders';
 
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create(self::TABLE, function (Blueprint $table) {
+        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('phone', 18);
             $table->string('communication_method');
             $table->string('status');
+
+            Schema::table(self::TABLE_NAME, static function (Blueprint $table): void {
+                $table->foreignId('product_id')
+                    ->constrained('products')
+                    ->cascadeOnDelete()
+                    ->cascadeOnUpdate();
+            });
+
             $table->timestamps();
         });
     }
@@ -28,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists(self::TABLE);
+        Schema::dropIfExists(self::TABLE_NAME);
     }
 };
