@@ -54,7 +54,10 @@ class GenerateVkYmlCase
                 . "Цена - $productModel->price рублей действительна на ".date('d.m.Y')." и может быть выше или ниже в зависимости от ваших пожеланий по составу и размера букета.\n\n"
                 . "Просто нажмите кнопку \"Написать\" и я с удовольствием приму ваш заказ.";
             $offer->addChild('description', $description);
-            $offer->addChild('picture', $productModel->image_url);
+
+            foreach ($productModel->gallery_urls as $gallery_url) {
+                $offer->addChild('picture', $gallery_url);
+            }
         }
 
         Storage::disk('public')->makeDirectory('feeds');
