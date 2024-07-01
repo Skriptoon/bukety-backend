@@ -16,15 +16,15 @@ use Inertia\Inertia;
 |
 */
 
-Route::domain(env('APP_DOMAIN'))->group(function () {
-    Route::get('/', static function () {
-        return Inertia::render('Dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+Route::domain(env('APP_DOMAIN'))->group(static function () {
+    Route::middleware(['auth', 'verified'])->group(static function () {
+        Route::get('/', static function () {
+            return Inertia::render('Dashboard');
+        })->name('dashboard');
 
-    Route::resource('products', ProductController::class);
-    Route::resource('categories', CategoryController::class);
-
-    Route::middleware('auth')->group(function () {
+        Route::resource('products', ProductController::class);
+        Route::resource('categories', CategoryController::class);
     });
+
     require __DIR__ . '/auth.php';
 });
