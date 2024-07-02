@@ -20,6 +20,7 @@
         "spatie/laravel-data": "^4.1",
         "spatie/laravel-permission": "^5.10",
         "tightenco/ziggy": "^1.0",
+        "vkcom/vk-php-sdk": "^5.131",
         "xpaw/php-source-query-class": "^2.1",
         "xpaw/steamid": "^2.0"
     },
