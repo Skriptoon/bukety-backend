@@ -49,9 +49,10 @@ class GenerateVkYmlCase
 
             $offer->addChild('name', $productModel->name);
 
-            $description = $productModel->vk_description .
+            $description = $productModel->preview_description . "\n\n" . $productModel->vk_description .
                 "\n\nБукет можно забрать самовывозом или мы отправим его Вам Яндекс доставкой к нужному времени.\n\n"
-                . "Цена - $productModel->price рублей действительна на ".date('d.m.Y')." и может быть выше или ниже в зависимости от ваших пожеланий по составу и размера букета.\n\n"
+                . "Цена - $productModel->price рублей действительна на " . date('d.m.Y') .
+                " и может быть выше или ниже в зависимости от ваших пожеланий по составу и размера букета.\n\n"
                 . "Просто нажмите кнопку \"Написать\" и я с удовольствием приму ваш заказ.";
             $offer->addChild('description', $description);
 
