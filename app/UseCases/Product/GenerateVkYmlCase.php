@@ -20,7 +20,7 @@ class GenerateVkYmlCase
         $shop = $xml->addChild('shop');
         $shop->addChild('name', 'Букетница');
         $shop->addChild('company', 'Букетница');
-        $shop->addChild('url', 'buketnitsa96.r/');
+        $shop->addChild('url', 'buketnitsa96.ru');
 
         $currencies = $shop->addChild('currencies');
         $currency = $currencies->addChild('currency');
