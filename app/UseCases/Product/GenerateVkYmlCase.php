@@ -48,6 +48,7 @@ class GenerateVkYmlCase
             }
 
             $offer->addChild('name', $productModel->name);
+            $offer->addChild('url', config('app.frontend_url') . '/' . $productModel->alias);
 
             $description = $productModel->preview_description . "\n\n" . $productModel->vk_description .
                 "\n\nБукет можно забрать самовывозом или мы отправим его Вам Яндекс доставкой к нужному времени.\n\n"
