@@ -14,7 +14,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create(self::TABLE_NAME, function (Blueprint $table) {
+        Schema::create(self::TABLE_NAME, static function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('slug');
@@ -28,7 +28,7 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        Schema::create('category_product', function (Blueprint $table) {
+        Schema::create('category_product', static function (Blueprint $table) {
             $table->foreignId('product_id')
                 ->constrained('products')
                 ->cascadeOnUpdate()

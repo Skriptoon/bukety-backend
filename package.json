@@ -9,12 +9,12 @@
         "@tailwindcss/forms": "^0.5.3",
         "@vitejs/plugin-vue": "^4.0.0",
         "autoprefixer": "^10.4.12",
-        "axios": "^1.1.2",
+        "axios": "1.6.0",
         "eslint": "^8.56.0",
         "eslint-plugin-vue": "^9.20.1",
         "laravel-vite-plugin": "^0.7.2",
         "lodash": "^4.17.19",
-        "postcss": "^8.4.18",
+        "postcss": "8.4.31",
         "sass": "^1.57.1",
         "tailwindcss": "^3.2.1"
     },
@@ -28,8 +28,8 @@
         "primeflex": "^3.3.0",
         "primeicons": "^6.0.1",
         "primevue": "^3.22.4",
-        "quill": "^1.3.3",
-        "vite": "^4.0.0",
+        "quill": "2.0.0-rc.0",
+        "vite": "5.2.6",
         "vue": "^3.2.41"
     }
 }
