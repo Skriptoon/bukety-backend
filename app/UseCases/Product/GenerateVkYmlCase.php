@@ -20,7 +20,7 @@ class GenerateVkYmlCase
         $shop = $xml->addChild('shop');
         $shop->addChild('name', 'Букетница');
         $shop->addChild('company', 'Букетница');
-        $shop->addChild('url', 'buketnitsa96.r/');
+        $shop->addChild('url', 'buketnitsa96.ru');
 
         $currencies = $shop->addChild('currencies');
         $currency = $currencies->addChild('currency');
@@ -48,6 +48,7 @@ class GenerateVkYmlCase
             }
 
             $offer->addChild('name', $productModel->name);
+            $offer->addChild('url', config('app.frontend_url') . '/product/' . $productModel->slug);
 
             $description = $productModel->preview_description . "\n\n" . $productModel->vk_description .
                 "\n\nБукет можно забрать самовывозом или мы отправим его Вам Яндекс доставкой к нужному времени.\n\n"
