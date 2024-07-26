@@ -34,7 +34,7 @@ services:
       - "host.docker.internal:host-gateway"
 
   node:
-    image: node:19.9.0
+    image: node:22.3.0
     environment:
       NODE_ENV: development
     restart: ${RESTART}

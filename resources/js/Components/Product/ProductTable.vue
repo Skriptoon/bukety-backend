@@ -9,9 +9,10 @@ import { router } from '@inertiajs/vue3'
 import ConfirmPopup from 'primevue/confirmpopup'
 import Tag from 'primevue/tag'
 import Dropdown from 'primevue/dropdown'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { FilterMatchMode } from 'primevue/api'
 import InputText from 'primevue/inputtext'
+import { Inertia } from '@inertiajs/inertia'
 
 defineProps({
   products: {
@@ -32,6 +33,18 @@ const filters = ref({
   category: { value: getParams.get('category') ? Number(getParams.get('category')) : null, matchMode: FilterMatchMode.CONTAINS },
   name: { value: getParams.get('name'), matchMode: FilterMatchMode.CONTAINS },
 })
+
+
+let nameFilterInput = ref(null)
+
+onMounted(() => {
+  const nameFilter = Inertia.restore('nameFilter')
+  if (getParams.get('name') !== String(nameFilter)) {
+      nameFilterInput.value.$el.focus()
+  }
+  Inertia.remember('nameFilter', getParams.get('name'))
+})
+
 
 function deleteConfirm(event, id) {
   confirm.require({
@@ -106,7 +119,7 @@ function page(data) {
       header="Название"
     >
       <template #filter="{ filterModel, filterCallback }">
-        <InputText v-model.trim="filterModel.value" @input="filterCallback" />
+        <InputText ref="nameFilterInput" v-model="filterModel.value" @input="filterCallback" />
       </template>
       <template #body="{ data }">
         <h4>{{ data.name }}</h4>

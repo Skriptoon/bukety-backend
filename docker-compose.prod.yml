@@ -40,7 +40,7 @@ services:
       - node
 
   node:
-    image: node:19.9.0
+    image: node:22.3.0
     environment:
       NODE_ENV: development
     working_dir: /app
