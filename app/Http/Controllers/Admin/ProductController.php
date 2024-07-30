@@ -57,11 +57,22 @@ class ProductController extends Controller
                 'name' => $category->name,
             ]);
 
+        $previousUrl = null;
+        if (str_contains(url()->previous(), route('products.index'))) {
+            $previousUrl = url()->previous();
+        }
+
+        if (url()->previous() === url()->current())
+        {
+            $previousUrl = session()->previousUrl();
+        }
+
         return Inertia::render('Product/Edit', [
             'product' => $productModel,
             'categories' => $categories,
             'whomOptions' => WhomEnum::getOptions(),
             'occasionOptions' => OccasionEnum::getOptions(),
+            'previousUrl' => $previousUrl
         ]);
     }
 
@@ -74,6 +85,10 @@ class ProductController extends Controller
         $dto = ProductDTO::from($request);
 
         $case->handle($product, $dto);
+        
+        if ($request->redirect_url) {
+            return redirect($request->redirect_url);
+        }
 
         return redirect()->route('products.index');
     }
