@@ -6,6 +6,7 @@ namespace App\UseCases\Sitemap;
 
 use App\Models\Category;
 use App\Models\Product;
+use Exception;
 use SimpleXMLElement;
 use Storage;
 
@@ -22,34 +23,32 @@ readonly class SitemapGenerator
         $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset/>');
 
         foreach ($staticPages as $staticPage) {
-            $url = $xml->addChild('url');
-            $url?->addChild('loc', $this->getFrontendUrl($staticPage));
-            $url?->addChild('lastmod', date('c'));
-            $url?->addChild('changefreq', 'weekly');
-            $url?->addChild('priority', '0.8');
+            $this->addUrl($xml, $this->getFrontendUrl($staticPage));
         }
 
         $categories = Category::active()->get();
 
         foreach ($categories as $category) {
-            $url = $xml->addChild('url');
-            $url?->addChild('loc', $this->getFrontendUrl($category->slug));
-            $url?->addChild('lastmod', date('c'));
-            $url?->addChild('changefreq', 'weekly');
-            $url?->addChild('priority', '0.8');
+            $this->addUrl($xml, $this->getFrontendUrl($category->slug));
         }
 
         $products = Product::active()->get();
 
         foreach ($products as $product) {
-            $url = $xml->addChild('url');
-            $url?->addChild('loc', $this->getFrontendUrl('product/' . $product->slug));
-            $url?->addChild('lastmod', date('c'));
-            $url?->addChild('changefreq', 'weekly');
-            $url?->addChild('priority', '0.8');
+            $this->addUrl($xml, $this->getFrontendUrl('product/' . $product->slug));
         }
 
         $xml->asXML(Storage::path('/sitemap.xml'));
+    }
+
+    private function addUrl(SimpleXMLElement $xml, string $url): void
+    {
+        $urlElement = $xml->addChild('url');
+
+        $urlElement->addChild('loc', $url);
+        $urlElement->addChild('lastmod', date('c'));
+        $urlElement->addChild('changefreq', 'weekly');
+        $urlElement->addChild('priority', '0.8');
     }
 
     private function getFrontendUrl(string $path): string

@@ -20,10 +20,16 @@ services:
       args:
         PHP_VERSION: ${PHP_VERSION}
     restart: ${RESTART}
+    environment:
+      PHP_ENABLE_XDEBUG: 1
+      PHP_IDE_CONFIG: "serverName=xdebug"
     networks:
       - web
     volumes:
       - ./:/app
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/base.ini
+      - ./docker/php/docker-php-entrypoint:/usr/local/bin/docker-php-entrypoint
+      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     depends_on:
       - db
       - node

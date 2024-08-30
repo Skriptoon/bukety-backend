@@ -1,15 +1,11 @@
 ARG PHP_VERSION
+FROM mlocati/php-extension-installer as extension_installer
 FROM php:$PHP_VERSION
 
-WORKDIR /app
-
-COPY . .
-
 ARG USER_ID=1001
-RUN chown -R www-data:www-data /app
-RUN usermod -o -u ${USER_ID} -g www-data www-data
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
+COPY --from=extension_installer /usr/bin/install-php-extensions /usr/bin/
 
 RUN apt update && apt install -y \
     libzip-dev \
@@ -21,8 +17,12 @@ RUN apt update && apt install -y \
 
 RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev libwebp-dev
 
+RUN install-php-extensions xdebug-3.3.2
+
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp
 RUN docker-php-ext-configure intl
 
 RUN docker-php-ext-install intl zip gd gmp pdo pdo_mysql pdo_pgsql pgsql opcache
 
+WORKDIR /app
+ADD . /app
