@@ -10,6 +10,7 @@ const props = defineProps({
   categories: Array,
   whomOptions: Array,
   occasionOptions: Array,
+  previousUrl: String,
 })
 
 const breadcrumbs = computed(() => {
@@ -41,6 +42,7 @@ const breadcrumbs = computed(() => {
           :categories="categories"
           :occasion-options="occasionOptions"
           :whom-options="whomOptions"
+          :previous-url="previousUrl"
       />
     </Block>
   </AuthenticatedLayout>

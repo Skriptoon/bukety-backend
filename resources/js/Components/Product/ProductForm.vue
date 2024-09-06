@@ -16,6 +16,7 @@ const props = defineProps({
   categories: Array,
   whomOptions: Array,
   occasionOptions: Array,
+  previousUrl: String,
 })
 
 const form = useForm({
@@ -33,6 +34,7 @@ const form = useForm({
   categories: props.product?.categories.map((category) => category.id) ?? [],
   whom: props.product?.whom ?? null,
   occasion: props.product?.occasion ?? null,
+  redirect_url: props.previousUrl,
   _method: undefined,
 })
 

@@ -1,0 +1,20 @@
+{
+    "$schema": "vendor/infection/infection/resources/schema.json",
+    "source": {
+        "directories": [
+            "."
+        ],
+        "excludes": [
+            "vendor",
+            "tests",
+            "node_modules"
+        ]
+    },
+    "logs": {
+        "text": "/app/infection.log"
+    },
+    "mutators": {
+        "@default": true
+    },
+    "bootstrap": "./createApplication.php"
+}

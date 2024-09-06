@@ -78,3 +78,6 @@ yarn-command:
 
 symlink:
 	@test -L public/storage || (cd public && ln -s ./../storage/app/public storage && cd ..)
+
+infection:
+	@docker-compose exec php ./vendor/bin/infection

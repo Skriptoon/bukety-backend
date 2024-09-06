@@ -30,7 +30,7 @@ class GenerateVkYmlCase
         $categories = $shop?->addChild('categories');
         foreach ($categoryModels as $categoryModel) {
             $category = $categories?->addChild('category', $categoryModel->name);
-            $categoryModel->addAttribute('id', (string)$categoryModel->id);
+            $category->addAttribute('id', (string)$categoryModel->id);
         }
 
         $offers = $shop?->addChild('offers');

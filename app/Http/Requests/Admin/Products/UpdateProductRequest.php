@@ -6,6 +6,9 @@ namespace App\Http\Requests\Admin\Products;
 
 use Illuminate\Validation\Rules\Unique;
 
+/**
+ *  @property-read string|null $redirect_url
+ */
 class UpdateProductRequest extends StoreProductRequest
 {
     public function rules(): array
@@ -27,6 +30,10 @@ class UpdateProductRequest extends StoreProductRequest
             'gallery' => [
                 'array',
                 'nullable',
+            ],
+            'redirect_url' => [
+              'nullable',
+              'url',
             ],
         ]);
     }
