@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Filters\Category\IsMain;
+use Database\Factories\CategoryFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 use Lacodix\LaravelModelFilter\Traits\HasFilters;
 use Storage;
@@ -23,14 +27,20 @@ use Storage;
  * @property string $description
  * @property string|null $image
  * @property string|null $seo_description
+ * @property int|null $parent_id
  * @property int $sort
  * @property bool $is_active
  * @property bool $show_in_main
  * @property Carbon|null $created_at
  * @property string $slug
  * @property Carbon|null $updated_at
+ * @property bool|null $is_hidden
  * @property-read Collection<int, Product> $products
  * @property-read int|null $products_count
+ * @property-read string|null $image_url
+ * @property-read Collection<int, Category> $children
+ * @property-read int|null $children_count
+ * @property-read Category|null $parent
  * @method static Builder|Category newModelQuery()
  * @method static Builder|Category newQuery()
  * @method static Builder|Category query()
@@ -46,12 +56,12 @@ use Storage;
  * @method static Builder|Category whereUpdatedAt($value)
  * @method static Builder|Category whereSlug($value)
  * @method static Builder|Category active()
- * @property bool|null $is_hidden
- * @property-read string|null $image_url
  * @method static Builder|Category filter(array $values, string $group = '__default')
  * @method static Builder|Category filterByQueryString(string $group = '__default')
  * @method static Builder|Category whereIsHidden($value)
  * @method static Builder|Category visible()
+ * @method static CategoryFactory factory($count = null, $state = [])
+ * @method static Builder|Category whereParentId($value)
  * @mixin Eloquent
  */
 class Category extends Model
@@ -64,6 +74,7 @@ class Category extends Model
         'slug',
         'description',
         'seo_description',
+        'parent_id',
         'sort',
         'image',
         'is_active',
@@ -93,5 +104,15 @@ class Category extends Model
     public function scopeVisible(Builder $query): Builder
     {
         return $query->where('is_hidden', false);
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(Category::class, 'parent_id', 'id');
+    }
+
+    public function parent()
+    {
+        return $this->hasOne(Category::class, 'id', 'parent_id');
     }
 }

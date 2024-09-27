@@ -36,6 +36,7 @@ readonly class StoreCategoryCase
             'slug' => Str::slug($data->name),
             'description' => $data->description,
             'seo_description' => $data->seo_description,
+            'parent_id' => $data->parent_id,
             'image' => $image,
             'sort' => $data->sort,
             'is_active' => $data->is_active,

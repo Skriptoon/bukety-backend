@@ -7,6 +7,7 @@ import Block from '@/Components/Block.vue'
 
 const props = defineProps({
   category: Object,
+  categories: Array,
 })
 
 const breadcrumbs = computed(() => {
@@ -33,7 +34,7 @@ const breadcrumbs = computed(() => {
   <AuthenticatedLayout :breadcrumb="breadcrumbs">
     <h2>Редактирование категории</h2>
     <Block>
-      <CategoryForm :category="category" />
+      <CategoryForm :category="category" :categories="categories"/>
     </Block>
   </AuthenticatedLayout>
 </template>

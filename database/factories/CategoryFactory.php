@@ -23,6 +23,7 @@ class CategoryFactory extends Factory
             'slug' => Str::slug($name),
             'description' => $this->faker->text(),
             'seo_description' => $this->faker->text(),
+            'parent_id' => null,
             'sort' => $this->faker->randomDigit(),
             'image' => $this->faker->imageUrl(),
             'is_active' => $this->faker->boolean(),

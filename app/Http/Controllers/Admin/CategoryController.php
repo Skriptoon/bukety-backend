@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Categories\StoreCategoryRequest;
 use App\Http\Requests\Admin\Categories\UpdateCategoryRequest;
 use App\Models\Category;
-use App\Models\Product;
 use App\UseCases\Category\StoreCategoryCase;
 use App\UseCases\Category\UpdateCategoryCase;
 use Illuminate\Http\RedirectResponse;
@@ -31,7 +30,15 @@ class CategoryController extends Controller
 
     public function edit(Category $category): Response
     {
-        return Inertia::render('Categories/Edit', ['category' => $category]);
+        $categories = Category::orderBy('sort')
+            ->where('id', '!=', $category->id)
+            ->get(['id', 'name'])
+            ->map(fn ($category) => [
+                'id' => $category->id,
+                'name' => $category->name,
+            ]);
+
+        return Inertia::render('Categories/Edit', ['category' => $category, 'categories' => $categories]);
     }
 
     /**
@@ -52,7 +59,14 @@ class CategoryController extends Controller
 
     public function create(): Response
     {
-        return Inertia::render('Categories/Create');
+        $categories = Category::orderBy('sort')
+            ->get(['id', 'name'])
+            ->map(fn ($category) => [
+                'id' => $category->id,
+                'name' => $category->name,
+            ]);
+
+        return Inertia::render('Categories/Create', ['categories' => $categories]);
     }
 
     /**

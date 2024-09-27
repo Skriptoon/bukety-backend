@@ -13,8 +13,12 @@
     "logs": {
         "text": "/app/infection.log"
     },
+    "phpUnit": {
+        "configDir": "/app",
+    },
     "mutators": {
         "@default": true
     },
-    "bootstrap": "./createApplication.php"
+    "bootstrap": "./createApplication.php",
+    timeout: 60,
 }

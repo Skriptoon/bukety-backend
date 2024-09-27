@@ -3,7 +3,6 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\Request;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -39,8 +38,6 @@ class Handler extends ExceptionHandler
 
     /**
      * Register the exception handling callbacks for the application.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -52,7 +49,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         $response = parent::render($request, $e);
-        if (!app()->environment('local') && in_array($response->getStatusCode(), [500, 503, 404, 403])) {
+        if (! app()->environment('local') && in_array($response->getStatusCode(), [500, 503, 404, 403])) {
             return response()->json([
                 'success' => false,
                 'error' => $e->showMessage ?? false

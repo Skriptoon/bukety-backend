@@ -13,6 +13,7 @@ class CategoryDTO extends Data
         public string $name,
         public ?string $description,
         public ?string $seo_description,
+        public ?int $parent_id,
         public ?UploadedFile $image,
         public int $sort,
         public bool $is_active,

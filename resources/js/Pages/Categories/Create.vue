@@ -5,6 +5,10 @@ import { computed } from 'vue'
 import CategoryForm from '@/Components/Category/CategoryForm.vue'
 import Block from '@/Components/Block.vue'
 
+const props = defineProps({
+  categories: Array,
+})
+
 const breadcrumbs = computed(() => {
   return [
     {
@@ -29,7 +33,7 @@ const breadcrumbs = computed(() => {
   <AuthenticatedLayout :breadcrumb="breadcrumbs">
     <h2>Создание категории</h2>
     <Block>
-      <CategoryForm :category="category" />
+      <CategoryForm :categories="categories"/>
     </Block>
   </AuthenticatedLayout>
 </template>

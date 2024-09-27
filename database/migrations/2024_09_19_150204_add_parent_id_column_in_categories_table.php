@@ -7,18 +7,20 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
-    private const string TABLE_NAME = 'products';
-
-    private const string COLUMN_NAME = 'vk_description';
+    private const string TABLE_NAME = 'categories';
+    private const string COLUMN_NAME = 'parent_id';
 
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::table(self::TABLE_NAME, static function (Blueprint $table): void {
-            $table->text(self::COLUMN_NAME)->nullable();
-            $table->string('vk_url')->nullable()->change();
+        Schema::table(self::TABLE_NAME, function (Blueprint $table) {
+            $table->foreignId(self::COLUMN_NAME)
+                ->nullable()
+                ->constrained(self::TABLE_NAME)
+                ->cascadeOnUpdate()
+                ->cascadeOnUpdate();
         });
     }
 
@@ -27,9 +29,8 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::table(self::TABLE_NAME, static function (Blueprint $table): void {
+        Schema::table('categories', function (Blueprint $table) {
             $table->dropColumn(self::COLUMN_NAME);
-            $table->string('vk_url')->nullable(false)->change();
         });
     }
 };

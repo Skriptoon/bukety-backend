@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\UseCases\Order;
 
 use App\DTO\Order\OrderDTO;
-use App\Enums\CommunicationsMethodsEnum;
 use App\Enums\OrderStatusEnum;
 use App\Models\Order;
 use VK\Client\VKApiClient;
@@ -26,10 +25,10 @@ readonly class StoreOrderCase
             'product_id' => $orderDto->product_id,
         ]);
 
-        $message = "Новый заказ
-Букет: " . route('products.edit', $orderDto->product_id) . "
+        $message = 'Новый заказ
+Букет: '.route('products.edit', $orderDto->product_id)."
 Телефон: {$orderDto->phone}
-Способ связи: " . $orderDto->communication_method->label();
+Способ связи: ".$orderDto->communication_method->label();
 
         $this->vkApiClient->messages()->send(config('api_keys.vk_api_key'), [
             'random_id' => 0,

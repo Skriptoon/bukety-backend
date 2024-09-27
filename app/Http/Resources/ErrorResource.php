@@ -16,7 +16,7 @@ class ErrorResource extends JsonResource
     {
         return [
             'success' => false,
-            'error' => $this->resource
+            'error' => $this->resource,
         ];
     }
 }

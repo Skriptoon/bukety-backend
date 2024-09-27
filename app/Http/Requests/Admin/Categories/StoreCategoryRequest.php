@@ -26,6 +26,11 @@ class StoreCategoryRequest extends FormRequest
                 'nullable',
                 'string',
             ],
+            'parent_id' => [
+                'nullable',
+                'integer',
+                'exists:categories,id',
+            ],
             'image' => [
                 'image',
                 'nullable',

@@ -35,7 +35,7 @@ class ProductController extends Controller
 
         $categories = Category::orderBy('sort')
             ->get(['id', 'name'])
-            ->map(fn($category) => [
+            ->map(fn ($category) => [
                 'id' => $category->id,
                 'name' => $category->name,
             ]);
@@ -52,7 +52,7 @@ class ProductController extends Controller
         $productModel = Product::with('categories')->find($product);
         $categories = Category::orderBy('sort')
             ->get()
-            ->map(fn($category) => [
+            ->map(fn ($category) => [
                 'value' => $category->id,
                 'name' => $category->name,
             ]);
@@ -62,8 +62,7 @@ class ProductController extends Controller
             $previousUrl = url()->previous();
         }
 
-        if (url()->previous() === url()->current())
-        {
+        if (url()->previous() === url()->current()) {
             $previousUrl = session()->previousUrl();
         }
 
@@ -72,7 +71,7 @@ class ProductController extends Controller
             'categories' => $categories,
             'whomOptions' => WhomEnum::getOptions(),
             'occasionOptions' => OccasionEnum::getOptions(),
-            'previousUrl' => $previousUrl
+            'previousUrl' => $previousUrl,
         ]);
     }
 
@@ -85,7 +84,7 @@ class ProductController extends Controller
         $dto = ProductDTO::from($request);
 
         $case->handle($product, $dto);
-        
+
         if ($request->redirect_url) {
             return redirect($request->redirect_url);
         }
@@ -97,8 +96,8 @@ class ProductController extends Controller
     {
         $categories = Category::orderBy('sort')
             ->get()
-            ->map(fn($category) => [
-                'value' => (string)$category->id,
+            ->map(fn ($category) => [
+                'value' => (string) $category->id,
                 'name' => $category->name,
             ]);
 

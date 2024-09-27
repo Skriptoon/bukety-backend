@@ -6,7 +6,6 @@ namespace App\UseCases\Sitemap;
 
 use App\Models\Category;
 use App\Models\Product;
-use Exception;
 use SimpleXMLElement;
 use Storage;
 
@@ -35,7 +34,7 @@ readonly class SitemapGenerator
         $products = Product::active()->get();
 
         foreach ($products as $product) {
-            $this->addUrl($xml, $this->getFrontendUrl('product/' . $product->slug));
+            $this->addUrl($xml, $this->getFrontendUrl('product/'.$product->slug));
         }
 
         $xml->asXML(Storage::path('/sitemap.xml'));
@@ -53,6 +52,6 @@ readonly class SitemapGenerator
 
     private function getFrontendUrl(string $path): string
     {
-        return config('app.frontend_url') . '/' . $path;
+        return config('app.frontend_url').'/'.$path;
     }
 }

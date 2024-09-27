@@ -32,8 +32,8 @@ class UpdateProductRequest extends StoreProductRequest
                 'nullable',
             ],
             'redirect_url' => [
-              'nullable',
-              'url',
+                'nullable',
+                'url',
             ],
         ]);
     }

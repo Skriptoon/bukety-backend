@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
     {
         $userExists = User::whereName('Admin')->exists();
 
-        if (!$userExists) {
+        if (! $userExists) {
             $user = User::create([
                 'name' => 'Admin',
                 'email' => 'admin@example.com',

@@ -39,6 +39,7 @@ use Storage;
  * @property array $occasion
  * @property-read Collection<int, Category> $categories
  * @property-read int|null $categories_count
+ *
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()
  * @method static Builder|Product query()
@@ -61,6 +62,7 @@ use Storage;
  * @method static Builder|Product whereOccasion($value)
  * @method static Builder|Product whereWhom($value)
  * @method static Builder|Product whereVkDescription($value)
+ *
  * @mixin Eloquent
  */
 class Product extends Model
@@ -93,7 +95,7 @@ class Product extends Model
 
     protected array $filters = [
         CategoryFilter::class,
-        Name::class
+        Name::class,
     ];
 
     public function categories(): BelongsToMany

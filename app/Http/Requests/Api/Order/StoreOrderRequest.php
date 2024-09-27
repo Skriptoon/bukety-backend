@@ -15,7 +15,7 @@ class StoreOrderRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                'string'
+                'string',
             ],
             'phone' => [
                 'required',
@@ -30,8 +30,8 @@ class StoreOrderRequest extends FormRequest
             'product_id' => [
                 'required',
                 'integer',
-                Rule::exists('products','id'),
-            ]
+                Rule::exists('products', 'id'),
+            ],
         ];
     }
 

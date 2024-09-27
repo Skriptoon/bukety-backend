@@ -7,7 +7,6 @@ use Lacodix\LaravelModelFilter\Filters\Filter;
 
 class IsMain extends Filter
 {
-
     public function apply(Builder $query): Builder
     {
         $value = $this->values[0] ?? false;

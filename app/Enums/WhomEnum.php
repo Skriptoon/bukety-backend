@@ -28,7 +28,6 @@ enum WhomEnum: string
     case Friend = 'friend';
     case Girlfriend = 'girlfriend';
 
-
     public function label(): string
     {
         return match ($this) {

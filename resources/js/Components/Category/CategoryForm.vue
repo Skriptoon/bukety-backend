@@ -6,9 +6,11 @@ import Image from 'primevue/image'
 import Button from 'primevue/button'
 import SpCheckbox from '@/Components/Form/SpCheckbox.vue'
 import SpTextarea from '@/Components/Form/SpTextarea.vue'
+import SpDropdown from '@/Components/Form/SpDropdown.vue'
 
 const props = defineProps({
   category: Object,
+  categories: Array,
 })
 
 const form = useForm({
@@ -16,6 +18,7 @@ const form = useForm({
   name: props.category?.name ?? null,
   description: props.category?.description ?? null,
   seo_description: props.category?.seo_description ?? null,
+  parent_id: props.category?.parent_id ?? null,
   image: null,
   sort: props.category?.sort ?? null,
   is_active: props.category?.is_active ?? false,
@@ -44,6 +47,14 @@ function updateImage(val) {
           v-model="form"
           name="name"
           label="Название"
+      />
+    </div>
+    <div class="mt-5">
+      <SpDropdown
+          v-model="form"
+          :options="categories"
+          name="parent_id"
+          label="Родительская категория"
       />
     </div>
     <div class="mt-5">

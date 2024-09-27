@@ -18,7 +18,8 @@ class CategoryListResource extends JsonResource
             'id' => $this->resource->id,
             'name' => $this->resource->name,
             'slug' => $this->resource->slug,
-            'image' => $this->resource->image_url
+            'image' => $this->resource->image_url,
+            'parent' => new self($this->resource->parent),
         ];
     }
 }

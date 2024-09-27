@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Product;
@@ -33,5 +35,5 @@ class ProductFactory extends Factory
             'vk_url' => $this->faker->url(),
             'is_active' => $this->faker->boolean(),
         ];
-}
+    }
 }

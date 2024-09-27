@@ -31,7 +31,7 @@ class StoreProductRequest extends FormRequest
             ],
             'vk_description' => [
                 'nullable',
-                'string'
+                'string',
             ],
             'preview_description' => [
                 'required',
@@ -77,8 +77,8 @@ class StoreProductRequest extends FormRequest
                     $isImage = Validator::make(['value' => $value], ['value' => 'image'])->passes();
                     $isString = Validator::make(['value' => $value], ['value' => 'string'])->passes();
 
-                    if (!$isImage && !$isString) {
-                        $fail($attribute . ' должен быть изображением');
+                    if (! $isImage && ! $isString) {
+                        $fail($attribute.' должен быть изображением');
                     }
                 },
             ],

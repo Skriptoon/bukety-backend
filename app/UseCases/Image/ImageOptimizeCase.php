@@ -17,13 +17,13 @@ class ImageOptimizeCase
      */
     public function handle(string $imagePath, string $outputPath): string
     {
-        if (!Storage::disk('public')->exists($outputPath)) {
+        if (! Storage::disk('public')->exists($outputPath)) {
             Storage::disk('public')->makeDirectory($outputPath);
         }
 
         $img = Image::fromFile($imagePath);
 
-        $filename = $outputPath . '/' . uniqid('', true) . '.webp';
+        $filename = $outputPath.'/'.uniqid('', true).'.webp';
         $img->save(Storage::disk('public')->path($filename));
 
         return $filename;

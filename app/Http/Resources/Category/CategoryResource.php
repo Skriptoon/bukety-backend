@@ -21,6 +21,8 @@ class CategoryResource extends JsonResource
             'slug' => $this->resource->slug,
             'description' => $this->resource->description,
             'seo_description' => $this->resource->seo_description,
+            'children' => CategoryListResource::collection($this->resource->children),
+            'parent' => $this->resource->parent ? new CategoryListResource($this->resource->parent) : null,
             'is_hidden' => $this->resource->is_hidden,
         ];
     }

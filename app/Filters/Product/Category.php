@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filters\Product;
 
+use App\Models\Category as CategoryModel;
 use Illuminate\Database\Eloquent\Builder;
 use Lacodix\LaravelModelFilter\Filters\Filter;
 
@@ -13,8 +14,13 @@ class Category extends Filter
     {
         $value = $this->values[0] ?? null;
 
-        return $query->whereHas('categories', function (Builder $query) use ($value): void {
-            $query->where('id', $value);
-        });
+        $categories = [];
+        $currentCategory = CategoryModel::findOrFail($value);
+        while ($currentCategory) {
+            $categories[] = $currentCategory->id;
+            $currentCategory = $currentCategory->parent;
+        }
+
+        return $query->whereRelation('categories', 'id', $categories);
     }
 }

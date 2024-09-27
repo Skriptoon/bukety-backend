@@ -22,13 +22,13 @@ class ProductResource extends JsonResource
             $whom = array_slice($this->resource->whom, 0, 4);
             $occasion = array_slice($this->resource->occasion, 0, 4);
 
-            $whom = array_map(static fn(string $item): string => WhomEnum::from($item)->label(), $whom);
-            $occasion = array_map(static fn(string $item): string => OccasionEnum::from($item)->label(), $occasion);
+            $whom = array_map(static fn (string $item): string => WhomEnum::from($item)->label(), $whom);
+            $occasion = array_map(static fn (string $item): string => OccasionEnum::from($item)->label(), $occasion);
 
-            $seoDescription = $this->resource->preview_description . ".\n"
-                . 'Отличный подарок ' . implode(', ', $whom)
-                . ' на ' . implode(', ', $occasion) . ".\n"
-                . 'Цена: ' . $this->resource->price . '₽';
+            $seoDescription = $this->resource->preview_description.".\n"
+                .'Отличный подарок '.implode(', ', $whom)
+                .' на '.implode(', ', $occasion).".\n"
+                .'Цена: '.$this->resource->price.'₽';
         }
 
         return [
@@ -43,11 +43,11 @@ class ProductResource extends JsonResource
             'gallery' => $this->resource->gallery_urls,
             'url' => $this->resource->vk_url,
             'whom' => array_map(
-                static fn(string $item): string => WhomEnum::from($item)->label(),
+                static fn (string $item): string => WhomEnum::from($item)->label(),
                 $this->resource->whom
             ),
             'occasion' => array_map(
-                static fn(string $item): string => OccasionEnum::from($item)->label(),
+                static fn (string $item): string => OccasionEnum::from($item)->label(),
                 $this->resource->occasion
             ),
             'updated_at' => $this->resource->updated_at,
