@@ -14,7 +14,9 @@ class Category extends Filter
     {
         $value = $this->values[0] ?? null;
 
-        $category = CategoryModel::firstOrFail($value);
+        $category = CategoryModel::where(['id' => $value])
+            ->firstOrFail();
+
         $categories = $this->getChildrenCategoriesIds($category);
         $categories[] = $category->id;
 
