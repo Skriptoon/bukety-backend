@@ -20,7 +20,6 @@ const form = useForm({
   seo_description: props.category?.seo_description ?? null,
   parent_id: props.category?.parent_id ?? null,
   image: null,
-  sort: props.category?.sort ?? null,
   is_active: props.category?.is_active ?? false,
   show_in_main: props.category?.show_in_main ?? false,
   is_hidden: props.category?.is_hidden ?? false,
@@ -84,13 +83,6 @@ function updateImage(val) {
           alt="preview"
           width="250"
           preview
-      />
-    </div>
-    <div class="mt-5">
-      <SpInput
-          v-model="form"
-          name="sort"
-          label="Позиция"
       />
     </div>
     <div class="mt-5">

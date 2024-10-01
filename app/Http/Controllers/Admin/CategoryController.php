@@ -8,10 +8,12 @@ use App\DTO\Category\CategoryDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Categories\StoreCategoryRequest;
 use App\Http\Requests\Admin\Categories\UpdateCategoryRequest;
+use App\Http\Resources\BaseBooleanResource;
 use App\Models\Category;
 use App\UseCases\Category\StoreCategoryCase;
 use App\UseCases\Category\UpdateCategoryCase;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Nette\Utils\ImageException;
@@ -22,6 +24,7 @@ class CategoryController extends Controller
     public function index(): Response
     {
         $categories = Category::withoutGlobalScope('visible')
+            ->whereNull('parent_id')
             ->orderBy('sort')
             ->get();
 
@@ -33,7 +36,7 @@ class CategoryController extends Controller
         $categories = Category::orderBy('sort')
             ->where('id', '!=', $category->id)
             ->get(['id', 'name'])
-            ->map(fn ($category) => [
+            ->map(static fn (Category $category) => [
                 'id' => $category->id,
                 'name' => $category->name,
             ]);
@@ -61,7 +64,7 @@ class CategoryController extends Controller
     {
         $categories = Category::orderBy('sort')
             ->get(['id', 'name'])
-            ->map(fn ($category) => [
+            ->map(static fn (Category $category) => [
                 'id' => $category->id,
                 'name' => $category->name,
             ]);
@@ -87,5 +90,16 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect(route('categories.index'));
+    }
+
+    public function updateSort(Request $request): BaseBooleanResource
+    {
+        $ids = $request->get('category_ids', []);
+        foreach ($ids as $key => $id) {
+            Category::where('id', $id)
+                ->update(['sort' => $key]);
+        }
+
+        return new BaseBooleanResource(true);
     }
 }

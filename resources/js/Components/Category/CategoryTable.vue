@@ -7,12 +7,15 @@ import { router } from '@inertiajs/vue3'
 import Image from 'primevue/image'
 import ConfirmPopup from 'primevue/confirmpopup'
 import { useConfirm } from 'primevue/useconfirm'
+import { ref } from 'vue'
 
-defineProps({
+const props = defineProps({
   categories: Array,
 })
 
 const confirm = useConfirm()
+const categoriesArray = ref(props.categories)
+const expandedRows = ref([])
 
 function deleteConfirm(event, id) {
   confirm.require({
@@ -28,10 +31,27 @@ function deleteConfirm(event, id) {
     },
   })
 }
+
+function onRowReorder(event) {
+  categoriesArray.value = event.value;
+
+  axios.patch(route('categories.update-sort'), {
+    category_ids: event.value.map(category => category.id),
+  })
+
+  expandedRows.value = []
+}
 </script>
 
 <template>
-  <DataTable :value="categories">
+  <DataTable
+    v-model:expandedRows="expandedRows"
+    dataKey="id"
+    :value="categoriesArray"
+    @rowReorder="onRowReorder"
+  >
+    <Column rowReorder headerStyle="width: 3rem" :reorderableColumn="false" />
+    <Column expander style="width: 5rem" />
     <Column
         field="image"
         style="width: 100px"
@@ -43,7 +63,11 @@ function deleteConfirm(event, id) {
     <Column
         field="name"
         header="Название"
-    />
+    >
+      <template #body="{ data }">
+        <FontAwesomeIcon v-if="data.is_hidden" :icon="['fas', 'eye-slash']" /> {{ data.name }}
+      </template>
+    </Column>
     <Column style="width: 200px">
       <template #body="{ data }">
         <Link :href="route('categories.edit', data.id)">
@@ -68,6 +92,11 @@ function deleteConfirm(event, id) {
         </Button>
       </template>
     </Column>
+    <template #expansion="{ data }">
+      <div class="border-1 border-400 border-round-lg">
+        <CategoryTable :categories="data.children" />
+      </div>
+    </template>
   </DataTable>
   <ConfirmPopup />
 </template>

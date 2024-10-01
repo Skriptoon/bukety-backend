@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -69,6 +68,8 @@ class Category extends Model
     use HasFactory;
     use HasFilters;
 
+    protected $with = ['children'];
+
     protected $fillable = [
         'name',
         'slug',
@@ -108,11 +109,11 @@ class Category extends Model
 
     public function children(): HasMany
     {
-        return $this->hasMany(Category::class, 'parent_id', 'id');
+        return $this->hasMany(__CLASS__, 'parent_id', 'id');
     }
 
-    public function parent()
+    public function parent(): HasOne
     {
-        return $this->hasOne(Category::class, 'id', 'parent_id');
+        return $this->hasOne(__CLASS__, 'id', 'parent_id');
     }
 }

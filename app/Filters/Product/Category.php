@@ -14,13 +14,23 @@ class Category extends Filter
     {
         $value = $this->values[0] ?? null;
 
-        $categories = [];
-        $currentCategory = CategoryModel::findOrFail($value);
-        while ($currentCategory) {
-            $categories[] = $currentCategory->id;
-            $currentCategory = $currentCategory->parent;
+        $category = CategoryModel::firstOrFail($value);
+        $categories = $this->getChildrenCategoriesIds($category);
+        $categories[] = $category->id;
+
+        return $query->whereRelation('categories', function (Builder $query) use ($categories): void {
+            $query->whereIn('category_id', $categories);
+        });
+    }
+
+    private function getChildrenCategoriesIds(CategoryModel $category): array
+    {
+        $ids = [];
+        foreach ($category->children as $child) {
+            $ids[] = $child->id;
+            $ids = [...$ids, ...$this->getChildrenCategoriesIds($child)];
         }
 
-        return $query->whereRelation('categories', 'id', $categories);
+        return $ids;
     }
 }

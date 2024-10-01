@@ -18,6 +18,7 @@ class CategoryController extends Controller
         $categories = Category::active()
             ->visible()
             ->filter($request->toArray())
+            ->whereNull('parent_id')
             ->orderBy('sort')
             ->get();
 

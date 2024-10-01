@@ -24,6 +24,9 @@ Route::domain(env('APP_DOMAIN'))->group(static function () {
         })->name('dashboard');
 
         Route::resource('products', ProductController::class);
+
+        Route::patch('categories/update-sort', [CategoryController::class, 'updateSort'])
+            ->name('categories.update-sort');
         Route::resource('categories', CategoryController::class);
 
         Route::get('orders', [OrderController::class, 'index'])->name('orders.index');

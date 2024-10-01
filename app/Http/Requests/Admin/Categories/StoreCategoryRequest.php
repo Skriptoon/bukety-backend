@@ -35,10 +35,6 @@ class StoreCategoryRequest extends FormRequest
                 'image',
                 'nullable',
             ],
-            'sort' => [
-                'required',
-                'integer',
-            ],
             'is_active' => [
                 'required',
                 'boolean',

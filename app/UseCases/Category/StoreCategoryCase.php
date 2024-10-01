@@ -38,7 +38,7 @@ readonly class StoreCategoryCase
             'seo_description' => $data->seo_description,
             'parent_id' => $data->parent_id,
             'image' => $image,
-            'sort' => $data->sort,
+            'sort' => 0,
             'is_active' => $data->is_active,
             'show_in_main' => $data->show_in_main,
             'is_hidden' => $data->is_hidden,

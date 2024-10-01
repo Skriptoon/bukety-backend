@@ -6,8 +6,10 @@ namespace Tests\Feature;
 
 use App\DTO\Category\CategoryDTO;
 use App\Models\Category;
+use App\Models\Product;
 use App\UseCases\Category\StoreCategoryCase;
 use App\UseCases\Category\UpdateCategoryCase;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -35,7 +37,6 @@ class CategoryTest extends TestCase
             'description' => $this->faker->sentence(),
             'seo_description' => $this->faker->sentence(),
             'image' => new UploadedFile($this->faker->image(), 'test.png'),
-            'sort' => $this->faker->randomDigit(),
             'is_active' => $this->faker->boolean(),
             'show_in_main' => $this->faker->boolean(),
             'is_hidden' => $this->faker->boolean(),
@@ -54,7 +55,6 @@ class CategoryTest extends TestCase
         $this->assertEquals($dto->description, $category->description);
         $this->assertEquals($dto->seo_description, $category->seo_description);
         $this->assertFileExists(Storage::disk('public')->path($category->image));
-        $this->assertEquals($dto->sort, $category->sort);
         $this->assertEquals($dto->is_active, $category->is_active);
         $this->assertEquals($dto->show_in_main, $category->show_in_main);
         $this->assertEquals($dto->is_hidden, $category->is_hidden);
@@ -76,7 +76,6 @@ class CategoryTest extends TestCase
             'description' => $this->faker->sentence(),
             'seo_description' => $this->faker->sentence(),
             'image' => new UploadedFile($this->faker->image(), 'test.png'),
-            'sort' => $this->faker->randomDigit(),
             'is_active' => !$category->is_active,
             'show_in_main' => !$category->show_in_main,
             'is_hidden' => !$category->is_hidden,
@@ -93,7 +92,6 @@ class CategoryTest extends TestCase
         $this->assertEquals($dto->description, $category->description);
         $this->assertEquals($dto->seo_description, $category->seo_description);
         $this->assertFileExists(Storage::disk('public')->path($category->image));
-        $this->assertEquals($dto->sort, $category->sort);
         $this->assertEquals($dto->is_active, $category->is_active);
         $this->assertEquals($dto->show_in_main, $category->show_in_main);
         $this->assertEquals($dto->is_hidden, $category->is_hidden);
@@ -116,7 +114,6 @@ class CategoryTest extends TestCase
             'seo_description' => $this->faker->sentence(),
             'parent_id' => $parentCategory->id,
             'image' => new UploadedFile($this->faker->image(), 'test.png'),
-            'sort' => $this->faker->randomDigit(),
             'is_active' => $this->faker->boolean(),
             'show_in_main' => $this->faker->boolean(),
             'is_hidden' => $this->faker->boolean(),
@@ -135,7 +132,6 @@ class CategoryTest extends TestCase
         $this->assertEquals($dto->seo_description, $category->seo_description);
         $this->assertEquals($dto->parent_id, $category->parent_id);
         $this->assertFileExists(Storage::disk('public')->path($category->image));
-        $this->assertEquals($dto->sort, $category->sort);
         $this->assertEquals($dto->is_active, $category->is_active);
         $this->assertEquals($dto->show_in_main, $category->show_in_main);
         $this->assertEquals($dto->is_hidden, $category->is_hidden);
@@ -155,7 +151,6 @@ class CategoryTest extends TestCase
             'seo_description' => $this->faker->sentence(),
             'parent_id' => $parentCategory->id,
             'image' => new UploadedFile($this->faker->image(), 'test.png'),
-            'sort' => $this->faker->randomDigit(),
             'is_active' => !$category->is_active,
             'show_in_main' => !$category->show_in_main,
             'is_hidden' => !$category->is_hidden,
@@ -173,9 +168,25 @@ class CategoryTest extends TestCase
         $this->assertEquals($dto->seo_description, $category->seo_description);
         $this->assertEquals($dto->parent_id, $category->parent_id);
         $this->assertFileExists(Storage::disk('public')->path($category->image));
-        $this->assertEquals($dto->sort, $category->sort);
         $this->assertEquals($dto->is_active, $category->is_active);
         $this->assertEquals($dto->show_in_main, $category->show_in_main);
         $this->assertEquals($dto->is_hidden, $category->is_hidden);
+    }
+
+    public function test_get_children_category_products(): void
+    {
+        $parentCategory = Category::factory()->create();
+        /** @var Collection|Category[] $childCategory */
+        $childCategory = Category::factory(5)->create(['parent_id' => $parentCategory->id]);
+
+        $product = Product::factory()->create();
+        $product->categories()->attach($childCategory[2]->id);
+        $product->save();
+
+        $searchedProduct = Product::active()
+            ->filter(['category' => $parentCategory->id])
+            ->first();
+
+        $this->assertEquals($product->id, $searchedProduct->id);
     }
 }
