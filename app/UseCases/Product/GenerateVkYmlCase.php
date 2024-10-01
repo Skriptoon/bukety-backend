@@ -30,22 +30,27 @@ class GenerateVkYmlCase
         $categories = $shop?->addChild('categories');
         foreach ($categoryModels as $categoryModel) {
             $category = $categories?->addChild('category', $categoryModel->name);
-            $category->addAttribute('id', (string) $categoryModel->id);
+            $category->addAttribute('id', (string)$categoryModel->id);
         }
 
         $offers = $shop?->addChild('offers');
         foreach ($productModels as $productModel) {
             $offer = $offers?->addChild('offer');
 
-            $offer?->addAttribute('id', (string) $productModel->id);
+            $offer?->addAttribute('id', (string)$productModel->id);
             $offer?->addAttribute('available', 'true');
 
-            $offer?->addChild('price', (string) $productModel->price);
+            $offer?->addChild('price', (string)$productModel->price);
             $offer?->addChild('currencyId', 'RUB');
 
             /** @var Category $category */
             foreach ($productModel->categories as $category) {
-                $offer?->addChild('categoryId', (string) $category->id);
+                $offer?->addChild('categoryId', (string)$category->id);
+                $currentCategory = $category;
+                while ($currentCategory->parent) {
+                    $offer?->addChild('categoryId', (string)$currentCategory->id);
+                    $currentCategory = $currentCategory->parent;
+                }
             }
 
             $offer?->addChild('name', $productModel->name);

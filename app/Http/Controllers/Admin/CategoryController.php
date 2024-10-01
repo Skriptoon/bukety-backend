@@ -33,13 +33,23 @@ class CategoryController extends Controller
 
     public function edit(Category $category): Response
     {
-        $categories = Category::orderBy('sort')
+        $categories = Category::with('parent')
+            ->orderBy('sort')
             ->where('id', '!=', $category->id)
-            ->get(['id', 'name'])
-            ->map(static fn (Category $category) => [
-                'id' => $category->id,
-                'name' => $category->name,
-            ]);
+            ->get(['id', 'name', 'parent_id'])
+            ->map(static function (Category $category) {
+                $names = [$category->name];
+                $currentCategory = $category;
+                while ($currentCategory->parent) {
+                    $names[] = $currentCategory->parent->name;
+                    $currentCategory = $currentCategory->parent;
+                }
+
+                return [
+                    'id' => $category->id,
+                    'name' => implode(' → ', array_reverse($names)),
+                ];
+            });
 
         return Inertia::render('Categories/Edit', ['category' => $category, 'categories' => $categories]);
     }
@@ -62,12 +72,22 @@ class CategoryController extends Controller
 
     public function create(): Response
     {
-        $categories = Category::orderBy('sort')
-            ->get(['id', 'name'])
-            ->map(static fn (Category $category) => [
-                'id' => $category->id,
-                'name' => $category->name,
-            ]);
+        $categories = Category::with('parent')
+            ->orderBy('sort')
+            ->get(['id', 'name', 'parent_id'])
+            ->map(static function (Category $category) {
+                $names = [$category->name];
+                $currentCategory = $category;
+                while ($currentCategory->parent) {
+                    $names[] = $currentCategory->parent->name;
+                    $currentCategory = $currentCategory->parent;
+                }
+
+                return [
+                    'id' => $category->id,
+                    'name' => implode(' → ', array_reverse($names)),
+                ];
+            });
 
         return Inertia::render('Categories/Create', ['categories' => $categories]);
     }
