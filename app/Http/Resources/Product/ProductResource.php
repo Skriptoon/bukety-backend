@@ -19,16 +19,8 @@ class ProductResource extends JsonResource
     {
         $seoDescription = $this->resource->seo_description;
         if ($seoDescription === null) {
-            $whom = array_slice($this->resource->whom, 0, 4);
-            $occasion = array_slice($this->resource->occasion, 0, 4);
-
-            $whom = array_map(static fn (string $item): string => WhomEnum::from($item)->label(), $whom);
-            $occasion = array_map(static fn (string $item): string => OccasionEnum::from($item)->label(), $occasion);
-
-            $seoDescription = $this->resource->preview_description.".\n"
-                .'Отличный подарок '.implode(', ', $whom)
-                .' на '.implode(', ', $occasion).".\n"
-                .'Цена: '.$this->resource->price.'₽';
+            $seoDescription = 'Купить ' . $this->resource->name . 'цена ' . $this->resource->price . '₽.'
+                . 'Заказть с доставкой по катерибургу';
         }
 
         return [
