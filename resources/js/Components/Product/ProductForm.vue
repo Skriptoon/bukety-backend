@@ -10,6 +10,7 @@ import { ref } from 'vue'
 import SpMultiSelect from '@/Components/Form/SpMultiSelect.vue'
 import SpTextarea from '@/Components/Form/SpTextarea.vue'
 import SpWysiwyg from '@/Components/Form/SpWysiwyg.vue'
+import SpAutocomplete from '@/Components/Form/SpAutocomplete.vue'
 
 const props = defineProps({
   product: Object,
@@ -28,6 +29,7 @@ const form = useForm({
   seo_description: props.product?.seo_description ?? null,
   vk_url: props.product?.vk_url ?? null,
   price: props.product?.price ?? null,
+  structure: null,
   image: null,
   gallery: [],
   is_active: props.product?.is_active ?? false,
@@ -39,6 +41,7 @@ const form = useForm({
 })
 
 const gallery = ref(props.product?.gallery ?? [])
+const structureItems = ref([])
 
 function sendForm() {
   const tempGallery = [...form.gallery]
@@ -82,6 +85,10 @@ function imageDown(index) {
 
 function deleteImage(index) {
   gallery.value.splice(index, 1)
+}
+
+function searchStructure(event) {
+  structureItems.value = [event.query]
 }
 </script>
 
@@ -162,6 +169,15 @@ function deleteImage(index) {
           name="occasion"
           label="Повод"
           :options="occasionOptions"
+      />
+    </div>
+    <div class="mt-5">
+      <SpAutocomplete
+          v-model="form"
+          name="structure"
+          label="Состав"
+          :items="structureItems"
+          @complete="searchStructure"
       />
     </div>
     <div class="mt-5">

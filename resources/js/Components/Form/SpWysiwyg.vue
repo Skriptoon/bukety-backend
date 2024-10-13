@@ -17,5 +17,12 @@ defineProps({
         class="mt-2"
         :id="name"
     />
+    <small
+        v-if="modelValue.errors[name]"
+        :id="name"
+        class="p-error"
+    >
+      {{ modelValue.errors[name] }}
+    </small>
   </div>
 </template>

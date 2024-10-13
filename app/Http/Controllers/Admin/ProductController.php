@@ -20,6 +20,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Nette\Utils\ImageException;
 use Nette\Utils\UnknownImageFileException;
+use Storage;
 
 class ProductController extends Controller
 {
@@ -43,7 +44,7 @@ class ProductController extends Controller
         return Inertia::render('Product/Index', [
             'products' => $products,
             'categories' => $categories,
-            'vkProductFeed' => \Storage::disk('public')->url('feeds/vk.yml'),
+            'vkProductFeed' => Storage::disk('public')->url('feeds/vk.yml'),
         ]);
     }
 
