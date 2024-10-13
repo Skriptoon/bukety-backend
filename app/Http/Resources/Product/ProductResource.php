@@ -20,7 +20,7 @@ class ProductResource extends JsonResource
         $seoDescription = $this->resource->seo_description;
         if ($seoDescription === null) {
             $seoDescription = 'Купить ' . $this->resource->name . 'цена ' . $this->resource->price . '₽.'
-                . 'Заказть с доставкой по катерибургу';
+                . 'Заказать с доставкой по Екатеринбургу';
         }
 
         return [
