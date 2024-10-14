@@ -66,7 +66,7 @@ class CategoryTest extends TestCase
      */
     public function test_update_main_category(): void
     {
-        $category = Category::factory()->create();
+        $category = Category::factory()->create(['is_active' => true]);
 
         $sitemapPath = Storage::path('sitemap.xml');
         Storage::delete('sitemap.xml');
@@ -106,7 +106,7 @@ class CategoryTest extends TestCase
         $sitemapPath = Storage::path('sitemap.xml');
         Storage::delete('sitemap.xml');
 
-        $parentCategory = Category::factory()->create();
+        $parentCategory = Category::factory()->create(['is_active' => true]);
 
         $categoryData = [
             'name' => $this->faker->word(),
@@ -139,8 +139,8 @@ class CategoryTest extends TestCase
 
     public function test_update_child_category(): void
     {
-        $category = Category::factory()->create();
-        $parentCategory = Category::factory()->create();
+        $category = Category::factory()->create(['is_active' => true]);
+        $parentCategory = Category::factory()->create(['is_active' => true]);
 
         $sitemapPath = Storage::path('sitemap.xml');
         Storage::delete('sitemap.xml');
@@ -175,9 +175,9 @@ class CategoryTest extends TestCase
 
     public function test_get_children_category_products(): void
     {
-        $parentCategory = Category::factory()->create();
+        $parentCategory = Category::factory()->create(['is_active' => true]);
         /** @var Collection|Category[] $childCategory */
-        $childCategory = Category::factory(5)->create(['parent_id' => $parentCategory->id]);
+        $childCategory = Category::factory(5)->create(['parent_id' => $parentCategory->id, 'is_active' => true]);
 
         $product = Product::factory()->create();
         $product->categories()->attach($childCategory[2]->id);

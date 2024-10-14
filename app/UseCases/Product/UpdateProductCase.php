@@ -19,6 +19,7 @@ readonly class UpdateProductCase
         private ImageOptimizeCase $imageOptimizeCase,
         private SitemapGenerator $sitemapGenerator,
         private GenerateVkYmlCase $generateVkYmlCase,
+        private UpdateProductIngredientsCase $updateProductIngredientsCase,
     ) {
     }
 
@@ -35,7 +36,6 @@ readonly class UpdateProductCase
             'preview_description' => $data->preview_description,
             'seo_description' => $data->seo_description,
             'price' => $data->price,
-            'vk_url' => $data->vk_url,
             'slug' => Str::slug($data->name),
             'whom' => $data->whom,
             'occasion' => $data->occasion,
@@ -68,6 +68,7 @@ readonly class UpdateProductCase
         $product->save();
         $product->categories()->withoutGlobalScope('visible')->sync($data->categories);
 
+        $this->updateProductIngredientsCase->handle($product, $data->ingredients);
         $this->sitemapGenerator->handle();
         $this->generateVkYmlCase->handle();
     }

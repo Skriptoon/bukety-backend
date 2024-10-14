@@ -11,6 +11,7 @@ import SpMultiSelect from '@/Components/Form/SpMultiSelect.vue'
 import SpTextarea from '@/Components/Form/SpTextarea.vue'
 import SpWysiwyg from '@/Components/Form/SpWysiwyg.vue'
 import SpAutocomplete from '@/Components/Form/SpAutocomplete.vue'
+import axios from 'axios'
 
 const props = defineProps({
   product: Object,
@@ -27,13 +28,12 @@ const form = useForm({
   vk_description: props.product?.vk_description ?? null,
   preview_description: props.product?.preview_description ?? null,
   seo_description: props.product?.seo_description ?? null,
-  vk_url: props.product?.vk_url ?? null,
   price: props.product?.price ?? null,
-  structure: null,
+  ingredients:  props.product?.ingredients?.map(ingredient => ingredient.name) ?? null,
   image: null,
   gallery: [],
   is_active: props.product?.is_active ?? false,
-  categories: props.product?.categories.map((category) => category.id) ?? [],
+  categories: props.product?.categories?.map((category) => category.id) ?? [],
   whom: props.product?.whom ?? null,
   occasion: props.product?.occasion ?? null,
   redirect_url: props.previousUrl,
@@ -41,7 +41,7 @@ const form = useForm({
 })
 
 const gallery = ref(props.product?.gallery ?? [])
-const structureItems = ref([])
+const ingredients = ref([])
 
 function sendForm() {
   const tempGallery = [...form.gallery]
@@ -87,8 +87,18 @@ function deleteImage(index) {
   gallery.value.splice(index, 1)
 }
 
-function searchStructure(event) {
-  structureItems.value = [event.query]
+async function searchIngredients(event) {
+  const response = await axios.get(route('products.ingredients'), {
+    params: {
+      query: event.query,
+    },
+  })
+
+  ingredients.value = response.data.map(ingredient => ingredient.name)
+
+  if (ingredients.value?.find(ingredient => ingredient === event.query) === undefined) {
+    ingredients.value.unshift(event.query)
+  }
 }
 </script>
 
@@ -140,13 +150,6 @@ function searchStructure(event) {
     <div class="mt-5">
       <SpInput
           v-model="form"
-          name="vk_url"
-          label="Ссылка на товар VK"
-      />
-    </div>
-    <div class="mt-5">
-      <SpInput
-          v-model="form"
           name="price"
           label="Цена"
           number
@@ -174,10 +177,10 @@ function searchStructure(event) {
     <div class="mt-5">
       <SpAutocomplete
           v-model="form"
-          name="structure"
+          name="ingredients"
           label="Состав"
-          :items="structureItems"
-          @complete="searchStructure"
+          :items="ingredients"
+          @complete="searchIngredients"
       />
     </div>
     <div class="mt-5">

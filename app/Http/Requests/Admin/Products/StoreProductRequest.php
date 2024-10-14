@@ -32,16 +32,14 @@ class StoreProductRequest extends FormRequest
             'vk_description' => [
                 'nullable',
                 'string',
+                'max:255',
             ],
             'preview_description' => [
                 'required',
                 'string',
+                'max:255',
             ],
             'seo_description' => [
-                'nullable',
-                'string',
-            ],
-            'vk_url' => [
                 'nullable',
                 'string',
             ],
@@ -70,6 +68,13 @@ class StoreProductRequest extends FormRequest
                 'array',
             ],
             'occasion.*' => [
+                'string',
+            ],
+            'ingredients' => [
+                'nullable',
+                'array',
+            ],
+            'ingredients.*' => [
                 'string',
             ],
             'gallery.*' => [

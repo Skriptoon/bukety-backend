@@ -6,12 +6,14 @@ namespace App\Models;
 
 use App\Filters\Product\Category as CategoryFilter;
 use App\Filters\Product\Name;
+use Database\Factories\ProductFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Lacodix\LaravelModelFilter\Traits\HasFilters;
 use Storage;
@@ -27,7 +29,6 @@ use Storage;
  * @property string $preview_description
  * @property string|null $seo_description
  * @property string $price
- * @property string $vk_url
  * @property string $image
  * @property array $gallery
  * @property bool $is_active
@@ -39,7 +40,8 @@ use Storage;
  * @property array $occasion
  * @property-read Collection<int, Category> $categories
  * @property-read int|null $categories_count
- *
+ * @property-read Collection<int, ProductIngredient> $ingredients
+ * @property-read int|null $ingredients_count
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()
  * @method static Builder|Product query()
@@ -62,7 +64,7 @@ use Storage;
  * @method static Builder|Product whereOccasion($value)
  * @method static Builder|Product whereWhom($value)
  * @method static Builder|Product whereVkDescription($value)
- *
+ * @method static ProductFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Product extends Model
@@ -74,7 +76,7 @@ class Product extends Model
         'name',
         'slug',
         'description',
-        'vk_description',
+        'vk_description', //todo: remove column
         'preview_description',
         'seo_description',
         'price',
@@ -82,7 +84,6 @@ class Product extends Model
         'occasion',
         'image',
         'gallery',
-        'vk_url',
         'is_active',
     ];
 
@@ -101,6 +102,11 @@ class Product extends Model
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function ingredients(): BelongsToMany
+    {
+        return $this->belongsToMany(ProductIngredient::class);
     }
 
     public function getImageUrlAttribute(): string

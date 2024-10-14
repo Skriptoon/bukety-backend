@@ -33,7 +33,6 @@ class ProductResource extends JsonResource
             'price' => $this->resource->price,
             'image' => $this->resource->image_url,
             'gallery' => $this->resource->gallery_urls,
-            'url' => $this->resource->vk_url,
             'whom' => array_map(
                 static fn (string $item): string => WhomEnum::from($item)->label(),
                 $this->resource->whom
@@ -42,6 +41,7 @@ class ProductResource extends JsonResource
                 static fn (string $item): string => OccasionEnum::from($item)->label(),
                 $this->resource->occasion
             ),
+            'ingredients' => $this->resource->ingredients()->pluck('name'),
             'updated_at' => $this->resource->updated_at,
         ];
     }

@@ -16,12 +16,12 @@ class ProductDTO extends Data
         public ?string $vk_description,
         public string $preview_description,
         public ?string $seo_description,
-        public ?string $vk_url,
         public int $price,
         public ?UploadedFile $image,
         public array $gallery,
         public array $whom,
         public array $occasion,
+        public array $ingredients,
         public bool $is_active,
     ) {
     }

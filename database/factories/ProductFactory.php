@@ -32,7 +32,6 @@ class ProductFactory extends Factory
             'occasion' => [],
             'image' => $this->faker->imageUrl(),
             'gallery' => [],
-            'vk_url' => $this->faker->url(),
             'is_active' => $this->faker->boolean(),
         ];
     }

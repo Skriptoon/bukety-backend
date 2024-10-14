@@ -12,8 +12,10 @@ use App\Http\Requests\Admin\Products\StoreProductRequest;
 use App\Http\Requests\Admin\Products\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductIngredient;
 use App\UseCases\Product\StoreProductCase;
 use App\UseCases\Product\UpdateProductCase;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -50,7 +52,7 @@ class ProductController extends Controller
 
     public function edit(int $product): Response
     {
-        $productModel = Product::with('categories')->find($product);
+        $productModel = Product::with('categories', 'ingredients')->find($product);
         $categories = Category::orderBy('sort')
             ->get()
             ->map(fn ($category) => [
@@ -98,7 +100,7 @@ class ProductController extends Controller
         $categories = Category::orderBy('sort')
             ->get()
             ->map(fn ($category) => [
-                'value' => (string) $category->id,
+                'value' => (string)$category->id,
                 'name' => $category->name,
             ]);
 
@@ -127,5 +129,11 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('products.index');
+    }
+
+    public function getIngredients(Request $request): Collection
+    {
+        return ProductIngredient::where('name', 'ilike', '%' . $request->get('query') . '%')
+            ->get();
     }
 }
