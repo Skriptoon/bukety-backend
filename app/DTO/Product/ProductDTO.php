@@ -21,7 +21,7 @@ class ProductDTO extends Data
         public array $gallery,
         public array $whom,
         public array $occasion,
-        public array $ingredients,
+        public ?array $ingredients,
         public bool $is_active,
     ) {
     }
