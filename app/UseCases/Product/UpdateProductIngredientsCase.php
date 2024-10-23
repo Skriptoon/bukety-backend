@@ -9,12 +9,12 @@ use App\Models\ProductIngredient;
 
 class UpdateProductIngredientsCase
 {
-    public function handle(Product $product, array $ingredients): void
+    public function handle(Product $product, ?array $ingredients): void
     {
         $ingredientsIds = ProductIngredient::whereIn('name', $ingredients)
             ->pluck('id', 'name');
 
-        foreach ($ingredients as $ingredient) {
+        foreach ($ingredients ?? [] as $ingredient) {
             if (!isset($ingredientsIds[$ingredient])) {
                 $ingredientModel = ProductIngredient::create([
                     'name' => mb_strtolower($ingredient),

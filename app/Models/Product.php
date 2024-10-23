@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
@@ -38,10 +39,12 @@ use Storage;
  * @property string $gallery_urls
  * @property array $whom
  * @property array $occasion
+ * @property int|null $main_category_id
  * @property-read Collection<int, Category> $categories
  * @property-read int|null $categories_count
  * @property-read Collection<int, ProductIngredient> $ingredients
  * @property-read int|null $ingredients_count
+ * @property-read Category|null $mainCategory
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()
  * @method static Builder|Product query()
@@ -65,6 +68,7 @@ use Storage;
  * @method static Builder|Product whereWhom($value)
  * @method static Builder|Product whereVkDescription($value)
  * @method static ProductFactory factory($count = null, $state = [])
+ * @method static Builder|Product whereMainCategoryId($value)
  * @mixin Eloquent
  */
 class Product extends Model
@@ -75,8 +79,9 @@ class Product extends Model
     protected $fillable = [
         'name',
         'slug',
+        'main_category_id',
         'description',
-        'vk_description', //todo: remove column
+        'vk_description',
         'preview_description',
         'seo_description',
         'price',
@@ -107,6 +112,11 @@ class Product extends Model
     public function ingredients(): BelongsToMany
     {
         return $this->belongsToMany(ProductIngredient::class);
+    }
+
+    public function mainCategory(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 
     public function getImageUrlAttribute(): string

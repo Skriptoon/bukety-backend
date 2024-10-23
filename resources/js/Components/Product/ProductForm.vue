@@ -12,6 +12,7 @@ import SpTextarea from '@/Components/Form/SpTextarea.vue'
 import SpWysiwyg from '@/Components/Form/SpWysiwyg.vue'
 import SpAutocomplete from '@/Components/Form/SpAutocomplete.vue'
 import axios from 'axios'
+import SpDropdown from '@/Components/Form/SpDropdown.vue'
 
 const props = defineProps({
   product: Object,
@@ -33,6 +34,7 @@ const form = useForm({
   image: null,
   gallery: [],
   is_active: props.product?.is_active ?? false,
+  main_category: props.product?.main_category_id ?? null,
   categories: props.product?.categories?.map((category) => category.id) ?? [],
   whom: props.product?.whom ?? null,
   occasion: props.product?.occasion ?? null,
@@ -112,11 +114,21 @@ async function searchIngredients(event) {
       />
     </div>
     <div class="mt-5">
+      <SpDropdown
+          v-model="form"
+          name="main_category"
+          label="Основная категории"
+          :options="categories"
+          filter
+      />
+    </div>
+    <div class="mt-5">
       <SpMultiSelect
           v-model="form"
           name="categories"
           label="Категории"
           :options="categories"
+          filter
       />
     </div>
     <div class="mt-5">

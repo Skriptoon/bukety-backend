@@ -179,7 +179,7 @@ class CategoryTest extends TestCase
         /** @var Collection|Category[] $childCategory */
         $childCategory = Category::factory(5)->create(['parent_id' => $parentCategory->id, 'is_active' => true]);
 
-        $product = Product::factory()->create();
+        $product = Product::factory()->create(['is_active' => true]);
         $product->categories()->attach($childCategory[2]->id);
         $product->save();
 

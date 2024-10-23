@@ -11,6 +11,7 @@ class ProductDTO extends Data
 {
     public function __construct(
         public string $name,
+        public int $main_category,
         public array $categories,
         public string $description,
         public ?string $vk_description,

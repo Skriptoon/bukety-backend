@@ -31,6 +31,7 @@ readonly class StoreProductCase
         $product = new Product([
             'name' => $data->name,
             'slug' => Str::slug($data->name),
+            'main_category_id' => $data->main_category,
             'description' => $data->description,
             'vk_description' => $data->vk_description,
             'preview_description' => $data->preview_description,

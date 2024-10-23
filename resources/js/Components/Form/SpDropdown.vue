@@ -7,8 +7,9 @@
                 :options="options"
                 :id="name"
                 option-label="name"
-                option-value="id"
+                option-value="value"
                 :class="{'p-invalid': modelValue.errors[name]}"
+                :filter="filter"
                 @focus="modelValue.errors[name] = null"
             />
             <label :for="name">{{ label }}</label>
@@ -44,6 +45,7 @@ export default {
             type: Array,
             required: true,
         },
+      filter: Boolean,
 
     },
 };

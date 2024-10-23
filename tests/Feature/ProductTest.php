@@ -22,9 +22,8 @@ class ProductTest extends TestCase
         $case->handle($product, ['Состав', 'Ингредиенты', $ingredient->name]);
         $ingredients = $product->ingredients()->pluck('name');
 
-
-        $this->assertTrue($ingredients->contains('Состав'));
-        $this->assertTrue($ingredients->contains('Ингредиенты'));
+        $this->assertTrue($ingredients->contains('состав'));
+        $this->assertTrue($ingredients->contains('ингредиенты'));
         $this->assertTrue($ingredients->contains($ingredient->name));
     }
 }

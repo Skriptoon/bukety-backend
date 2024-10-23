@@ -16,6 +16,11 @@ class StoreProductRequest extends FormRequest
                 'required',
                 'string',
                 'unique:products,name',
+                'max: 60',
+            ],
+            'main_category' => [
+                'integer',
+                'exists:categories,id',
             ],
             'categories' => [
                 'array',
@@ -24,6 +29,7 @@ class StoreProductRequest extends FormRequest
             ],
             'categories.*' => [
                 'integer',
+                'exists:categories,id',
             ],
             'description' => [
                 'required',

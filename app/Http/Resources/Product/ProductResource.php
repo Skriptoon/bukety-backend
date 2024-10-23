@@ -6,6 +6,7 @@ namespace App\Http\Resources\Product;
 
 use App\Enums\OccasionEnum;
 use App\Enums\WhomEnum;
+use App\Http\Resources\Category\CategoryListResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -27,6 +28,9 @@ class ProductResource extends JsonResource
             'id' => $this->resource->id,
             'name' => $this->resource->name,
             'slug' => $this->resource->slug,
+            'main_category' => new CategoryListResource(
+                $this->resource->mainCategory ?? $this->resource->categories()->first()
+            ),
             'preview_description' => $this->resource->preview_description,
             'description' => $this->resource->description,
             'seo_description' => $seoDescription,
