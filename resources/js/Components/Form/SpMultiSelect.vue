@@ -9,7 +9,7 @@
           :filter="filter"
           display="chip"
           option-label="name"
-          option-value="value"
+          option-value="id"
           placeholder="Не выбрано"
           aria-describedby="dd-error"
       />

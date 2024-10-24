@@ -7,7 +7,7 @@
                 :options="options"
                 :id="name"
                 option-label="name"
-                option-value="value"
+                option-value="id"
                 :class="{'p-invalid': modelValue.errors[name]}"
                 :filter="filter"
                 @focus="modelValue.errors[name] = null"

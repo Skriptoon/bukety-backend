@@ -54,11 +54,20 @@ class ProductController extends Controller
     {
         $productModel = Product::with('categories', 'ingredients')->find($product);
         $categories = Category::orderBy('sort')
-            ->get()
-            ->map(fn ($category) => [
-                'value' => $category->id,
-                'name' => $category->name,
-            ]);
+            ->get(['id', 'name', 'parent_id'])
+            ->map(static function (Category $category) {
+                $names = [$category->name];
+                $currentCategory = $category;
+                while ($currentCategory->parent) {
+                    $names[] = $currentCategory->parent->name;
+                    $currentCategory = $currentCategory->parent;
+                }
+
+                return [
+                    'id' => $category->id,
+                    'name' => implode(' → ', array_reverse($names)),
+                ];
+            });
 
         $previousUrl = null;
         if (str_contains(url()->previous(), route('products.index'))) {
@@ -98,11 +107,20 @@ class ProductController extends Controller
     public function create(): Response
     {
         $categories = Category::orderBy('sort')
-            ->get()
-            ->map(fn ($category) => [
-                'value' => (string)$category->id,
-                'name' => $category->name,
-            ]);
+            ->get(['id', 'name', 'parent_id'])
+            ->map(static function (Category $category) {
+                $names = [$category->name];
+                $currentCategory = $category;
+                while ($currentCategory->parent) {
+                    $names[] = $currentCategory->parent->name;
+                    $currentCategory = $currentCategory->parent;
+                }
+
+                return [
+                    'id' => $category->id,
+                    'name' => implode(' → ', array_reverse($names)),
+                ];
+            });
 
         return Inertia::render('Product/Create', [
             'categories' => $categories,
