@@ -15,7 +15,7 @@ trait OptionsTrait
         $options = [];
         foreach ($cases as $item) {
             $options[] = [
-                'value' => $item->value,
+                'id' => $item->value,
                 'name' => $item->label(),
             ];
         }
