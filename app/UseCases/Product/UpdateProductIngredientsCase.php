@@ -11,6 +11,10 @@ class UpdateProductIngredientsCase
 {
     public function handle(Product $product, ?array $ingredients): void
     {
+        if ($ingredients === null) {
+            return;
+        }
+
         $ingredientsIds = ProductIngredient::whereIn('name', $ingredients)
             ->pluck('id', 'name');
 
