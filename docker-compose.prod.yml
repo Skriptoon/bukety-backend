@@ -32,8 +32,9 @@ services:
       - default
     volumes:
       - .:/app
-      - ./docker/php/docker-php-entrypoint:/usr/local/bin/docker-php-entrypoint
       - ./docker/php/php.ini:/usr/local/etc/php/conf.d/base.ini
+      - ./docker/php/docker-php-entrypoint:/usr/local/bin/docker-php-entrypoint
+      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     depends_on:
       - db
       - node
