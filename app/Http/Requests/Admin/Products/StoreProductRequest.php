@@ -54,7 +54,7 @@ class StoreProductRequest extends FormRequest
                 'integer',
             ],
             'old_price' => [
-                'required',
+                'nullable',
                 'integer',
                 'gt:price',
             ],

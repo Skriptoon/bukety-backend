@@ -18,7 +18,7 @@ class ProductDTO extends Data
      * @param  string  $preview_description
      * @param  string|null  $seo_description
      * @param  float  $price
-     * @param  float  $old_price
+     * @param  float|null  $old_price
      * @param  UploadedFile|null  $image
      * @param  UploadedFile[]|string[]  $gallery
      * @param  array  $whom
@@ -35,7 +35,7 @@ class ProductDTO extends Data
         public string $preview_description,
         public ?string $seo_description,
         public float $price,
-        public float $old_price,
+        public ?float $old_price,
         public ?UploadedFile $image,
         public array $gallery,
         public array $whom,
