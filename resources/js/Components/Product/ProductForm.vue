@@ -13,6 +13,8 @@ import SpWysiwyg from '@/Components/Form/SpWysiwyg.vue'
 import SpAutocomplete from '@/Components/Form/SpAutocomplete.vue'
 import axios from 'axios'
 import SpDropdown from '@/Components/Form/SpDropdown.vue'
+import InputGroup from 'primevue/inputgroup';
+import InputGroupAddon from 'primevue/inputgroupaddon';
 
 const props = defineProps({
   product: Object,
@@ -30,7 +32,8 @@ const form = useForm({
   preview_description: props.product?.preview_description ?? null,
   seo_description: props.product?.seo_description ?? null,
   price: props.product?.price ?? null,
-  ingredients:  props.product?.ingredients?.map(ingredient => ingredient.name) ?? null,
+  old_price: props.product?.old_price ?? null,
+  ingredients: props.product?.ingredients?.map(ingredient => ingredient.name) ?? null,
   image: null,
   gallery: [],
   is_active: props.product?.is_active ?? false,
@@ -164,6 +167,23 @@ async function searchIngredients(event) {
           v-model="form"
           name="price"
           label="Цена"
+          number
+          mode="currency"
+          currency="RUB"
+          locale="ru-RU"
+      >
+        <template v-if="form.old_price" #postAddon>
+          <div class="white-space-nowrap">
+            Скидка: {{ ((1 - form.price / form.old_price) * 100).toFixed() }}%
+          </div>
+        </template>
+      </SpInput>
+    </div>
+    <div class="mt-5">
+      <SpInput
+          v-model="form"
+          name="old_price"
+          label="Старая цена"
           number
           mode="currency"
           currency="RUB"

@@ -35,6 +35,7 @@ class ProductResource extends JsonResource
             'description' => $this->resource->description,
             'seo_description' => $seoDescription,
             'price' => $this->resource->price,
+            'old_price' => $this->resource->old_price,
             'image' => $this->resource->image_url,
             'gallery' => $this->resource->gallery_urls,
             'whom' => array_map(

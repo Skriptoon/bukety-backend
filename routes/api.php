@@ -25,6 +25,7 @@ Route::domain($domain)->group(static function (): void {
 
             Route::prefix('products')->group(static function (): void {
                 Route::get('/', [ProductController::class, 'index']);
+                Route::get('stocks', [ProductController::class, 'stocks']);
                 Route::get('{product:slug}', [ProductController::class, 'show']);
                 Route::get('{product:slug}/recommended', [ProductController::class, 'recommended']);
             });

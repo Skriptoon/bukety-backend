@@ -20,7 +20,7 @@ RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev libwebp-d
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp
 RUN docker-php-ext-configure intl
 
-RUN docker-php-ext-install intl zip gd gmp pdo pdo_mysql pdo_pgsql pgsql opcache
+RUN docker-php-ext-install intl zip gd gmp pdo pdo_pgsql pgsql opcache
 
 RUN install-php-extensions xdebug-3.3.2
 

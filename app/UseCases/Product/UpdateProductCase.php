@@ -37,9 +37,11 @@ readonly class UpdateProductCase
             'preview_description' => $data->preview_description,
             'seo_description' => $data->seo_description,
             'price' => $data->price,
+            'old_price' => $data->old_price,
             'slug' => Str::slug($data->name),
             'whom' => $data->whom,
             'occasion' => $data->occasion,
+            'is_active' => $data->is_active,
         ]);
 
         if ($data->image !== null) {

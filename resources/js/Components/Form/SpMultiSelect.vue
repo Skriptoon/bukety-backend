@@ -7,6 +7,7 @@
           :options="options"
           :class="{ 'p-invalid': modelValue.errors[name] }"
           :filter="filter"
+          class="w-full"
           display="chip"
           option-label="name"
           option-value="id"

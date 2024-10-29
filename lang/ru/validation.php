@@ -174,8 +174,5 @@ return [
     */
 
     'attributes' => [
-        'srv_group' => 'группа',
-        'authid' => 'SteamID',
-        'expired' => 'действует до',
     ],
 ];

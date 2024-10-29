@@ -29,7 +29,7 @@ use Storage;
  * @property string|null $vk_description
  * @property string $preview_description
  * @property string|null $seo_description
- * @property string $price
+ * @property float $price
  * @property string $image
  * @property array $gallery
  * @property bool $is_active
@@ -40,6 +40,7 @@ use Storage;
  * @property array $whom
  * @property array $occasion
  * @property int|null $main_category_id
+ * @property float $old_price
  * @property-read Collection<int, Category> $categories
  * @property-read int|null $categories_count
  * @property-read Collection<int, ProductIngredient> $ingredients
@@ -85,6 +86,7 @@ class Product extends Model
         'preview_description',
         'seo_description',
         'price',
+        'old_price',
         'whom',
         'occasion',
         'image',
@@ -95,8 +97,10 @@ class Product extends Model
     protected $casts = [
         'gallery' => 'array',
         'price' => 'float',
+        'old_price' => 'float',
         'whom' => 'array',
         'occasion' => 'array',
+        'is_active' => 'bool',
     ];
 
     protected array $filters = [

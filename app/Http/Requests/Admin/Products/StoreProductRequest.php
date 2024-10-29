@@ -53,6 +53,11 @@ class StoreProductRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'old_price' => [
+                'required',
+                'integer',
+                'gt:price',
+            ],
             'image' => [
                 'image',
                 'required',

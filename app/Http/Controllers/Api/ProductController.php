@@ -47,4 +47,15 @@ class ProductController extends Controller
 
         return ProductResource::collection($recommended);
     }
+
+    public function stocks(): AnonymousResourceCollection
+    {
+        $products = Product::active()
+            ->whereNotNull('old_price')
+            ->limit(10)
+            ->inRandomOrder()
+            ->get();
+
+        return ProductResource::collection($products);
+    }
 }

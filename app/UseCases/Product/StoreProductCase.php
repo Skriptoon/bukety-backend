@@ -37,6 +37,7 @@ readonly class StoreProductCase
             'preview_description' => $data->preview_description,
             'seo_description' => $data->seo_description,
             'price' => $data->price,
+            'old_price' => $data->old_price,
             'is_active' => $data->is_active,
             'whom' => $data->whom,
             'occasion' => $data->occasion,

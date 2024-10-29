@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\OccasionEnum;
+use App\Enums\WhomEnum;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Str;
@@ -19,6 +21,8 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         $name = $this->faker->word();
+        $whom = array_map(static fn (WhomEnum $whom): string => $whom->value, WhomEnum::cases());
+        $occasion = array_map(static fn (OccasionEnum $occasion): string => $occasion->value, OccasionEnum::cases());
 
         return [
             'name' => $name,
@@ -27,12 +31,13 @@ class ProductFactory extends Factory
             'vk_description' => $this->faker->text(),
             'preview_description' => $this->faker->text(),
             'seo_description' => $this->faker->text(),
-            'price' => $this->faker->randomFloat(2, 4, 6),
-            'whom' => [],
-            'occasion' => [],
+            'price' => $this->faker->randomFloat(2),
+            'whom' => $whom,
+            'occasion' => $occasion,
             'image' => $this->faker->imageUrl(),
             'gallery' => [],
             'is_active' => $this->faker->boolean(),
+            'old_price' => $this->faker->randomFloat(2),
         ];
     }
 }

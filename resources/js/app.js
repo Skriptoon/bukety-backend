@@ -1,5 +1,5 @@
 import './bootstrap'
-import 'primevue/resources/primevue.min.css'
+import 'primevue/resources/themes/lara-light-cyan/theme.css'
 import '../scss/index.scss'
 import {createApp, h} from 'vue'
 import {createInertiaApp, Link} from '@inertiajs/vue3'

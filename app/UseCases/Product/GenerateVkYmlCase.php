@@ -41,6 +41,7 @@ class GenerateVkYmlCase
             $offer?->addAttribute('available', 'true');
 
             $offer?->addChild('price', (string)$productModel->price);
+            $offer?->addChild('oldPrice', (string)$productModel->old_price);
             $offer?->addChild('currencyId', 'RUB');
 
             /** @var Category $category */

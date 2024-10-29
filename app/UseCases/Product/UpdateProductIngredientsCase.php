@@ -11,20 +11,19 @@ class UpdateProductIngredientsCase
 {
     public function handle(Product $product, ?array $ingredients): void
     {
-        if ($ingredients === null) {
-            return;
-        }
+        $ingredientsIds = [];
+        if ($ingredients !== null) {
+            $ingredientsIds = ProductIngredient::whereIn('name', $ingredients)
+                ->pluck('id', 'name');
 
-        $ingredientsIds = ProductIngredient::whereIn('name', $ingredients)
-            ->pluck('id', 'name');
+            foreach ($ingredients as $ingredient) {
+                if (!isset($ingredientsIds[$ingredient])) {
+                    $ingredientModel = ProductIngredient::create([
+                        'name' => mb_strtolower($ingredient),
+                    ]);
 
-        foreach ($ingredients ?? [] as $ingredient) {
-            if (!isset($ingredientsIds[$ingredient])) {
-                $ingredientModel = ProductIngredient::create([
-                    'name' => mb_strtolower($ingredient),
-                ]);
-
-                $ingredientsIds[] = $ingredientModel->id;
+                    $ingredientsIds[] = $ingredientModel->id;
+                }
             }
         }
 

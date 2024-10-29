@@ -3,4 +3,11 @@
 @import 'mixins';
 @import 'Components';
 @import 'Pages';
-@import 'App';
+
+body {
+  margin: 0;
+  background-color: var(--gray-200);
+  min-height: 100vh;
+  color: var(--text-color);
+  font-family: Helvetica, sans-serif;
+}
