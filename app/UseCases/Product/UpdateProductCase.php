@@ -19,6 +19,7 @@ readonly class UpdateProductCase
         private ImageOptimizeCase $imageOptimizeCase,
         private SitemapGenerator $sitemapGenerator,
         private GenerateVkYmlCase $generateVkYmlCase,
+        private GenerateYandexYmlCase $generateYandexYmlCase,
         private UpdateProductIngredientsCase $updateProductIngredientsCase,
     ) {
     }
@@ -74,5 +75,6 @@ readonly class UpdateProductCase
         $this->updateProductIngredientsCase->handle($product, $data->ingredients);
         $this->sitemapGenerator->handle();
         $this->generateVkYmlCase->handle();
+        $this->generateYandexYmlCase->handle();
     }
 }

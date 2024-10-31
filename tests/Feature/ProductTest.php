@@ -31,6 +31,7 @@ class ProductTest extends TestCase
     {
         Storage::delete('sitemap.xml');
         Storage::disk('public')->delete('feeds/vk.yml');
+        Storage::disk('public')->delete('feeds/yandex.yml');
 
         $categories = Category::factory(4)->create();
         $whom = array_map(static fn (WhomEnum $whom): string => $whom->value, WhomEnum::cases());
@@ -78,6 +79,7 @@ class ProductTest extends TestCase
         $this->assertGreaterThan(0, $product->ingredients->count());
         $this->assertFileExists(Storage::path('sitemap.xml'));
         $this->assertFileExists(Storage::disk('public')->path('feeds/vk.yml'));
+        $this->assertFileExists(Storage::disk('public')->path('feeds/yandex.yml'));
     }
 
     /**
@@ -88,6 +90,7 @@ class ProductTest extends TestCase
     {
         Storage::delete('sitemap.xml');
         Storage::disk('public')->delete('feeds/vk.yml');
+        Storage::disk('public')->delete('feeds/yandex.yml');
 
         $categories = Category::factory(4)->create();
         $product = Product::factory()->create(['gallery' => []]);
@@ -136,6 +139,7 @@ class ProductTest extends TestCase
         $this->assertGreaterThan(0, $product->ingredients->count());
         $this->assertFileExists(Storage::path('sitemap.xml'));
         $this->assertFileExists(Storage::disk('public')->path('feeds/vk.yml'));
+        $this->assertFileExists(Storage::disk('public')->path('feeds/yandex.yml'));
     }
 
     public function test_update_ingredients()

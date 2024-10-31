@@ -9,14 +9,16 @@ use App\Models\Product;
 use SimpleXMLElement;
 use Storage;
 
-class GenerateVkYmlCase
+class GenerateYandexYmlCase
 {
-    public function handle(): void
+    public function handle()
     {
         $productModels = Product::active()->get();
         $categoryModels = Category::active()->get();
 
-        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><yml_catalog  date="' . date('Y-m-d H:i:s') . '"/>');
+        $xml = new SimpleXMLElement(
+            '<?xml version="1.0" encoding="UTF-8"?><yml_catalog date="' . date('Y-m-d H:i:s') . '"/>'
+        );
         $shop = $xml->addChild('shop');
         $shop?->addChild('name', 'Букетница');
         $shop?->addChild('company', 'Букетница');
@@ -46,24 +48,16 @@ class GenerateVkYmlCase
             }
             $offer?->addChild('currencyId', 'RUB');
 
-            /** @var Category $category */
-            foreach ($productModel->categories as $category) {
-                $offer?->addChild('categoryId', (string)$category->id);
-                $currentCategory = $category;
-                while ($currentCategory->parent) {
-                    $offer?->addChild('categoryId', (string)$currentCategory->id);
-                    $currentCategory = $currentCategory->parent;
-                }
+            $categoryId = $productModel->main_category_id;
+            if ($categoryId === null) {
+                $categoryId = $productModel->categories()->first()->id;
             }
+            $offer?->addChild('categoryId', (string)$categoryId);
 
             $offer?->addChild('name', $productModel->name);
-            $offer?->addChild('url', config('app.frontend_url').'/product/'.$productModel->slug);
+            $offer?->addChild('url', config('app.frontend_url') . '/product/' . $productModel->slug);
 
-            $description = $productModel->preview_description."\n\n".$productModel->vk_description.
-                "\n\nБукет можно забрать самовывозом или мы отправим его Вам Яндекс доставкой к нужному времени.\n\n"
-                ."Цена - $productModel->price рублей действительна на ".date('d.m.Y').
-                " и может быть выше или ниже в зависимости от ваших пожеланий по составу и размера букета.\n\n"
-                .'Просто нажмите кнопку "Написать" и я с удовольствием приму ваш заказ.';
+            $description = $productModel->preview_description . "\n\n" . $productModel->vk_description;
             $offer?->addChild('description', $description);
 
             foreach ($productModel->gallery_urls as $gallery_url) {
@@ -72,6 +66,6 @@ class GenerateVkYmlCase
         }
 
         Storage::disk('public')->makeDirectory('feeds');
-        $xml->asXML(Storage::disk('public')->path('feeds/vk.yml'));
+        $xml->asXML(Storage::disk('public')->path('feeds/yandex.yml'));
     }
 }
