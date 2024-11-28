@@ -7,7 +7,7 @@
           placeholder="Действует до"
           dateFormat="dd.mm.yy"
           selectOtherMonths
-          showButtonBar
+          show-button-bar
           :class="{'p-invalid': modelValue.errors[name]}"
           :show-button-bar="showButtonBar"
           :min-date="minDate"
