@@ -65,6 +65,15 @@ function completeOrder(id) {
     />
     <Column
         :show-filter-menu="false"
+        field="price"
+        header="Цена"
+    >
+      <template #body="{ data }">
+          {{ data.price }} ₽
+      </template>
+    </Column>
+    <Column
+        :show-filter-menu="false"
         field="product.id"
         header="Товар"
     >

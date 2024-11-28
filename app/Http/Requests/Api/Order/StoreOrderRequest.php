@@ -32,6 +32,10 @@ class StoreOrderRequest extends FormRequest
                 'integer',
                 Rule::exists('products', 'id'),
             ],
+            'promo_code' => [
+                'nullable',
+                'string',
+            ],
         ];
     }
 
@@ -40,7 +44,7 @@ class StoreOrderRequest extends FormRequest
         return [
             'name' => 'Имя',
             'phone' => 'Телефон',
-            'communication_method' => 'Сбособ связи',
+            'communication_method' => 'Способ связи',
         ];
     }
 }

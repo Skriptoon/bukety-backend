@@ -30,6 +30,7 @@ Route::domain($domain)->group(static function (): void {
                 Route::get('{product:slug}/recommended', [ProductController::class, 'recommended']);
             });
 
+            Route::post('order/apply-promo-code', [OrderController::class, 'applyPromoCode']);
             Route::post('order', [OrderController::class, 'store']);
         });
     });

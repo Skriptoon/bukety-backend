@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import { router } from '@inertiajs/vue3'
 import Icon from '@/Components/Icon.vue'
 
 export default {
@@ -59,20 +58,17 @@ export default {
         url: route('orders.index'),
         title: 'Заказы',
         icon: 'cart-shopping',
-      }
+      },
+      {
+        url: route('promo-codes.index'),
+        title: 'Промокоды',
+        icon: 'percent',
+      },
     ],
   }),
 
   mounted() {
     this.section = this.$page.props.selectedSection ?? 0
-  },
-
-  methods: {
-    changeSection(event) {
-      router.post('/change-section', {
-        section: event.value,
-      })
-    },
-  },
+  }
 }
 </script>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\PromoCodeController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -32,6 +33,8 @@ Route::domain(env('APP_DOMAIN'))->group(static function () {
 
         Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
         Route::patch('orders/{order}/complete', [OrderController::class, 'complete'])->name('orders.complete');
+
+        Route::resource('promo-codes', PromoCodeController::class);
     });
 
     require __DIR__ . '/auth.php';

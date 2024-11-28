@@ -7,8 +7,10 @@
           placeholder="Действует до"
           dateFormat="dd.mm.yy"
           selectOtherMonths
+          showButtonBar
           :class="{'p-invalid': modelValue.errors[name]}"
-          :showButtonBar="showButtonBar"
+          :show-button-bar="showButtonBar"
+          :min-date="minDate"
           @focus="modelValue.errors[name] = null"
       />
       <label :for="name">{{ label }}</label>
@@ -41,6 +43,7 @@ export default {
     },
     label: String,
     showButtonBar: Boolean,
+    minDate: Object,
   },
 };
 </script>

@@ -14,6 +14,7 @@ class OrderDTO extends Data
         public string $phone,
         public int $product_id,
         public CommunicationsMethodsEnum $communication_method,
+        public string $promo_code,
     ) {
     }
 }

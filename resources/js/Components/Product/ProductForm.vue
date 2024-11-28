@@ -13,8 +13,6 @@ import SpWysiwyg from '@/Components/Form/SpWysiwyg.vue'
 import SpAutocomplete from '@/Components/Form/SpAutocomplete.vue'
 import axios from 'axios'
 import SpDropdown from '@/Components/Form/SpDropdown.vue'
-import InputGroup from 'primevue/inputgroup';
-import InputGroupAddon from 'primevue/inputgroupaddon';
 
 const props = defineProps({
   product: Object,

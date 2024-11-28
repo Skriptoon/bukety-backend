@@ -2,7 +2,7 @@
   <div>
     <div class="p-float-label mb-2">
       <InputGroup>
-        <input-text
+        <inputText
             v-if="!number"
             v-model="model[name]"
             class="w-full"
@@ -22,6 +22,9 @@
             :disabled="disabled"
             :mode="mode"
             :currency="currency"
+            :min="min"
+            :max="max"
+            :suffix="suffix"
             @focus="model.errors[name] = null"
         />
         <label :for="name">{{ label }}</label>
@@ -68,6 +71,9 @@ export default {
     number: Boolean,
     mode: 'decimal' | 'currency' | undefined,
     currency: String,
+    min: Number,
+    max: Number,
+    suffix: String,
   },
 
   computed: {
