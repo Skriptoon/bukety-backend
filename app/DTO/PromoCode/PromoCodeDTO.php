@@ -12,7 +12,7 @@ class PromoCodeDTO extends Data
     public function __construct(
         public string $promo_code,
         public int $discount,
-        public Carbon $expired_at,
+        public ?Carbon $expired_at,
         public bool $is_disposable,
         public bool $is_active,
     ) {

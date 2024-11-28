@@ -28,7 +28,7 @@
 <script>
 import Calendar from 'primevue/calendar';
 
-export default {
+export default  {
   name: 'SpDatePicker',
 
   components: {
