@@ -44,7 +44,7 @@ readonly class StoreOrderCase
             'communication_method' => $orderDto->communication_method,
             'status' => OrderStatusEnum::New,
             'product_id' => $orderDto->product_id,
-            'promo_code_id' => $promoCode->id,
+            'promo_code_id' => $promoCode?->id,
             'price' => $price,
         ]);
 
