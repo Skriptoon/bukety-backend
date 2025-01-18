@@ -11,7 +11,7 @@ install: composer-install up artisan-key-generate migrate artisan-seed generate-
 install-prod: composer-install up artisan-key-generate yarn-install yarn-dev symlink
 
 up:
-	@docker-compose up -d --build --remove-orphans
+	@docker-compose up -d --remove-orphans
 
 down:
 	@docker-compose down

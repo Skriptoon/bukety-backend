@@ -22,7 +22,7 @@ RUN docker-php-ext-configure intl
 
 RUN docker-php-ext-install intl zip gd gmp pdo pdo_pgsql pgsql opcache
 
-RUN install-php-extensions xdebug-3.3.2
+RUN install-php-extensions xdebug-3.4.1
 
 WORKDIR /app
 ADD . /app
