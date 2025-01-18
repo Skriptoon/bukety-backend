@@ -109,7 +109,6 @@ function page(data) {
       <template #body="{ data }">
           <a :href="route('get-image-with-description', data.id)" target="_blank">
             <Image
-              imageClass="max-w-full"
               width="70"
               height="70"
               :src="'/storage/' + data.image"
