@@ -7,15 +7,25 @@ namespace App\UseCases\Product;
 use App\Models\Product;
 use Nette\Utils\Image;
 use Nette\Utils\ImageColor;
+use Nette\Utils\ImageException;
+use Nette\Utils\UnknownImageFileException;
 use Storage;
 
 class GenerateImageWithDescriptionCase
 {
     private const string FONT = 'calibri.ttf';
     private const int FONT_SIZE = 16;
+
+    /**
+     * @throws ImageException
+     * @throws UnknownImageFileException
+     */
     public function handle(Product $product): string
     {
         $productImage = Image::fromFile(Storage::disk('public')->path($product->image));
+        $ratio = $productImage->getWidth() / 500;
+        $productImage->resize(500, (int)($productImage->getHeight() / $ratio));
+
         $ingredientsText = $this->generateText('Состав: ' .  $product->ingredients->implode('name', ', '), $productImage->getWidth());
         $ingredientsTextSize = Image::calculateTextBox($ingredientsText, resource_path('fonts/'.self::FONT), self::FONT_SIZE);
 
