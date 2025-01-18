@@ -57,6 +57,10 @@ class GenerateImageWithDescriptionCase
             $this->generateText('Состав: ' .  $product->ingredients->implode('name', ', '), $productImage->getWidth()),
         );
 
+        $logo = Image::fromFile(Storage::path('images/logo.png'));
+        $logo->resize(100, 100);
+        $image->place($logo, $productImage->getWidth() - 100, $productImage->getHeight() - 100);
+
         $filename = 'image-with-description.png';
         $image->save(Storage::path($filename));
 
