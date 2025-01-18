@@ -13,6 +13,7 @@ use App\Http\Requests\Admin\Products\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductIngredient;
+use App\UseCases\Product\GenerateImageWithDescriptionCase;
 use App\UseCases\Product\StoreProductCase;
 use App\UseCases\Product\UpdateProductCase;
 use Illuminate\Database\Eloquent\Collection;
@@ -23,6 +24,7 @@ use Inertia\Response;
 use Nette\Utils\ImageException;
 use Nette\Utils\UnknownImageFileException;
 use Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ProductController extends Controller
 {
@@ -153,5 +155,12 @@ class ProductController extends Controller
     {
         return ProductIngredient::where('name', 'ilike', '%' . $request->get('query') . '%')
             ->get();
+    }
+
+    public function getImageWithDescription(Product $product, GenerateImageWithDescriptionCase $case): StreamedResponse
+    {
+        $path = $case->handle($product);
+
+        return Storage::download($path);
     }
 }

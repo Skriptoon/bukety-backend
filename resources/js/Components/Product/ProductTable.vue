@@ -3,16 +3,16 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Image from 'primevue/image'
 import Button from 'primevue/button'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { useConfirm } from 'primevue/useconfirm'
-import { router } from '@inertiajs/vue3'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import {useConfirm} from 'primevue/useconfirm'
+import {router} from '@inertiajs/vue3'
 import ConfirmPopup from 'primevue/confirmpopup'
 import Tag from 'primevue/tag'
 import Dropdown from 'primevue/dropdown'
-import { onMounted, ref } from 'vue'
-import { FilterMatchMode } from 'primevue/api'
+import {onMounted, ref} from 'vue'
+import {FilterMatchMode} from 'primevue/api'
 import InputText from 'primevue/inputtext'
-import { Inertia } from '@inertiajs/inertia'
+import {Inertia} from '@inertiajs/inertia'
 
 defineProps({
   products: {
@@ -107,10 +107,14 @@ function page(data) {
       style="width: 100px"
     >
       <template #body="{ data }">
-        <Image
-          imageClass="max-w-full"
-          :src="'/storage/' + data.image"
-        />
+          <a :href="route('get-image-with-description', data.id)" target="_blank">
+            <Image
+              imageClass="max-w-full"
+              width="70"
+              height="70"
+              :src="'/storage/' + data.image"
+            />
+          </a>
       </template>
     </Column>
     <Column
@@ -123,7 +127,7 @@ function page(data) {
       </template>
       <template #body="{ data }">
         <h4>{{ data.name }}</h4>
-        <p>{{ data.preview_description }}</p>
+        <p>Цена: {{ data.price }}₽</p>
       </template>
     </Column>
     <Column

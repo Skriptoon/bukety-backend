@@ -24,6 +24,8 @@ Route::domain(env('APP_DOMAIN'))->group(static function () {
             return Inertia::render('Dashboard');
         })->name('dashboard');
 
+        Route::get('/products/{product}/image-with-description', [ProductController::class, 'getImageWithDescription'])
+        ->name('get-image-with-description');
         Route::get('/products/ingredients', [ProductController::class, 'getIngredients'])->name('products.ingredients');
         Route::resource('products', ProductController::class);
 
