@@ -26,6 +26,7 @@ class GenerateImageWithDescriptionCase
         $ratio = $productImage->getWidth() / 500;
         $productImage->resize(500, (int)($productImage->getHeight() / $ratio));
         $ingredientsText = null;
+        $ingredientsTextSize = null;
 
         if ($product->ingredients->count() > 0) {
             $ingredientsText = $this->generateText(
