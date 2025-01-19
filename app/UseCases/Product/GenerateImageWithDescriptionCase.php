@@ -25,13 +25,23 @@ class GenerateImageWithDescriptionCase
         $productImage = Image::fromFile(Storage::disk('public')->path($product->image));
         $ratio = $productImage->getWidth() / 500;
         $productImage->resize(500, (int)($productImage->getHeight() / $ratio));
+        $ingredientsText = null;
 
-        $ingredientsText = $this->generateText('Состав: ' .  $product->ingredients->implode('name', ', '), $productImage->getWidth());
-        $ingredientsTextSize = Image::calculateTextBox($ingredientsText, resource_path('fonts/'.self::FONT), self::FONT_SIZE);
+        if ($product->ingredients->count() > 0) {
+            $ingredientsText = $this->generateText(
+                'Состав: ' . $product->ingredients->implode('name', ', '),
+                $productImage->getWidth()
+            );
+            $ingredientsTextSize = Image::calculateTextBox(
+                $ingredientsText,
+                resource_path('fonts/' . self::FONT),
+                self::FONT_SIZE
+            );
+        }
 
         $image = Image::fromBlank(
             $productImage->getWidth(),
-            $productImage->getHeight() + 60 + $ingredientsTextSize['height'],
+            $productImage->getHeight() + 60 + $ingredientsTextSize['height'] ?? 0,
             ImageColor::rgb(0, 0, 0)
         );
 
@@ -47,15 +57,17 @@ class GenerateImageWithDescriptionCase
             'Цена: ' . $product->price . 'р',
         );
 
-        $image->ttfText(
-            self::FONT_SIZE,
-            0,
-            0,
-            $productImage->getHeight() + 60,
-            ImageColor::rgb(255, 255, 255),
-            resource_path('fonts/'.self::FONT),
-            $this->generateText('Состав: ' .  $product->ingredients->implode('name', ', '), $productImage->getWidth()),
-        );
+        if ($ingredientsText) {
+            $image->ttfText(
+                self::FONT_SIZE,
+                0,
+                0,
+                $productImage->getHeight() + 60,
+                ImageColor::rgb(255, 255, 255),
+                resource_path('fonts/' . self::FONT),
+                $ingredientsText
+            );
+        }
 
         $logo = Image::fromFile(Storage::path('images/logo.png'));
         $logo->resize(100, 100);
