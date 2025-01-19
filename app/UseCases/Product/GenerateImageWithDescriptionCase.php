@@ -33,7 +33,7 @@ class GenerateImageWithDescriptionCase
                 'Состав: ' . $product->ingredients->implode('name', ', '),
                 $productImage->getWidth()
             );
-            $ingredientsTextSize = Image::calculateTextBox(
+            ['height' => $ingredientsTextSize] = Image::calculateTextBox(
                 $ingredientsText,
                 resource_path('fonts/' . self::FONT),
                 self::FONT_SIZE
@@ -42,7 +42,7 @@ class GenerateImageWithDescriptionCase
 
         $image = Image::fromBlank(
             $productImage->getWidth(),
-            $productImage->getHeight() + 60 + $ingredientsTextSize['height'] ?? 0,
+            $productImage->getHeight() + 60 + $ingredientsTextSize ?? 0,
             ImageColor::rgb(0, 0, 0)
         );
 
