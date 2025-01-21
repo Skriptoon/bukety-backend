@@ -4,8 +4,16 @@
         class="authenticated-layout__bar-icon pi pi-bars"
         @click="openSidebar = true"
     />
-    <sidebar v-model="openSidebar"/>
-    <header class="authenticated-layout__header">
+    <Sidebar v-model="openSidebar" v-model:visible="visibleSidebar"/>
+    <header
+        class="authenticated-layout__headertransition-[margin-left] duration-300 ml-0"
+            :class="{
+          '!ml-[330px]': visibleSidebar,
+        }"
+    >
+        <Button  @click="visibleSidebar = !visibleSidebar">
+            <Icon icon="fa-solid fa-bars"/>
+        </Button>
       <div class="authenticated-layout__user-menu">
         <menubar :model="menu">
           <template #item="{item}">
@@ -46,7 +54,12 @@
         </div>
       </div>
     </header>
-    <main class="authenticated-layout__content">
+    <main
+        class="authenticated-layout__content transition-[margin-left] duration-300 ml-0"
+        :class="{
+          '!ml-[330px]': visibleSidebar,
+        }"
+    >
       <slot/>
     </main>
     <Toast position="top-center" group="tc"/>
@@ -58,15 +71,19 @@ import Sidebar from '@/Components/Sidebar.vue'
 import Breadcrumb from 'primevue/breadcrumb'
 import Menubar from 'primevue/menubar'
 import Toast from 'primevue/toast';
+import Button from "primevue/button";
+import Icon from "@/Components/Icon.vue";
 
 export default {
   name: 'AuthenticatedLayout',
 
   components: {
+      Icon,
     Breadcrumb,
     Sidebar,
     Menubar,
     Toast,
+      Button,
   },
 
   props: {
@@ -112,6 +129,7 @@ export default {
         },
       ],
       openSidebar: false,
+        visibleSidebar: true,
     }
   },
 }

@@ -10,7 +10,7 @@ import ConfirmPopup from 'primevue/confirmpopup'
 import Tag from 'primevue/tag'
 import Dropdown from 'primevue/dropdown'
 import {onMounted, ref} from 'vue'
-import {FilterMatchMode} from 'primevue/api'
+import {FilterMatchMode} from '@primevue/core/api';
 import InputText from 'primevue/inputtext'
 import {Inertia} from '@inertiajs/inertia'
 
@@ -149,7 +149,7 @@ function page(data) {
         </Dropdown>
       </template>
       <template #body="{ data }">
-        <div class="grid gap-1">
+        <div>
           <Tag
             v-for="(category, index) in data.categories"
             :key="index"

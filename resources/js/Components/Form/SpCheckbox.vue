@@ -11,7 +11,7 @@
           binary
           @focus="model.errors[name] = null"
       />
-      <InputSwitch
+      <ToggleSwitch
           v-else
           v-model="model[name]"
           :id="name"
@@ -40,14 +40,14 @@
 </template>
 
 <script>
-import InputSwitch from 'primevue/inputswitch';
+import ToggleSwitch from 'primevue/toggleswitch';
 import Checkbox from 'primevue/checkbox';
 
 export default {
   name: 'SpCheckbox',
 
   components: {
-    InputSwitch,
+      ToggleSwitch,
     Checkbox,
   },
 

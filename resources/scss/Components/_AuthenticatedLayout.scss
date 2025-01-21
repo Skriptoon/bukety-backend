@@ -1,3 +1,6 @@
+@use '../mixins' as *;
+@import "primeflex/primeflex.scss";
+
 .authenticated-layout {
     &__content, &__header {
         @include styleclass('p-4');

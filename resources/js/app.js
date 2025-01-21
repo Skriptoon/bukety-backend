@@ -1,5 +1,4 @@
 import './bootstrap'
-import 'primevue/resources/themes/lara-light-cyan/theme.css'
 import '../scss/index.scss'
 import {createApp, h} from 'vue'
 import {createInertiaApp, Link} from '@inertiajs/vue3'
@@ -13,29 +12,34 @@ import {fas} from '@fortawesome/free-solid-svg-icons';
 import Tooltip from 'primevue/tooltip';
 import ToastService from 'primevue/toastservice';
 import Ripple from 'primevue/ripple';
+import Lara from '@primevue/themes/lara'
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel'
 
 library.add(fas)
 
 createInertiaApp({
-  title: (title) => `${title} - ${appName}`,
-  resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
-  setup({el, App, props, plugin}) {
-    return createApp({render: () => h(App, props)})
-        .use(plugin)
-        .use(PrimeVue)
-        .use(ZiggyVue, Ziggy)
-        .use(DialogService)
-        .use(ConfirmationService)
-        .use(ToastService)
-        .component('Link', Link)
-        .component('RouterLink', Link)
-        .directive('tooltip', Tooltip)
-        .directive('ripple', Ripple)
-        .mount(el)
-  },
-  progress: {
-    color: '#06b6d4',
-  },
+    title: (title) => `${title} - ${appName}`,
+    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
+    setup({el, App, props, plugin}) {
+        return createApp({render: () => h(App, props)})
+            .use(plugin)
+            .use(PrimeVue, {
+                theme: {
+                    preset: Lara
+                }
+            })
+            .use(ZiggyVue, Ziggy)
+            .use(DialogService)
+            .use(ConfirmationService)
+            .use(ToastService)
+            .component('Link', Link)
+            .component('RouterLink', Link)
+            .directive('tooltip', Tooltip)
+            .directive('ripple', Ripple)
+            .mount(el)
+    },
+    progress: {
+        color: '#06b6d4',
+    },
 })

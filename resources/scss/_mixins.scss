@@ -1,3 +1,5 @@
+@use 'primeflex/core/variables' as *;
+
 @mixin sm {
     @media screen and (max-width: $sm) {
         @content;

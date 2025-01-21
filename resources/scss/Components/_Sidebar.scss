@@ -1,3 +1,6 @@
+@use '../mixins' as *;
+@import "primeflex/primeflex.scss";
+
 .sidebar {
     &__content {
         background: var(--surface-0);

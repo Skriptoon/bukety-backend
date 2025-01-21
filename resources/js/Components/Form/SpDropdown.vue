@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="p-float-label mb-2">
-            <dropdown
+            <Select
                 v-model="modelValue[name]"
                 class="w-full"
                 :options="options"
@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import Dropdown from 'primevue/dropdown';
+import Select from 'primevue/select';
 
 export default {
     name: 'SpDropdown',
 
     components: {
-        Dropdown,
+        Select,
     },
 
     props: {

@@ -1,18 +1,18 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3'
+import {useForm} from '@inertiajs/vue3'
 import SpInput from '@/Components/Form/SpInput.vue'
 import SpFileInput from '@/Components/Form/SpFileInput.vue'
 import SpCheckbox from '@/Components/Form/SpCheckbox.vue'
 import Button from 'primevue/button'
 import Image from 'primevue/image'
 import Icon from '@/Components/Icon.vue'
-import { ref } from 'vue'
+import {ref} from 'vue'
 import SpMultiSelect from '@/Components/Form/SpMultiSelect.vue'
 import SpTextarea from '@/Components/Form/SpTextarea.vue'
-import SpWysiwyg from '@/Components/Form/SpWysiwyg.vue'
 import SpAutocomplete from '@/Components/Form/SpAutocomplete.vue'
 import axios from 'axios'
 import SpDropdown from '@/Components/Form/SpDropdown.vue'
+import SpEditor from "@/Components/Form/SpEditor.vue";
 
 const props = defineProps({
   product: Object,
@@ -133,7 +133,7 @@ async function searchIngredients(event) {
       />
     </div>
     <div class="mt-5">
-      <SpWysiwyg
+      <SpEditor
           v-model="form"
           name="description"
           label="Описание"

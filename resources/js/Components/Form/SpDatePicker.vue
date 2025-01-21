@@ -1,13 +1,12 @@
 <template>
   <div>
     <div class="p-float-label mb-2">
-      <calendar
+      <DatePicker
           v-model="modelValue[name]"
           class="w-full"
           placeholder="Действует до"
-          dateFormat="dd.mm.yy"
-          selectOtherMonths
-          show-button-bar
+          date-format="dd.mm.yy"
+          select-other-months
           :class="{'p-invalid': modelValue.errors[name]}"
           :show-button-bar="showButtonBar"
           :min-date="minDate"
@@ -26,13 +25,13 @@
 </template>
 
 <script>
-import Calendar from 'primevue/calendar';
+import DatePicker from 'primevue/datepicker';
 
 export default  {
   name: 'SpDatePicker',
 
   components: {
-    Calendar,
+      DatePicker,
   },
 
   props: {
