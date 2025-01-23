@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p-float-label">
+    <FloatLabel class="mt-8">
       <MultiSelect
           v-model="modelValue[name]"
           :id="name"
@@ -15,7 +15,7 @@
           aria-describedby="dd-error"
       />
       <label :for="name">{{ label }}</label>
-    </div>
+    </FloatLabel>
     <small
         v-if="modelValue.errors[name]"
         :id="name"
@@ -28,12 +28,14 @@
 
 <script>
 import MultiSelect from 'primevue/multiselect';
+import FloatLabel from 'primevue/floatlabel'
 
 export default {
   name: 'SpMultiSelect',
 
   components: {
     MultiSelect,
+    FloatLabel
   },
 
   props: {

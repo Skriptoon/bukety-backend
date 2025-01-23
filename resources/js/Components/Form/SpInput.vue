@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p-float-label mb-2">
+    <FloatLabel class="mt-8">
       <InputGroup>
         <inputText
             v-if="!number"
@@ -32,7 +32,7 @@
           <slot name="postAddon" />
         </InputGroupAddon>
       </InputGroup>
-    </div>
+    </FloatLabel>
     <small
         v-if="modelValue.errors[name]"
         :id="name"
@@ -48,6 +48,7 @@ import InputText from 'primevue/inputtext';
 import InputNumber from 'primevue/inputnumber';
 import InputGroup from 'primevue/inputgroup'
 import InputGroupAddon from 'primevue/inputgroupaddon'
+import FloatLabel from 'primevue/floatlabel'
 
 export default {
   name: 'SpInput',
@@ -57,6 +58,7 @@ export default {
     InputGroup,
     InputText,
     InputNumber,
+    FloatLabel,
   },
 
   props: {

@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head } from '@inertiajs/vue3'
+import {Head} from '@inertiajs/vue3'
 import Block from '@/Components/Block.vue'
 import ActionButtonGroup from '@/Components/ActionButtonGroup.vue'
 import PromoCodesTable from '@/Components/PromoCodes/PromoCodesTable.vue'
@@ -12,7 +12,7 @@ defineProps({
 
 const breadcrumbs = [
   {
-    icon: 'pi pi-home',
+    icon: 'fa-solid fa-house',
     to: route('dashboard'),
   },
   {

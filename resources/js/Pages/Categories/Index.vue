@@ -2,7 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import Block from '@/Components/Block.vue'
 import CategoryTable from '@/Components/Category/CategoryTable.vue'
-import { Head } from '@inertiajs/vue3'
+import {Head} from '@inertiajs/vue3'
 import ActionButtonGroup from '@/Components/ActionButtonGroup.vue'
 import Button from 'primevue/button'
 
@@ -12,7 +12,7 @@ defineProps({
 
 const breadcrumbs = [
   {
-    icon: 'pi pi-home',
+    icon: 'fa-solid fa-house',
     to: route('dashboard'),
   },
   {

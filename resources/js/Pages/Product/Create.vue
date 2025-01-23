@@ -1,9 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import ProductForm from '@/Components/Product/ProductForm.vue'
-import { computed } from 'vue'
+import {computed} from 'vue'
 import Block from '@/Components/Block.vue'
-import { Head } from '@inertiajs/vue3'
+import {Head} from '@inertiajs/vue3'
 
 defineProps({
   categories: Array,
@@ -14,7 +14,7 @@ defineProps({
 const breadcrumbs = computed(() => {
   return [
     {
-      icon: 'pi pi-home',
+      icon: 'fa-solid fa-house',
       to: route('dashboard'),
     },
     {

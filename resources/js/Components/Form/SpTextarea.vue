@@ -1,7 +1,8 @@
 <script setup>
 import Textarea from 'primevue/textarea'
+import FloatLabel from 'primevue/floatlabel'
 
-const props = defineProps({
+defineProps({
   modelValue: Object,
   name: String,
   label: String,
@@ -10,7 +11,7 @@ const props = defineProps({
 
 <template>
   <div>
-    <div class="p-float-label">
+    <FloatLabel class="mt-8">
       <Textarea
           v-model="modelValue[name]"
           auto-resize
@@ -18,7 +19,7 @@ const props = defineProps({
           :id="name"
       />
       <label :for="name">{{ label }}</label>
-    </div>
+    </FloatLabel>
     <small
         v-if="modelValue.errors[name]"
         :id="name"

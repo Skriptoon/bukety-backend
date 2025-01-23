@@ -1,56 +1,61 @@
 <template>
-    <Drawer
-        v-model:visible="visibleModel"
-        :modal="false"
-        :show-close-icon="false"
-        :dismissable="false"
+  <Drawer
+      v-model:visible="visibleModel"
+      :modal="false"
+      :show-close-icon="false"
+      :dismissable="false"
+  >
+    <template #header>
+      <div class="flex items-center justify-between px-6 pt-4 shrink-0">
+                <span class="inline-flex items-center gap-2">
+                    <img width="30" src="/storage/images/logo.png" alt="logo"/>
+                    <span class="font-semibold text-2xl text-primary">Букетница</span>
+                </span>
+      </div>
+    </template>
+    <i
+        class="sidebar__back-button pi pi-arrow-left"
+        @click="$emit('update:modelValue', false)"
+    />
+    <div
+        v-for="(link, index) in links"
+        :key="index"
+        class="p-2 text-xl"
     >
-        <template #header>
-            Букетница
-        </template>
-        <i
-            class="sidebar__back-button pi pi-arrow-left"
-            @click="$emit('update:modelValue', false)"
-        />
-        <div
-            v-for="(link, index) in links"
-            :key="index"
-            class="sidebar__link"
-        >
-            <Link :href="link.url" class="white-space-nowrap">
-                <icon :icon="link.icon"><span class="sidebar__link-text">{{ link.title }}</span></icon>
-            </Link>
-        </div>
-    </Drawer>
+      <Link :href="link.url" class="white-space-nowrap">
+        <icon :icon="link.icon"><span class="ml-2">{{ link.title }}</span></icon>
+      </Link>
+    </div>
+  </Drawer>
 </template>
 
 <script>
 import Icon from '@/Components/Icon.vue'
-import Drawer from "primevue/drawer";
+import Drawer from 'primevue/drawer';
 
 export default {
   name: 'Sidebar',
 
   components: {
     Icon,
-      Drawer
+    Drawer,
   },
 
   props: {
     modelValue: Boolean,
-      visible: Boolean,
+    visible: Boolean,
   },
 
-    computed: {
-      visibleModel: {
-          get() {
-              return this.visible
-          },
-          set(value) {
-              this.$emit('update:visible', value)
-          }
-      }
+  computed: {
+    visibleModel: {
+      get() {
+        return this.visible
+      },
+      set(value) {
+        this.$emit('update:visible', value)
+      },
     },
+  },
 
   data: () => ({
     section: null,
@@ -86,6 +91,6 @@ export default {
 
   mounted() {
     this.section = this.$page.props.selectedSection ?? 0
-  }
+  },
 }
 </script>

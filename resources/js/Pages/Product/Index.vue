@@ -1,8 +1,8 @@
 <script>
-import { Head } from '@inertiajs/vue3'
+import {Head} from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import ProductTable from '@/Components/Product/ProductTable.vue'
-import { defineComponent } from 'vue'
+import {defineComponent} from 'vue'
 import Block from '@/Components/Block.vue'
 import ActionButtonGroup from '@/Components/ActionButtonGroup.vue'
 import Button from 'primevue/button'
@@ -20,7 +20,7 @@ export default defineComponent({
   data: () => ({
     breadcrumbs: [
       {
-        icon: 'pi pi-home',
+        icon: 'fa-solid fa-house',
         to: route('dashboard'),
       },
       {

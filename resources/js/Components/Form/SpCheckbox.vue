@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p-float-label mb-2">
+    <div class="mt-8">
       <Checkbox
           v-if="!switcher"
           v-model="model[name]"
@@ -47,7 +47,7 @@ export default {
   name: 'SpCheckbox',
 
   components: {
-      ToggleSwitch,
+    ToggleSwitch,
     Checkbox,
   },
 

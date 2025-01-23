@@ -149,14 +149,14 @@ function page(data) {
         </Dropdown>
       </template>
       <template #body="{ data }">
-        <div>
+        <divZ class="flex gap-1 flex-wrap">
           <Tag
             v-for="(category, index) in data.categories"
             :key="index"
           >
             {{ category.name }}
           </Tag>
-        </div>
+        </divZ>
       </template>
     </Column>
     <Column style="width: 200px">

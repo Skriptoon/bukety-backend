@@ -26,6 +26,7 @@ defineProps({
           alignleft aligncenter alignright alignjustify | \
           bullist numlist outdent indent | removeformat | help'
       }"
+        api-key="2i85nyo5tx6d5bg7m49fxo96at2okw0zn6i6pflg97j21nre"
     />
 </template>
 

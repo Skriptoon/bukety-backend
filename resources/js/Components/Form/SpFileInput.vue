@@ -1,6 +1,6 @@
 <script setup>
 import FileUpload from 'primevue/fileupload'
-import { ref } from 'vue'
+import {ref} from 'vue'
 
 const props = defineProps({
   modelValue: Object,

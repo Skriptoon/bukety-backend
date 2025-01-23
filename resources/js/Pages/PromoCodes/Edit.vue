@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head } from '@inertiajs/vue3'
-import { computed } from 'vue'
+import {Head} from '@inertiajs/vue3'
+import {computed} from 'vue'
 import Block from '@/Components/Block.vue'
 import PromoCodesForm from '@/Components/PromoCodes/PromoCodesForm.vue'
 
@@ -12,7 +12,7 @@ const props = defineProps({
 const breadcrumbs = computed(() => {
   return [
     {
-      icon: 'pi pi-home',
+      icon: 'fa-solid fa-house',
       to: route('dashboard'),
     },
     {

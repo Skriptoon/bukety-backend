@@ -1,12 +1,12 @@
 <script setup>
 import OrderTable from '@/Components/Order/OrderTable.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head } from '@inertiajs/vue3'
+import {Head} from '@inertiajs/vue3'
 import Block from '@/Components/Block.vue'
 
 const breadcrumbs = [
   {
-    icon: 'pi pi-home',
+    icon: 'fa-solid fa-house',
     to: route('dashboard'),
   },
   {

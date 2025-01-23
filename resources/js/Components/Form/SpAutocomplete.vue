@@ -1,5 +1,6 @@
 <script setup>
 import AutoComplete from 'primevue/autocomplete'
+import FloatLabel from 'primevue/floatlabel'
 
 defineProps({
   modelValue: Object,
@@ -13,7 +14,7 @@ defineEmits(['complete'])
 
 <template>
   <div>
-    <div class="p-float-label">
+    <FloatLabel class="mt-8">
       <AutoComplete
           v-model="modelValue[name]"
           multiple
@@ -21,7 +22,7 @@ defineEmits(['complete'])
           @complete="$emit('complete', $event)"
       />
       <label :for="name">{{ label }}</label>
-    </div>
+    </FloatLabel>
     <small
         v-if="modelValue.errors[name]"
         :id="name"

@@ -6,41 +6,25 @@
     />
     <Sidebar v-model="openSidebar" v-model:visible="visibleSidebar"/>
     <header
-        class="authenticated-layout__headertransition-[margin-left] duration-300 ml-0"
-            :class="{
+        class="authenticated-layout__header transition-[margin-left] duration-300 ml-0 flex items-center px-4"
+        :class="{
           '!ml-[330px]': visibleSidebar,
         }"
     >
-        <Button  @click="visibleSidebar = !visibleSidebar">
-            <Icon icon="fa-solid fa-bars"/>
-        </Button>
-      <div class="authenticated-layout__user-menu">
-        <menubar :model="menu">
-          <template #item="{item}">
-            <Link
-                v-if="item.to"
-                :href="item.to"
-                class="p-menuitem-link"
-            >{{ item.label }}
-            </Link>
-            <span
-                v-else
-                class="p-menuitem-link"
-            >{{ item.label }}</span>
-          </template>
-        </menubar>
-      </div>
+      <Button @click="toggleSidebar">
+        <Icon icon="fa-solid fa-bars"/>
+      </Button>
       <div class="flex justify-content-between flex-wrap card-container">
         <div class="authenticated-layout__breadcrumbs">
-          <breadcrumb :model="breadcrumb">
+          <breadcrumb :model="breadcrumb" class="!bg-transparent">
             <template #item="{item}">
               <Link
                   class="p-menuitem-link"
                   :href="item.to ?? ''"
               >
-                <span
+                <Icon
                     v-if="item.icon"
-                    :class="item.icon"
+                    :icon="item.icon"
                 />
                 <span
                     v-if="item.label"
@@ -55,7 +39,7 @@
       </div>
     </header>
     <main
-        class="authenticated-layout__content transition-[margin-left] duration-300 ml-0"
+        class="authenticated-layout__content transition-[margin-left] duration-300 ml-0 p-4"
         :class="{
           '!ml-[330px]': visibleSidebar,
         }"
@@ -69,21 +53,19 @@
 <script>
 import Sidebar from '@/Components/Sidebar.vue'
 import Breadcrumb from 'primevue/breadcrumb'
-import Menubar from 'primevue/menubar'
 import Toast from 'primevue/toast';
-import Button from "primevue/button";
-import Icon from "@/Components/Icon.vue";
+import Button from 'primevue/button';
+import Icon from '@/Components/Icon.vue';
 
 export default {
   name: 'AuthenticatedLayout',
 
   components: {
-      Icon,
+    Icon,
     Breadcrumb,
     Sidebar,
-    Menubar,
     Toast,
-      Button,
+    Button,
   },
 
   props: {
@@ -113,6 +95,10 @@ export default {
         })
       }
     })
+
+    if (localStorage.getItem('visibleSidebar') !== null) {
+      this.visibleSidebar = Boolean(Number(localStorage.getItem('visibleSidebar')))
+    }
   },
 
   data() {
@@ -129,8 +115,15 @@ export default {
         },
       ],
       openSidebar: false,
-        visibleSidebar: true,
+      visibleSidebar: true,
     }
+  },
+
+  methods: {
+    toggleSidebar() {
+      this.visibleSidebar = !this.visibleSidebar
+      localStorage.setItem('visibleSidebar', Number(this.visibleSidebar))
+    },
   },
 }
 </script>

@@ -22,7 +22,7 @@ export default {
     return {
       breadcrumb: [
         {
-          icon: 'pi pi-home',
+          icon: 'fa-solid fa-house',
         },
       ],
     }

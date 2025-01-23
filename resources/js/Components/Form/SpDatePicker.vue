@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="p-float-label mb-2">
+    <FloatLabel class="mt-8">
       <DatePicker
           v-model="modelValue[name]"
           class="w-full"
@@ -13,7 +13,7 @@
           @focus="modelValue.errors[name] = null"
       />
       <label :for="name">{{ label }}</label>
-    </div>
+    </FloatLabel>
     <small
         v-if="modelValue.errors[name]"
         :id="name"
@@ -26,12 +26,15 @@
 
 <script>
 import DatePicker from 'primevue/datepicker';
+import FloatLabel from 'primevue/floatlabel'
 
-export default  {
+
+export default {
   name: 'SpDatePicker',
 
   components: {
-      DatePicker,
+    DatePicker,
+    FloatLabel
   },
 
   props: {
