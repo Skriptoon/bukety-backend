@@ -1,7 +1,7 @@
 <template>
   <Drawer
       v-model:visible="visibleModel"
-      :modal="!isLg"
+      :modal="false"
       :show-close-icon="!isLg"
       :dismissable="false"
   >

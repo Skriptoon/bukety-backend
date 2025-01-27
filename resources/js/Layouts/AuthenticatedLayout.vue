@@ -103,6 +103,10 @@ export default {
     if (localStorage.getItem('visibleSidebar') !== null) {
       this.visibleSidebar = Boolean(Number(localStorage.getItem('visibleSidebar')))
     }
+
+    if (!this.isLg) {
+      this.visibleSidebar = false
+    }
   },
 
   data() {
