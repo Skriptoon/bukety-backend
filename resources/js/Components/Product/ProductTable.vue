@@ -30,8 +30,11 @@ const confirm = useConfirm()
 let getParams = (new URL(document.location)).searchParams;
 
 const filters = ref({
-  category: { value: getParams.get('category') ? Number(getParams.get('category')) : null, matchMode: FilterMatchMode.CONTAINS },
-  name: { value: getParams.get('name'), matchMode: FilterMatchMode.CONTAINS },
+  category: {
+    value: getParams.get('category') ? Number(getParams.get('category')) : null,
+    matchMode: FilterMatchMode.CONTAINS
+  },
+  name: {value: getParams.get('name'), matchMode: FilterMatchMode.CONTAINS},
 })
 
 
@@ -40,7 +43,7 @@ let nameFilterInput = ref(null)
 onMounted(() => {
   const nameFilter = Inertia.restore('nameFilter')
   if (getParams.get('name') !== String(nameFilter)) {
-      nameFilterInput.value.$el.focus()
+    nameFilterInput.value.$el.focus()
   }
   Inertia.remember('nameFilter', getParams.get('name'))
 })
@@ -107,13 +110,14 @@ function page(data) {
       style="width: 100px"
     >
       <template #body="{ data }">
-          <a :href="route('get-image-with-description', data.id)" target="_blank">
-            <Image
-              width="70"
-              height="70"
-              :src="'/storage/' + data.image"
-            />
-          </a>
+        <a :href="route('get-image-with-description', data.id)" target="_blank">
+          <Image
+            class="max-w-none"
+            width="70"
+            height="70"
+            :src="'/storage/' + data.image"
+          />
+        </a>
       </template>
     </Column>
     <Column
@@ -122,7 +126,7 @@ function page(data) {
       header="Название"
     >
       <template #filter="{ filterModel, filterCallback }">
-        <InputText ref="nameFilterInput" v-model="filterModel.value" @input="filterCallback" />
+        <InputText ref="nameFilterInput" v-model="filterModel.value" @input="filterCallback"/>
       </template>
       <template #body="{ data }">
         <h4>{{ data.name }}</h4>
@@ -167,7 +171,7 @@ function page(data) {
             class="p-button-primary"
           >
             <template #icon>
-              <FontAwesomeIcon icon="edit" />
+              <FontAwesomeIcon icon="edit"/>
             </template>
           </Button>
         </Link>
@@ -178,11 +182,11 @@ function page(data) {
           @click="deleteConfirm($event, data.id)"
         >
           <template #icon>
-            <FontAwesomeIcon icon="trash" />
+            <FontAwesomeIcon icon="trash"/>
           </template>
         </Button>
       </template>
     </Column>
   </DataTable>
-  <ConfirmPopup />
+  <ConfirmPopup/>
 </template>

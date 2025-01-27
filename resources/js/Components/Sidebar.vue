@@ -1,8 +1,8 @@
 <template>
   <Drawer
       v-model:visible="visibleModel"
-      :modal="false"
-      :show-close-icon="false"
+      :modal="!isLg"
+      :show-close-icon="!isLg"
       :dismissable="false"
   >
     <template #header>
@@ -54,6 +54,10 @@ export default {
       set(value) {
         this.$emit('update:visible', value)
       },
+    },
+
+    isLg() {
+      return window.innerWidth > 1024
     },
   },
 

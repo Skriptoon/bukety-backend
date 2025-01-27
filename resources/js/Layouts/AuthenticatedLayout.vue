@@ -8,7 +8,7 @@
     <header
         class="authenticated-layout__header transition-[margin-left] duration-300 ml-0 flex items-center px-4"
         :class="{
-          '!ml-[330px]': visibleSidebar,
+          '!ml-[330px]': visibleSidebar && isLg,
         }"
     >
       <Button @click="toggleSidebar">
@@ -41,7 +41,7 @@
     <main
         class="authenticated-layout__content transition-[margin-left] duration-300 ml-0 p-4"
         :class="{
-          '!ml-[330px]': visibleSidebar,
+          '!ml-[330px]': visibleSidebar  && isLg,
         }"
     >
       <slot/>
@@ -78,6 +78,10 @@ export default {
   computed: {
     userLoaded() {
       return this.$page.props.auth.user
+    },
+
+    isLg() {
+      return window.innerWidth > 1024
     },
   },
 
