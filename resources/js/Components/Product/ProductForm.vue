@@ -12,7 +12,7 @@ import SpTextarea from '@/Components/Form/SpTextarea.vue'
 import SpAutocomplete from '@/Components/Form/SpAutocomplete.vue'
 import axios from 'axios'
 import SpDropdown from '@/Components/Form/SpDropdown.vue'
-import SpEditor from "@/Components/Form/SpEditor.vue";
+import SpEditor from '@/Components/Form/SpEditor.vue';
 
 const props = defineProps({
   product: Object,
@@ -55,10 +55,14 @@ function sendForm() {
 
   if (props.product?.id) {
     form._method = 'PUT'
-    form.post(route('products.update', props.product.id))
+    form.post(route('products.update', props.product.id), {
+        forceFormData: true,
+    })
   } else {
-    form._method = 'POST'
-    form.post(route('products.store'))
+    form._method = undefined
+    form.post(route('products.store'), {
+        forceFormData: true,
+    })
   }
 
   form.gallery = [...tempGallery]
