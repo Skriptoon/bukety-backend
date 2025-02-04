@@ -1,51 +1,49 @@
 <template>
   <div>
-    <FloatLabel class="mt-8">
+    <FloatLabel variant="on">
       <InputGroup>
         <inputText
-            v-if="!number"
-            v-model="model[name]"
-            class="w-full"
-            :id="name"
-            :class="{'p-invalid': modelValue.errors[name]}"
-            :aria-describedby="name"
-            :disabled="disabled"
-            @focus="model.errors[name] = null"
+          v-if="!number"
+          :id="name"
+          v-model="model"
+          :disabled="disabled"
+          :invalid="Boolean(error)"
+          class="w-full"
+          @focus="$emit('reset-validation')"
         />
         <InputNumber
-            v-else
-            v-model="model[name]"
-            class="w-full"
-            :id="name"
-            :class="{'p-invalid': modelValue.errors[name]}"
-            :aria-describedby="name"
-            :disabled="disabled"
-            :mode="mode"
-            :currency="currency"
-            :min="min"
-            :max="max"
-            :suffix="suffix"
-            @focus="model.errors[name] = null"
+          v-else
+          :id="name"
+          v-model="model"
+          :aria-describedby="name"
+          :currency="currency"
+          :disabled="disabled"
+          :invalid="Boolean(error)"
+          :max="max"
+          :min="min"
+          :mode="mode"
+          :suffix="suffix"
+          class="w-full"
+          @focus="$emit('reset-validation')"
         />
         <label :for="name">{{ label }}</label>
         <InputGroupAddon v-if="$slots.postAddon">
-          <slot name="postAddon" />
+          <slot name="postAddon"/>
         </InputGroupAddon>
       </InputGroup>
     </FloatLabel>
     <small
-        v-if="modelValue.errors[name]"
-        :id="name"
-        class="p-error"
+      :id="name"
+      class="text-rose-600"
     >
-      {{ modelValue.errors[name] }}
+      {{ error }}
     </small>
   </div>
 </template>
 
 <script>
-import InputText from 'primevue/inputtext';
-import InputNumber from 'primevue/inputnumber';
+import InputText from 'primevue/inputtext'
+import InputNumber from 'primevue/inputnumber'
 import InputGroup from 'primevue/inputgroup'
 import InputGroupAddon from 'primevue/inputgroupaddon'
 import FloatLabel from 'primevue/floatlabel'
@@ -62,7 +60,7 @@ export default {
   },
 
   props: {
-    modelValue: Object,
+    modelValue: [String, Number, null],
 
     name: {
       type: String,
@@ -71,11 +69,12 @@ export default {
     label: String,
     disabled: Boolean,
     number: Boolean,
-    mode: 'decimal' | 'currency' | undefined,
+    mode: [String, undefined],
     currency: String,
     min: Number,
     max: Number,
     suffix: String,
+    error: String,
   },
 
   computed: {

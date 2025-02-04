@@ -1,40 +1,39 @@
 <template>
   <div>
-    <FloatLabel class="mt-8">
+    <FloatLabel variant="on">
       <DatePicker
-          v-model="modelValue[name]"
-          class="w-full"
-          placeholder="Действует до"
-          date-format="dd.mm.yy"
-          select-other-months
-          :class="{'p-invalid': modelValue.errors[name]}"
-          :show-button-bar="showButtonBar"
-          :min-date="minDate"
-          @focus="modelValue.errors[name] = null"
+        v-model="model"
+        :invalid="Boolean(error)"
+        :min-date="minDate"
+        :show-button-bar="showButtonBar"
+        class="w-full"
+        date-format="dd.mm.yy"
+        placeholder="Действует до"
+        select-other-months
+        @focus="$emit('reset-validation')"
       />
       <label :for="name">{{ label }}</label>
     </FloatLabel>
     <small
-        v-if="modelValue.errors[name]"
-        :id="name"
-        class="p-error"
+      v-if="error"
+      :id="name"
+      class="text-rose-600"
     >
-      {{ modelValue.errors[name] }}
+      {{ error }}
     </small>
   </div>
 </template>
 
 <script>
-import DatePicker from 'primevue/datepicker';
+import DatePicker from 'primevue/datepicker'
 import FloatLabel from 'primevue/floatlabel'
-
 
 export default {
   name: 'SpDatePicker',
 
   components: {
     DatePicker,
-    FloatLabel
+    FloatLabel,
   },
 
   props: {
@@ -46,10 +45,18 @@ export default {
     label: String,
     showButtonBar: Boolean,
     minDate: Object,
+    error: String,
   },
-};
+
+  computed: {
+    model: {
+      get() {
+        return this.modelValue
+      },
+      set(value) {
+        this.$emit('update:modelValue', value)
+      },
+    },
+  },
+}
 </script>
-
-<style scoped>
-
-</style>

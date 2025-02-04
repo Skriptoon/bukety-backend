@@ -1,34 +1,45 @@
 <script setup>
 import AutoComplete from 'primevue/autocomplete'
 import FloatLabel from 'primevue/floatlabel'
+import { computed } from 'vue'
 
-defineProps({
+const props = defineProps({
   modelValue: Object,
   name: String,
   label: String,
   items: Array,
+  error: String,
 })
 
-defineEmits(['complete'])
+const emit = defineEmits(['complete', 'update:modelValue'])
+
+const model = computed({
+  get() {
+    return props.modelValue
+  },
+  set(value) {
+    emit('update:modelValue', value)
+  },
+})
 </script>
 
 <template>
   <div>
-    <FloatLabel class="mt-8">
+    <FloatLabel variant="on">
       <AutoComplete
-          v-model="modelValue[name]"
-          multiple
-          :suggestions="items"
-          @complete="$emit('complete', $event)"
+        v-model="model"
+        :suggestions="items"
+        multiple
+        @complete="$emit('complete', $event)"
       />
       <label :for="name">{{ label }}</label>
     </FloatLabel>
     <small
-        v-if="modelValue.errors[name]"
-        :id="name"
-        class="p-error"
+      v-if="error"
+      :id="name"
+      class="text-rose-600"
     >
-      {{ modelValue.errors[name] }}
+      {{ error }}
     </small>
   </div>
 </template>
