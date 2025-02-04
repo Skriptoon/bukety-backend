@@ -59,7 +59,7 @@ function sendForm() {
         forceFormData: true,
     })
   } else {
-    delete form._method
+    form._method = 'POST'
     form.post(route('products.store'), {
         forceFormData: true,
     })
