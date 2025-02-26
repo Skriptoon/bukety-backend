@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Lacodix\LaravelModelFilter\Traits\HasFilters;
 use Storage;
@@ -27,7 +26,6 @@ use Storage;
  * @property string $slug
  * @property string $description
  * @property string|null $vk_description
- * @property string $preview_description
  * @property string|null $seo_description
  * @property float $price
  * @property string $image
@@ -83,7 +81,6 @@ class Product extends Model
         'main_category_id',
         'description',
         'vk_description',
-        'preview_description',
         'seo_description',
         'price',
         'old_price',

@@ -31,7 +31,6 @@ class ProductResource extends JsonResource
             'main_category' => new CategoryListResource(
                 $this->resource->mainCategory ?? $this->resource->categories()->first()
             ),
-            'preview_description' => $this->resource->preview_description,
             'description' => $this->resource->description,
             'seo_description' => $seoDescription,
             'price' => $this->resource->price,

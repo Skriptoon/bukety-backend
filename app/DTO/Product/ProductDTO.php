@@ -15,7 +15,6 @@ class ProductDTO extends Data
      * @param  array  $categories
      * @param  string  $description
      * @param  string|null  $vk_description
-     * @param  string  $preview_description
      * @param  string|null  $seo_description
      * @param  float  $price
      * @param  float|null  $old_price
@@ -32,7 +31,6 @@ class ProductDTO extends Data
         public array $categories,
         public string $description,
         public ?string $vk_description,
-        public string $preview_description,
         public ?string $seo_description,
         public float $price,
         public ?float $old_price,

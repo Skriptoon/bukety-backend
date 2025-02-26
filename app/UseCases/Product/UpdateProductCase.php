@@ -35,7 +35,6 @@ readonly class UpdateProductCase
             'main_category_id' => $data->main_category,
             'description' => $data->description,
             'vk_description' => $data->vk_description,
-            'preview_description' => $data->preview_description,
             'seo_description' => $data->seo_description,
             'price' => $data->price,
             'old_price' => $data->old_price,

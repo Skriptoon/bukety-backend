@@ -40,11 +40,6 @@ class StoreProductRequest extends FormRequest
                 'string',
                 'max:255',
             ],
-            'preview_description' => [
-                'required',
-                'string',
-                'max:255',
-            ],
             'seo_description' => [
                 'nullable',
                 'string',

@@ -43,7 +43,6 @@ class ProductTest extends TestCase
             'categories' => $categories->pluck('id')->toArray(),
             'description' => $this->faker->text(),
             'vk_description' => $this->faker->text(),
-            'preview_description' => $this->faker->text(),
             'seo_description' => $this->faker->text(),
             'price' => $this->faker->randomFloat(2),
             'whom' => $this->faker->randomElements($whom),
@@ -68,7 +67,6 @@ class ProductTest extends TestCase
         $this->assertEquals($productData['categories'], $product->categories->pluck('id')->toArray());
         $this->assertEquals($productData['description'], $product->description);
         $this->assertEquals($productData['vk_description'], $product->vk_description);
-        $this->assertEquals($productData['preview_description'], $product->preview_description);
         $this->assertEquals($productData['seo_description'], $product->seo_description);
         $this->assertEquals($productData['price'], $product->price);
         $this->assertEquals($productData['old_price'], $product->old_price);
@@ -103,7 +101,6 @@ class ProductTest extends TestCase
             'categories' => $categories->pluck('id')->toArray(),
             'description' => $this->faker->text(),
             'vk_description' => $this->faker->text(),
-            'preview_description' => $this->faker->text(),
             'seo_description' => $this->faker->text(),
             'price' => $this->faker->randomFloat(2),
             'whom' => $this->faker->randomElements($whom),
@@ -128,7 +125,6 @@ class ProductTest extends TestCase
         $this->assertEquals($productData['categories'], $product->categories->pluck('id')->toArray());
         $this->assertEquals($productData['description'], $product->description);
         $this->assertEquals($productData['vk_description'], $product->vk_description);
-        $this->assertEquals($productData['preview_description'], $product->preview_description);
         $this->assertEquals($productData['seo_description'], $product->seo_description);
         $this->assertEquals($productData['price'], $product->price);
         $this->assertEquals($productData['old_price'], $product->old_price);

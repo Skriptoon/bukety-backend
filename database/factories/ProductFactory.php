@@ -29,7 +29,6 @@ class ProductFactory extends Factory
             'slug' => Str::slug($name),
             'description' => $this->faker->text(),
             'vk_description' => $this->faker->text(),
-            'preview_description' => $this->faker->text(),
             'seo_description' => $this->faker->text(),
             'price' => $this->faker->randomFloat(2, max: 10_000),
             'whom' => $whom,

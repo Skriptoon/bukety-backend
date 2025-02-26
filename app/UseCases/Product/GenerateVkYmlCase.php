@@ -16,7 +16,9 @@ class GenerateVkYmlCase
         $productModels = Product::active()->get();
         $categoryModels = Category::active()->get();
 
-        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><yml_catalog  date="' . date('Y-m-d H:i:s') . '"/>');
+        $xml = new SimpleXMLElement(
+            '<?xml version="1.0" encoding="UTF-8"?><yml_catalog  date="' . date('Y-m-d H:i:s') . '"/>'
+        );
         $shop = $xml->addChild('shop');
         $shop?->addChild('name', 'Букетница');
         $shop?->addChild('company', 'Букетница');
@@ -57,13 +59,13 @@ class GenerateVkYmlCase
             }
 
             $offer?->addChild('name', $productModel->name);
-            $offer?->addChild('url', config('app.frontend_url').'/product/'.$productModel->slug);
+            $offer?->addChild('url', config('app.frontend_url') . '/product/' . $productModel->slug);
 
-            $description = $productModel->preview_description."\n\n".$productModel->vk_description.
+            $description = strip_tags($productModel->description) . "\n\n" . $productModel->vk_description .
                 "\n\nБукет можно забрать самовывозом или мы отправим его Вам Яндекс доставкой к нужному времени.\n\n"
-                ."Цена - $productModel->price рублей действительна на ".date('d.m.Y').
+                . "Цена - $productModel->price рублей действительна на " . date('d.m.Y') .
                 " и может быть выше или ниже в зависимости от ваших пожеланий по составу и размера букета.\n\n"
-                .'Просто нажмите кнопку "Написать" и я с удовольствием приму ваш заказ.';
+                . 'Просто нажмите кнопку "Написать" и я с удовольствием приму ваш заказ.';
             $offer?->addChild('description', $description);
 
             foreach ($productModel->gallery_urls as $gallery_url) {

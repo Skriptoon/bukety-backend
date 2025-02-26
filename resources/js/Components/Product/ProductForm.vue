@@ -12,7 +12,7 @@ import SpTextarea from '@/Components/Form/SpTextarea.vue'
 import SpAutocomplete from '@/Components/Form/SpAutocomplete.vue'
 import axios from 'axios'
 import SpDropdown from '@/Components/Form/SpDropdown.vue'
-import SpEditor from "@/Components/Form/SpEditor.vue";
+import SpEditor from '@/Components/Form/SpEditor.vue';
 
 const props = defineProps({
   product: Object,
@@ -27,7 +27,6 @@ const form = useForm({
   name: props.product?.name ?? null,
   description: props.product?.description ?? null,
   vk_description: props.product?.vk_description ?? null,
-  preview_description: props.product?.preview_description ?? null,
   seo_description: props.product?.seo_description ?? null,
   price: props.product?.price ?? null,
   old_price: props.product?.old_price ?? null,
@@ -144,13 +143,6 @@ async function searchIngredients(event) {
           v-model="form"
           name="vk_description"
           label="Описание для ВК"
-      />
-    </div>
-    <div class="mt-5">
-      <SpInput
-          v-model="form"
-          name="preview_description"
-          label="Краткое описание"
       />
     </div>
     <div class="mt-5">
