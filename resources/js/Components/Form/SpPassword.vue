@@ -1,30 +1,30 @@
 <template>
   <div>
-    <FloatLabel class="mt-8">
-    <Password
-        v-model="modelValue[name]"
-        class="w-full"
+    <FloatLabel variant="on">
+      <Password
         :id="name"
-        :feedback="feedback"
-        :class="{'p-invalid': modelValue.errors[name]}"
+        v-model="model"
         :aria-describedby="name"
+        :feedback="feedback"
+        :invalid="Boolean(error)"
+        class="w-full"
         toggleMask
-        @focus="modelValue.errors[name] = null"
-    />
-    <label :for="name">{{ label }}</label>
+        @focus="$emit('reset-validation')"
+      />
+      <label :for="name">{{ label }}</label>
     </FloatLabel>
-  <small
-      v-if="modelValue.errors[name]"
+    <small
+      v-if="error"
       :id="name"
-      class="p-error"
-  >
-    {{ modelValue.errors[name] }}
-  </small>
+      class="text-rose-600"
+    >
+      {{ error }}
+    </small>
   </div>
 </template>
 
 <script>
-import Password from 'primevue/password';
+import Password from 'primevue/password'
 import FloatLabel from 'primevue/floatlabel'
 
 export default {
@@ -32,7 +32,7 @@ export default {
 
   components: {
     Password,
-    FloatLabel
+    FloatLabel,
   },
 
   props: {
@@ -47,6 +47,18 @@ export default {
       required: true,
     },
     feedback: Boolean,
+    error: String,
   },
-};
+
+  computed: {
+    model: {
+      get() {
+        return this.modelValue
+      },
+      set(value) {
+        this.$emit('update:modelValue', value)
+      },
+    },
+  },
+}
 </script>

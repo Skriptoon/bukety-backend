@@ -1,18 +1,19 @@
 <script setup>
 import FileUpload from 'primevue/fileupload'
-import {ref} from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
-  modelValue: Object,
+  modelValue: [Array , Object],
   name: {
     type: String,
     required: true,
   },
   label: String,
   multiple: Boolean,
+  error: String,
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'reset-validation'])
 
 const files = ref(null)
 
@@ -25,9 +26,8 @@ function updateFiles() {
     files.value.files = [...filesList]
   }
 
-  const form = {...props.modelValue}
-  form[props.name] = props.multiple ? files.value.files : files.value.files[0]
-  emit('update:modelValue', form)
+  emit('update:modelValue', props.multiple ? files.value.files : files.value.files[0])
+  emit('reset-validation')
 }
 </script>
 
@@ -38,21 +38,21 @@ function updateFiles() {
         <label>{{ label }}</label>
       </div>
       <FileUpload
-          ref="files"
-          :name="name"
-          :show-upload-button="false"
-          :show-cancel-button="false"
-          :multiple="multiple"
-          @remove="updateFiles"
-          @select="updateFiles"
+        ref="files"
+        :multiple="multiple"
+        :name="name"
+        :show-cancel-button="false"
+        :show-upload-button="false"
+        @remove="updateFiles"
+        @select="updateFiles"
       />
     </div>
     <small
-        v-if="modelValue.errors[name]"
-        :id="name"
-        class="p-error"
+      v-if="error"
+      :id="name"
+      class="text-rose-600"
     >
-      {{ modelValue.errors[name] }}
+      {{ error }}
     </small>
   </div>
 </template>

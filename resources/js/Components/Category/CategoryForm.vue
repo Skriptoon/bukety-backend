@@ -34,85 +34,91 @@ function sendForm() {
     form.post(route('categories.store'))
   }
 }
-function updateImage(val) {
-  form.image = val.image
-}
 </script>
 
 <template>
   <form @submit.prevent="sendForm">
     <div class="mt-2">
       <SpInput
-          v-model="form"
-          name="name"
-          label="Название"
+        v-model="form.name"
+        :error="form.errors.name"
+        label="Название"
+        name="name"
+        @reset-validation="form.errors.name = null"
       />
     </div>
     <div class="mt-5">
       <SpDropdown
-          v-model="form"
-          :options="categories"
-          name="parent_id"
-          label="Родительская категория"
+        v-model="form.parent_id"
+        :error="form.errors.parent_id"
+        :options="categories"
+        label="Родительская категория"
+        name="parent_id"
+        @reset-validation="form.errors.parent_id = null"
       />
     </div>
     <div class="mt-5">
       <SpTextarea
-          v-model="form"
-          name="description"
-          label="Описание"
+        v-model="form.description"
+        :error="form.errors.description"
+        label="Описание"
+        name="description"
+        @reset-validation="form.errors.description = null"
       />
     </div>
     <div class="mt-5">
       <SpTextarea
-          v-model="form"
-          name="seo_description"
-          label="SEO описание"
+        v-model="form.seo_description"
+        :error="form.errors.seo_description"
+        label="SEO описание"
+        name="seo_description"
+        @reset-validation="form.errors.seo_description = null"
       />
     </div>
     <div class="mt-5">
       <SpFileInput
-          v-model="form"
-          name="image"
-          label="Превью"
-          @update:modelValue="updateImage"
+        v-model="form.image"
+        :error="form.errors.image"
+        label="Превью"
+        name="image"
+        @reset-validation="form.errors.image = null"
       />
       <Image
-          v-if="category?.image"
-          :src="'/storage/' + category.image"
-          alt="preview"
-          width="250"
-          preview
+        v-if="category?.image"
+        :src="'/storage/' + category.image"
+        alt="preview"
+        preview
+        width="250"
       />
     </div>
     <div class="mt-5">
       <SpCheckbox
-          v-model="form"
-          name="show_in_main"
-          label="Отображать на главной"
-          switcher
+        v-model="form.show_in_main"
+        label="Отображать на главной"
+        name="show_in_main"
+        switcher
       />
     </div>
     <div class="mt-5">
       <SpCheckbox
-          v-model="form"
-          name="is_hidden"
-          label="Скрытая"
-          switcher
+        v-model="form.is_hidden"
+        label="Скрытая"
+        name="is_hidden"
+        switcher
       />
     </div>
     <div class="mt-5">
       <SpCheckbox
-          v-model="form"
-          name="is_active"
-          label="Активна"
-          switcher
+        v-model="form.is_active"
+        label="Активна"
+        name="is_active"
+        switcher
       />
     </div>
     <Button
-        severity="success"
-        class="mt-2"
-        type="submit"
+      class="mt-2"
+      severity="success"
+      type="submit"
     >
       {{ category?.id ? 'Сохранить' : 'Создать' }}
     </Button>

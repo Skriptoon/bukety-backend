@@ -1,33 +1,33 @@
 <template>
   <div>
-    <FloatLabel class="mt-8">
+    <FloatLabel variant="on">
       <MultiSelect
-          v-model="modelValue[name]"
-          :id="name"
-          :options="options"
-          :class="{ 'p-invalid': modelValue.errors[name] }"
-          :filter="filter"
-          class="w-full"
-          display="chip"
-          option-label="name"
-          option-value="id"
-          placeholder="Не выбрано"
-          aria-describedby="dd-error"
+        :id="name"
+        v-model="model"
+        :class="{ 'p-invalid': error }"
+        :filter="filter"
+        :options="options"
+        aria-describedby="dd-error"
+        class="w-full"
+        display="chip"
+        option-label="name"
+        option-value="id"
+        @focus="$emit('reset-validation')"
       />
       <label :for="name">{{ label }}</label>
     </FloatLabel>
     <small
-        v-if="modelValue.errors[name]"
-        :id="name"
-        class="p-error"
+      v-if="error"
+      :id="name"
+      class="text-rose-600"
     >
-      {{ modelValue.errors[name] }}
+      {{ error }}
     </small>
   </div>
 </template>
 
 <script>
-import MultiSelect from 'primevue/multiselect';
+import MultiSelect from 'primevue/multiselect'
 import FloatLabel from 'primevue/floatlabel'
 
 export default {
@@ -35,7 +35,7 @@ export default {
 
   components: {
     MultiSelect,
-    FloatLabel
+    FloatLabel,
   },
 
   props: {
@@ -44,6 +44,18 @@ export default {
     name: String,
     label: String,
     filter: Boolean,
+    error: String,
   },
-};
+
+  computed: {
+    model: {
+      get() {
+        return this.modelValue
+      },
+      set(value) {
+        this.$emit('update:modelValue', value)
+      },
+    },
+  },
+}
 </script>

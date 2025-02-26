@@ -1,12 +1,12 @@
 <script setup>
-import {useForm} from '@inertiajs/vue3'
+import { useForm } from '@inertiajs/vue3'
 import SpInput from '@/Components/Form/SpInput.vue'
 import SpFileInput from '@/Components/Form/SpFileInput.vue'
 import SpCheckbox from '@/Components/Form/SpCheckbox.vue'
 import Button from 'primevue/button'
 import Image from 'primevue/image'
 import Icon from '@/Components/Icon.vue'
-import {ref} from 'vue'
+import { ref } from 'vue'
 import SpMultiSelect from '@/Components/Form/SpMultiSelect.vue'
 import SpTextarea from '@/Components/Form/SpTextarea.vue'
 import SpAutocomplete from '@/Components/Form/SpAutocomplete.vue'
@@ -63,14 +63,6 @@ function sendForm() {
   form.gallery = [...tempGallery]
 }
 
-function updateImage(val) {
-  form.image = val.image
-}
-
-function updateGallery(val) {
-  form.gallery = val.gallery
-}
-
 function imageUp(index) {
   const tmp = gallery.value[index]
 
@@ -108,59 +100,73 @@ async function searchIngredients(event) {
   <form @submit.prevent="sendForm">
     <div class="mt-2">
       <SpInput
-          v-model="form"
-          name="name"
-          label="Название"
+        v-model="form.name"
+        :error="form.errors.name"
+        label="Название"
+        name="name"
+        @reset-validation="form.errors.name = null"
       />
     </div>
     <div class="mt-5">
       <SpDropdown
-          v-model="form"
-          name="main_category"
-          label="Основная категории"
-          :options="categories"
-          filter
+        v-model="form.main_category"
+        :error="form.errors.main_category"
+        :options="categories"
+        filter
+        label="Основная категории"
+        name="main_category"
+        @reset-validation="form.errors.main_category = null"
       />
     </div>
     <div class="mt-5">
       <SpMultiSelect
-          v-model="form"
-          name="categories"
-          label="Категории"
-          :options="categories"
-          filter
+        v-model="form.categories"
+        :error="form.errors.categories"
+        :options="categories"
+        filter
+        label="Категории"
+        name="categories"
+        @reset-validation="form.errors.categories = null"
       />
     </div>
     <div class="mt-5">
       <SpEditor
-          v-model="form"
-          name="description"
-          label="Описание"
+        v-model="form.description"
+        :error="form.errors.description"
+        label="Описание"
+        name="description"
+        @reset-validation="form.errors.description = null"
       />
     </div>
     <div class="mt-5">
       <SpTextarea
-          v-model="form"
-          name="vk_description"
-          label="Описание для ВК"
+        v-model="form.vk_description"
+        :error="form.errors.vk_description"
+        label="Описание для ВК"
+        name="vk_description"
+        @reset-validation="form.errors.vk_description = null"
       />
     </div>
     <div class="mt-5">
       <SpTextarea
-          v-model="form"
-          name="seo_description"
-          label="SEO описание"
+        v-model="form.seo_description"
+        :error="form.errors.seo_description"
+        label="SEO описание"
+        name="seo_description"
+        @reset-validation="form.errors.seo_description = null"
       />
     </div>
     <div class="mt-5">
       <SpInput
-          v-model="form"
-          name="price"
-          label="Цена"
-          number
-          mode="currency"
-          currency="RUB"
-          locale="ru-RU"
+        v-model="form.price"
+        :error="form.errors.price"
+        currency="RUB"
+        label="Цена"
+        locale="ru-RU"
+        mode="currency"
+        name="price"
+        number
+        @reset-validation="form.errors.price = null"
       >
         <template v-if="form.old_price" #postAddon>
           <div class="white-space-nowrap">
@@ -171,114 +177,126 @@ async function searchIngredients(event) {
     </div>
     <div class="mt-5">
       <SpInput
-          v-model="form"
-          name="old_price"
-          label="Старая цена"
-          number
-          mode="currency"
-          currency="RUB"
-          locale="ru-RU"
+        v-model="form.old_price"
+        :error="form.errors.old_price"
+        currency="RUB"
+        label="Старая цена"
+        locale="ru-RU"
+        mode="currency"
+        name="old_price"
+        number
+        @reset-validation="form.errors.old_price = null"
       />
     </div>
     <div class="mt-5">
       <SpMultiSelect
-          v-model="form"
-          name="whom"
-          label="Для кого"
-          :options="whomOptions"
+        v-model="form.whom"
+        :error="form.errors.whom"
+        :options="whomOptions"
+        label="Для кого"
+        name="whom"
+        @reset-validation="form.errors.whom = null"
       />
     </div>
     <div class="mt-5">
       <SpMultiSelect
-          v-model="form"
-          name="occasion"
-          label="Повод"
-          :options="occasionOptions"
+        v-model="form.occasion"
+        :error="form.errors.occasion"
+        :options="occasionOptions"
+        label="Повод"
+        name="occasion"
+        @reset-validation="form.errors.occasion = null"
       />
     </div>
     <div class="mt-5">
       <SpAutocomplete
-          v-model="form"
-          name="ingredients"
-          label="Состав"
-          :items="ingredients"
-          @complete="searchIngredients"
+        v-model="form.ingredients"
+        :error="form.errors.ingredients"
+        :items="ingredients"
+        label="Состав"
+        name="ingredients"
+        @complete="searchIngredients"
+        @reset-validation="form.errors.ingredients = null"
       />
     </div>
     <div class="mt-5">
       <SpFileInput
-          v-model="form"
-          name="image"
-          label="Превью"
-          @update:modelValue="updateImage"
+        v-model="form.image"
+        :error="form.errors.image"
+        label="Превью"
+        name="image"
+        @reset-validation="form.errors.image = null"
       />
       <Image
-          v-if="product?.image"
-          :src="'/storage/' + product.image"
-          alt="preview"
-          width="250"
-          preview
+        v-if="product?.image"
+        :src="'/storage/' + product.image"
+        alt="preview"
+        preview
+        width="250"
       />
     </div>
     <div class="mt-5">
       <SpFileInput
-          v-model="form"
-          name="gallery"
-          label="Галерея"
-          multiple
-          @update:modelValue="updateGallery"
+        v-model="form.gallery"
+        :error="form.errors.gallery"
+        label="Галерея"
+        multiple
+        name="gallery"
+        @reset-validation="form.errors.gallery = null"
       />
       <div
-          v-for="(galleryImage, index) in gallery"
-          :key="index"
-          class="grid align-items-center mt-2"
+        v-for="(galleryImage, index) in gallery"
+        :key="index"
+        class="grid align-items-center mt-2"
       >
         <div class="col-auto">
           <Image
-              :src="'/storage/' + galleryImage"
-              alt="preview"
-              width="100"
-              preview
+            :src="'/storage/' + galleryImage"
+            alt="preview"
+            preview
+            width="100"
           />
         </div>
         <div class="col-auto p-4">
           <div class="flex gap-2">
             <Button
-                v-if="index !== 0"
-                @click="imageUp(index)"
+              v-if="index !== 0"
+              @click="imageUp(index)"
             >
-              <Icon icon="caret-up" />
+              <Icon icon="caret-up"/>
             </Button>
             <Button
-                v-if="index + 1 !== gallery.length"
-                @click="imageDown(index)"
+              v-if="index + 1 !== gallery.length"
+              @click="imageDown(index)"
             >
-              <Icon icon="caret-down" />
+              <Icon icon="caret-down"/>
             </Button>
           </div>
         </div>
         <div class="col-auto">
           <Button
-              severity="danger"
-              @click="deleteImage(index)"
+            severity="danger"
+            @click="deleteImage(index)"
           >
-            <Icon icon="trash" />
+            <Icon icon="trash"/>
           </Button>
         </div>
       </div>
     </div>
     <div class="mt-5">
       <SpCheckbox
-          v-model="form"
-          name="is_active"
-          label="Активен"
-          switcher
+        v-model="form.is_active"
+        :error="form.errors.is_active"
+        label="Активен"
+        name="is_active"
+        switcher
+        @reset-validation="form.errors.is_active = null"
       />
     </div>
     <Button
-        severity="success"
-        class="mt-2"
-        type="submit"
+      class="mt-2"
+      severity="success"
+      type="submit"
     >
       {{ product?.id ? 'Сохранить' : 'Создать' }}
     </Button>

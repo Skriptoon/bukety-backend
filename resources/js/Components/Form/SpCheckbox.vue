@@ -1,47 +1,47 @@
 <template>
   <div>
-    <div class="mt-8">
+    <div class="mt-8 flex items-center">
       <Checkbox
-          v-if="!switcher"
-          v-model="model[name]"
-          :id="name"
-          :class="{'p-invalid': modelValue.errors[name]}"
-          :aria-describedby="name"
-          :disabled="disabled"
-          binary
-          @focus="model.errors[name] = null"
+        v-if="!switcher"
+        :id="name"
+        v-model="model"
+        :aria-describedby="name"
+        :disabled="disabled"
+        :invalid="Boolean(error)"
+        binary
+        @focus="$emit('reset-validation')"
       />
       <ToggleSwitch
-          v-else
-          v-model="model[name]"
-          :id="name"
-          :class="{'p-invalid': modelValue.errors[name]}"
-          :aria-describedby="name"
-          :disabled="disabled"
-          @focus="model.errors[name] = null"
+        v-else
+        :id="name"
+        v-model="model"
+        :aria-describedby="name"
+        :disabled="disabled"
+        :invalid="Boolean(error)"
+        @focus="$emit('reset-validation')"
       />
       <label
-          :class="{
-            'ml-6': switcher
+        :class="{
+            'ml-4': switcher
           }"
-          :for="name"
+        :for="name"
       >
         {{ label }}
       </label>
     </div>
     <small
-        v-if="modelValue.errors[name]"
-        :id="name"
-        class="p-error"
+      v-if="error"
+      :id="name"
+      class="text-rose-600"
     >
-      {{ modelValue.errors[name] }}
+      {{ error }}
     </small>
   </div>
 </template>
 
 <script>
-import ToggleSwitch from 'primevue/toggleswitch';
-import Checkbox from 'primevue/checkbox';
+import ToggleSwitch from 'primevue/toggleswitch'
+import Checkbox from 'primevue/checkbox'
 
 export default {
   name: 'SpCheckbox',
@@ -61,6 +61,7 @@ export default {
     label: String,
     disabled: Boolean,
     switcher: Boolean,
+    error: String,
   },
 
   computed: {

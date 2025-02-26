@@ -33,50 +33,56 @@ function sendForm() {
   <form @submit.prevent="sendForm">
     <div class="mt-2">
       <SpInput
-          v-model="form"
-          name="promo_code"
-          label="Промокод"
+        v-model="form.promo_code"
+        :error="form.errors.promo_code"
+        label="Промокод"
+        name="promo_code"
+        @reset-validation="form.errors.promo_code = null"
       />
     </div>
     <div class="mt-5">
       <SpInput
-          v-model="form"
-          name="discount"
-          label="Скидка"
-          suffix="%"
-          :max="99"
-          :min="1"
-          number
+        v-model="form.discount"
+        :error="form.errors.discount"
+        :max="99"
+        :min="1"
+        label="Скидка"
+        name="discount"
+        number
+        suffix="%"
+        @reset-validation="form.errors.discount = null"
       />
     </div>
     <div class="mt-5">
       <SpDatePicker
-          v-model="form"
-          name="expired_at"
-          label="Действует до"
-          :min-date="new Date()"
+        v-model="form.expired_at"
+        :error="form.errors.expired_at"
+        :min-date="new Date()"
+        label="Действует до"
+        name="expired_at"
+        @reset-validation="form.errors.expired_at = null"
       />
     </div>
     <div class="mt-5">
       <SpCheckbox
-          v-model="form"
-          name="is_disposable"
-          label="Одноразовый"
-          switcher
+        v-model="form.is_disposable"
+        label="Одноразовый"
+        name="is_disposable"
+        switcher
       />
     </div>
     <div class="mt-5">
       <SpCheckbox
-          v-model="form"
-          name="is_active"
-          label="Активна"
-          switcher
+        v-model="form.is_active"
+        label="Активна"
+        name="is_active"
+        switcher
       />
     </div>
     <Button
-        severity="success"
-        class="mt-2"
-        type="submit"
+      class="mt-2"
+      severity="success"
+      type="submit"
     >
       {{ promoCode?.id ? 'Сохранить' : 'Создать' }}
     </Button>

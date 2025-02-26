@@ -1,40 +1,39 @@
 <template>
   <div>
-    <FloatLabel class="mt-8">
+    <FloatLabel variant="on">
       <Select
-          v-model="modelValue[name]"
-          class="w-full"
-          :options="options"
-          :id="name"
-          option-label="name"
-          option-value="id"
-          :class="{'p-invalid': modelValue.errors[name]}"
-          :filter="filter"
-          @focus="modelValue.errors[name] = null"
+        :id="name"
+        v-model="model"
+        :filter="filter"
+        :invalid="Boolean(error)"
+        :options="options"
+        class="w-full"
+        option-label="name"
+        option-value="id"
+        @focus="$emit('reset-validation')"
       />
       <label :for="name">{{ label }}</label>
     </FloatLabel>
     <small
-        v-if="modelValue.errors[name]"
-        :id="name"
-        class="p-error"
+      v-if="error"
+      :id="name"
+      class="text-rose-600"
     >
-      {{ modelValue.errors[name] }}
+      {{ error }}
     </small>
   </div>
 </template>
 
 <script>
-import Select from 'primevue/select';
+import Select from 'primevue/select'
 import FloatLabel from 'primevue/floatlabel'
-
 
 export default {
   name: 'SpDropdown',
 
   components: {
     Select,
-    FloatLabel
+    FloatLabel,
   },
 
   props: {
@@ -49,11 +48,18 @@ export default {
       required: true,
     },
     filter: Boolean,
-
+    error: String,
   },
-};
+
+  computed: {
+    model: {
+      get() {
+        return this.modelValue
+      },
+      set(value) {
+        this.$emit('update:modelValue', value)
+      },
+    },
+  },
+}
 </script>
-
-<style scoped>
-
-</style>
