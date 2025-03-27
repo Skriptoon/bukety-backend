@@ -16,9 +16,10 @@ class ProductController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection
     {
+        $page = $request->get('page', 1);
         $products = Product::active()
             ->filter($request->toArray())
-            ->get();
+            ->paginate(20, page: $page);
 
         return ProductResource::collection($products);
     }
