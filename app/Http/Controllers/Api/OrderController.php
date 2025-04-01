@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Order\ApplyPromoCodeRequest;
 use App\Http\Requests\Api\Order\StoreOrderRequest;
 use App\Http\Resources\BaseBooleanResource;
+use App\Http\Resources\Order\OrderResource;
 use App\Http\Resources\PromoCode\PromoCodeResource;
 use App\UseCases\Order\StoreOrderCase;
 use App\UseCases\PromoCode\ApplyPromoCodeCase;
@@ -17,12 +18,11 @@ use Illuminate\Http\JsonResponse;
 
 class OrderController extends Controller
 {
-    public function store(StoreOrderRequest $request, StoreOrderCase $case): BaseBooleanResource
+    public function store(StoreOrderRequest $request, StoreOrderCase $case): OrderResource
     {
         $dto = OrderDTO::from($request);
-        $case->handle($dto);
 
-        return new BaseBooleanResource(true);
+        return new OrderResource($case->handle($dto));
     }
 
     public function applyPromoCode(

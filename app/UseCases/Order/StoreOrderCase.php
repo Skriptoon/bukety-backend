@@ -20,7 +20,7 @@ readonly class StoreOrderCase
     ) {
     }
 
-    public function handle(OrderDTO $orderDto): void
+    public function handle(OrderDTO $orderDto): Order
     {
         try {
             $promoCode = $this->applyPromoCodeCase->handle(
@@ -38,7 +38,7 @@ readonly class StoreOrderCase
             $price = round($price * (100 - $promoCode->discount) / 100);
         }
 
-        Order::create([
+        $order = Order::create([
             'name' => $orderDto->name,
             'phone' => $orderDto->phone,
             'communication_method' => $orderDto->communication_method,
@@ -59,5 +59,7 @@ readonly class StoreOrderCase
             'peer_id' => 455222640,
             'message' => $message,
         ]);
+
+        return $order;
     }
 }
