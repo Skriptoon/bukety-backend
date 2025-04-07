@@ -26,7 +26,8 @@ class OrderFactory extends Factory
             'status' => $this->faker->randomElement(OrderStatusEnum::cases()),
             'product_id' => $product->id,
             'promo_code_id' => PromoCode::factory(),
-            'price' => $product->price
+            'price' => $product->price,
+            'date' => $this->faker->date(),
         ];
     }
 }

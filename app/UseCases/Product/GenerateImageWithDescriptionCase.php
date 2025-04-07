@@ -26,7 +26,7 @@ class GenerateImageWithDescriptionCase
         $ratio = $productImage->getWidth() / 500;
         $productImage->resize(500, (int)($productImage->getHeight() / $ratio));
         $ingredientsText = null;
-        $ingredientsTextSize = null;
+        $ingredientsTextSize = 0;
 
         if ($product->ingredients->count() > 0) {
             $ingredientsText = $this->generateText(
@@ -40,9 +40,11 @@ class GenerateImageWithDescriptionCase
             );
         }
 
+        /** @var int<1, max> $height */
+        $height = (int)max(1, $productImage->getHeight() + 60 + $ingredientsTextSize);
         $image = Image::fromBlank(
             $productImage->getWidth(),
-            $productImage->getHeight() + 60 + $ingredientsTextSize ?? 0,
+            $height,
             ImageColor::rgb(0, 0, 0)
         );
 
@@ -54,7 +56,7 @@ class GenerateImageWithDescriptionCase
             0,
             $productImage->getHeight() + 30,
             ImageColor::rgb(255, 255, 255),
-            resource_path('fonts/'.self::FONT),
+            resource_path('fonts/' . self::FONT),
             'Цена: ' . $product->price . 'р',
         );
 
@@ -87,9 +89,9 @@ class GenerateImageWithDescriptionCase
         $ret = "";
 
         foreach ($arr as $word) {
-            $tmp_string = $ret.' '.$word;
+            $tmp_string = $ret . ' ' . $word;
 
-            $textbox = Image::calculateTextBox($tmp_string, resource_path('fonts/'.self::FONT), self::FONT_SIZE);
+            $textbox = Image::calculateTextBox($tmp_string, resource_path('fonts/' . self::FONT), self::FONT_SIZE);
 
             if ($textbox['width'] > $width) {
                 $ret .= ($ret == "" ? "" : "\n") . $word;

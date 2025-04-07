@@ -28,7 +28,7 @@ class ApplyPromoCodeCase
             throw new PromoCodeException('Действие промокода закончилось');
         }
 
-        $product = Product::find($productId);
+        $product = Product::findOrFail($productId);
         if ($product->old_price) {
             throw new PromoCodeException('Промокод нельзя применить на товар со скидкой');
         }

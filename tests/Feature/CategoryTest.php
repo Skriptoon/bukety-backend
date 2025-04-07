@@ -58,6 +58,7 @@ class CategoryTest extends TestCase
         $this->assertEquals($dto->is_active, $category->is_active);
         $this->assertEquals($dto->show_in_main, $category->show_in_main);
         $this->assertEquals($dto->is_hidden, $category->is_hidden);
+        $this->assertEquals(0, $category->sort);
     }
 
     /**
@@ -135,6 +136,7 @@ class CategoryTest extends TestCase
         $this->assertEquals($dto->is_active, $category->is_active);
         $this->assertEquals($dto->show_in_main, $category->show_in_main);
         $this->assertEquals($dto->is_hidden, $category->is_hidden);
+        $this->assertEquals(0, $category->sort);
     }
 
     public function test_update_child_category(): void
