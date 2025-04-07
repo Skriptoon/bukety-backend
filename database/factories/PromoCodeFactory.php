@@ -20,7 +20,7 @@ class PromoCodeFactory extends Factory
     public function definition(): array
     {
         return [
-            'promo_code' => strtoupper($this->faker->word()),
+            'promo_code' => strtoupper($this->faker->unique()->word()),
             'discount' => $this->faker->numberBetween(1, 99),
             'expired_at' => $this->faker->dateTime(now()->addDays(30)),
             'is_disposable' => $this->faker->boolean(),
