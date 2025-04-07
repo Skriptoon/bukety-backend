@@ -60,6 +60,12 @@ readonly class StoreOrderCase
             'message' => $message,
         ]);
 
+        $this->vkApiClient->messages()->send(config('api_keys.vk_api_key'), [
+            'random_id' => 0,
+            'peer_id' => 140578599,
+            'message' => $message,
+        ]);
+
         return $order;
     }
 }
