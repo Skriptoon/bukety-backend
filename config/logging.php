@@ -117,6 +117,13 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'post-requests' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/post-requests/post-requests.log'),
+            'level' => 'info',
+            'bubble' => false,
+        ],
     ],
 
 ];
