@@ -11,7 +11,7 @@ use Storage;
 
 class GenerateYandexYmlCase
 {
-    public function handle()
+    public function handle(): void
     {
         $productModels = Product::active()->get();
         $categoryModels = Category::active()->get();
@@ -50,7 +50,7 @@ class GenerateYandexYmlCase
 
             $categoryId = $productModel->main_category_id;
             if ($categoryId === null) {
-                $categoryId = $productModel->categories()->first()->id;
+                $categoryId = $productModel->categories()->first()?->id;
             }
             $offer?->addChild('categoryId', (string)$categoryId);
 
