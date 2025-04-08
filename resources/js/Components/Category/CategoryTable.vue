@@ -2,20 +2,28 @@
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Button from 'primevue/button'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { router } from '@inertiajs/vue3'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import {router} from '@inertiajs/vue3'
 import Image from 'primevue/image'
 import ConfirmPopup from 'primevue/confirmpopup'
-import { useConfirm } from 'primevue/useconfirm'
-import { ref } from 'vue'
+import {useConfirm} from 'primevue/useconfirm'
+import {computed, ref} from 'vue'
+import Checkbox from 'primevue/checkbox'
 
 const props = defineProps({
   categories: Array,
 })
 
 const confirm = useConfirm()
-const categoriesArray = ref(props.categories)
 const expandedRows = ref([])
+const withDisabled = ref(false)
+
+const categoriesArray = computed(() => {
+  if (!withDisabled.value) {
+    return props.categories.filter(category => category.is_active && !category.is_hidden)
+  }
+  return  props.categories
+})
 
 function deleteConfirm(event, id) {
   confirm.require({
@@ -44,6 +52,15 @@ function onRowReorder(event) {
 </script>
 
 <template>
+  <div class="flex items-center gap-2">
+    <Checkbox
+        v-model="withDisabled"
+        id="withDisabled"
+        binary
+        @update:modelValue="filter"
+    />
+    <label for="withDisabled">Показать скрытые категории</label>
+  </div>
   <DataTable
     v-model:expandedRows="expandedRows"
     dataKey="id"

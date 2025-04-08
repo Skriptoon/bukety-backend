@@ -10,9 +10,10 @@ import ConfirmPopup from 'primevue/confirmpopup'
 import Tag from 'primevue/tag'
 import Dropdown from 'primevue/dropdown'
 import {onMounted, ref} from 'vue'
-import {FilterMatchMode} from '@primevue/core/api';
+import {FilterMatchMode} from '@primevue/core/api'
 import InputText from 'primevue/inputtext'
 import {Inertia} from '@inertiajs/inertia'
+import Checkbox from 'primevue/checkbox'
 
 defineProps({
   products: {
@@ -27,18 +28,18 @@ defineProps({
 
 const confirm = useConfirm()
 
-let getParams = (new URL(document.location)).searchParams;
+let getParams = (new URL(document.location)).searchParams
 
 const filters = ref({
   category: {
     value: getParams.get('category') ? Number(getParams.get('category')) : null,
-    matchMode: FilterMatchMode.CONTAINS
+    matchMode: FilterMatchMode.CONTAINS,
   },
   name: {value: getParams.get('name'), matchMode: FilterMatchMode.CONTAINS},
 })
 
-
 let nameFilterInput = ref(null)
+const withDisabled = ref(Boolean(Number(getParams.get('with_disabled'))))
 
 onMounted(() => {
   const nameFilter = Inertia.restore('nameFilter')
@@ -47,7 +48,6 @@ onMounted(() => {
   }
   Inertia.remember('nameFilter', getParams.get('name'))
 })
-
 
 function deleteConfirm(event, id) {
   confirm.require({
@@ -66,6 +66,7 @@ function deleteConfirm(event, id) {
 
 function getRouteParams() {
   const params = {}
+  params.with_disabled = Number(withDisabled.value)
 
   for (const param in filters.value) {
     params[param] = filters.value[param].value
@@ -92,101 +93,110 @@ function page(data) {
 </script>
 
 <template>
+  <div class="flex items-center gap-2">
+    <Checkbox
+        v-model="withDisabled"
+        id="withDisabled"
+        binary
+        @update:modelValue="filter"
+    />
+    <label for="withDisabled">Показать скрытые товары</label>
+  </div>
   <DataTable
-    v-model:filters="filters"
-    :value="products.data"
-    :rows="products.per_page"
-    :first="products.from"
-    :rowsPerPageOptions="[5, 10, 20, 50]"
-    :total-records="products.total"
-    filterDisplay="row"
-    paginator
-    lazy
-    @filter="filter"
-    @page="page"
+      v-model:filters="filters"
+      :value="products.data"
+      :rows="products.per_page"
+      :first="products.from"
+      :rowsPerPageOptions="[5, 10, 20, 50]"
+      :total-records="products.total"
+      filterDisplay="row"
+      paginator
+      lazy
+      @filter="filter"
+      @page="page"
   >
     <Column
-      field="image"
-      style="width: 100px"
+        field="image"
+        style="width: 100px"
     >
       <template #body="{ data }">
         <a :href="route('get-image-with-description', data.id)" target="_blank">
           <Image
-            :src="'/storage/' + data.image"
-            image-class="max-w-none"
-            width="70"
-            height="70"
+              :src="'/storage/' + data.image"
+              image-class="max-w-none"
+              width="70"
+              height="70"
           />
         </a>
       </template>
     </Column>
     <Column
-      :show-filter-menu="false"
-      field="name"
-      header="Название"
+        :show-filter-menu="false"
+        field="name"
+        header="Название"
     >
       <template #filter="{ filterModel, filterCallback }">
-        <InputText ref="nameFilterInput" v-model="filterModel.value" @input="filterCallback"/>
+        <InputText ref="nameFilterInput" v-model="filterModel.value" @input="filterCallback" />
       </template>
       <template #body="{ data }">
-        <h4>{{ data.name }}</h4>
+        <h4><FontAwesomeIcon v-if="!data.is_active" :icon="['fas', 'eye-slash']" /> {{ data.name }}</h4>
         <p>Цена: {{ data.price }}₽</p>
       </template>
     </Column>
     <Column
-      :show-filter-menu="false"
-      field="category"
-      header="Категории"
+        :show-filter-menu="false"
+        field="category"
+        header="Категории"
     >
       <template #filter="{ filterModel, filterCallback }">
         <Dropdown
-          v-model="filterModel.value"
-          :options="categories"
-          option-label="name"
-          option-value="id"
-          placeholder="Выбрать категорию"
-          class="p-column-filter"
-          style="min-width: 12rem"
-          :showClear="true"
-          @change="filterCallback()"
+            v-model="filterModel.value"
+            :options="categories"
+            option-label="name"
+            option-value="id"
+            placeholder="Выбрать категорию"
+            class="p-column-filter"
+            style="min-width: 12rem"
+            :showClear="true"
+            @change="filterCallback()"
         >
         </Dropdown>
       </template>
       <template #body="{ data }">
-        <divZ class="flex gap-1 flex-wrap">
+        <div class="flex gap-1 flex-wrap">
           <Tag
-            v-for="(category, index) in data.categories"
-            :key="index"
+              v-for="(category, index) in data.categories"
+              :key="index"
           >
             {{ category.name }}
           </Tag>
-        </divZ>
+        </div>
       </template>
     </Column>
     <Column style="width: 200px">
       <template #body="{ data }">
         <Link :href="route('products.edit', data.id)">
           <Button
-            v-tooltip.bottom="'Измеить'"
-            class="p-button-primary"
+              v-tooltip.bottom="'Измеить'"
+              class="p-button-primary"
           >
             <template #icon>
-              <FontAwesomeIcon icon="edit"/>
+              <FontAwesomeIcon icon="edit" />
             </template>
           </Button>
         </Link>
         <Button
-          v-tooltip.bottom="'Удалить'"
-          class="ml-2"
-          severity="danger"
-          @click="deleteConfirm($event, data.id)"
+            v-tooltip.bottom="'Удалить'"
+            class="ml-2"
+            severity="danger"
+            @click="deleteConfirm($event, data.id)"
         >
           <template #icon>
-            <FontAwesomeIcon icon="trash"/>
+            <FontAwesomeIcon icon="trash" />
           </template>
         </Button>
       </template>
     </Column>
   </DataTable>
-  <ConfirmPopup/>
+  <ConfirmPopup />
 </template>

@@ -33,10 +33,15 @@ class ProductController extends Controller
         $perPage = $request->get('per_page', 10);
         $page = $request->get('page', 1);
 
-        $products = Product::filter($request->toArray())
+        $query = Product::filter($request->toArray())
             ->with('categories')
-            ->orderBy('id')
-            ->paginate($perPage, page: $page);
+            ->orderBy('id');
+
+        if (!$request->get('with_disabled')) {
+            $query->active();
+        }
+
+        $products = $query->paginate($perPage, page: $page);
 
         $categories = Category::orderBy('sort')
             ->get(['id', 'name'])

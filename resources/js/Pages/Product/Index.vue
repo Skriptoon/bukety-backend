@@ -1,40 +1,26 @@
-<script>
+<script setup>
 import {Head} from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import ProductTable from '@/Components/Product/ProductTable.vue'
-import {defineComponent} from 'vue'
 import Block from '@/Components/Block.vue'
 import ActionButtonGroup from '@/Components/ActionButtonGroup.vue'
 import Button from 'primevue/button'
 
-export default defineComponent({
-  components: {
-    ActionButtonGroup,
-    Head,
-    AuthenticatedLayout,
-    ProductTable,
-    Block,
-    Button,
-  },
-
-  data: () => ({
-    breadcrumbs: [
-      {
-        icon: 'fa-solid fa-house',
-        to: route('dashboard'),
-      },
-      {
-        label: 'Товары',
-      },
-    ],
-  }),
-
-  props: {
-    products: Array,
-    categories: Array,
-    vkProductFeed: String,
-  },
+defineProps({
+  products: Array,
+  categories: Array,
+  vkProductFeed: String,
 })
+
+const breadcrumbs = [
+  {
+    icon: 'fa-solid fa-house',
+    to: route('dashboard'),
+  },
+  {
+    label: 'Товары',
+  },
+]
 </script>
 
 <template>
@@ -49,7 +35,7 @@ export default defineComponent({
       </Link>
     </ActionButtonGroup>
     <Block>
-      <ProductTable :products="products" :categories="categories"/>
+      <ProductTable :products="products" :categories="categories" />
     </Block>
   </AuthenticatedLayout>
 </template>
