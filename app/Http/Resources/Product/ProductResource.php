@@ -45,7 +45,7 @@ class ProductResource extends JsonResource
                 static fn (string $item): string => OccasionEnum::from($item)->label(),
                 $this->resource->occasion
             ),
-            'ingredients' => $this->resource->ingredients()->pluck('name'),
+            'ingredients' => $this->resource->ingredients->pluck('name'),
             'updated_at' => $this->resource->updated_at,
         ];
     }

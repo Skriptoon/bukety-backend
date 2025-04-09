@@ -19,7 +19,7 @@ class ProductController extends Controller
         $page = $request->get('page', 1);
         $products = Product::active()
             ->filter($request->toArray())
-            ->with('categories')
+            ->with('categories', 'ingredients')
             ->paginate(20, page: $page);
 
         return ProductResource::collection($products);
@@ -28,7 +28,7 @@ class ProductController extends Controller
     public function show(string $product): ProductResource
     {
         $productModel = Product::active()
-            ->with('categories')
+            ->with('categories', 'ingredients')
             ->where('slug', $product)
             ->firstOrFail();
 
@@ -43,7 +43,7 @@ class ProductController extends Controller
             ->whereHas('categories', static function (Builder $query) use ($categoryIds) {
                 $query->whereIn('categories.id', $categoryIds);
             })
-            ->with('categories')
+            ->with('categories', 'ingredients')
             ->whereNot('id', $product->id)
             ->orderBy(new Expression('RANDOM()'))
             ->limit(10)
@@ -55,7 +55,7 @@ class ProductController extends Controller
     public function stocks(): AnonymousResourceCollection
     {
         $products = Product::active()
-            ->with('categories')
+            ->with('categories', 'ingredients')
             ->whereNotNull('old_price')
             ->limit(10)
             ->inRandomOrder()
