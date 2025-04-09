@@ -29,7 +29,7 @@ class ProductResource extends JsonResource
             'name' => $this->resource->name,
             'slug' => $this->resource->slug,
             'main_category' => new CategoryListResource(
-                $this->resource->mainCategory ?? $this->resource->categories()->first()
+                $this->resource->mainCategory ?? $this->resource->categories->first()
             ),
             'description' => $this->resource->description,
             'seo_description' => $seoDescription,
