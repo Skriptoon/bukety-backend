@@ -47,6 +47,7 @@ class ProductResource extends JsonResource
             ),
             'ingredients' => $this->resource->ingredients->pluck('name'),
             'updated_at' => $this->resource->updated_at,
+            'is_new' => $this->resource->created_at > now()->subDays(7),
         ];
     }
 }
