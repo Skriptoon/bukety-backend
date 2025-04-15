@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UseCases\Product;
+namespace App\UseCases\Product\Feeds;
 
 use App\Models\Category;
 use App\Models\Product;

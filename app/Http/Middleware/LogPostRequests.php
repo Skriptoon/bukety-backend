@@ -19,13 +19,13 @@ class LogPostRequests
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->method() === 'POST') {
-            Log::channel('post-requests')->info([
+            Log::channel('post-requests')->info((string)json_encode([
                 'method' => $request->method(),
                 'url' => $request->fullUrl(),
                 'ip' => $request->ip(),
                 'user_agent' => $request->header('User-Agent'),
                 'data' => $request->all()
-            ]);
+            ]));
         }
 
         return $next($request);

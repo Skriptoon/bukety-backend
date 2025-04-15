@@ -12,7 +12,7 @@ class ProductDTO extends Data
     /**
      * @param  string  $name
      * @param  int  $main_category
-     * @param  array  $categories
+     * @param  int[]  $categories
      * @param  string  $description
      * @param  string|null  $vk_description
      * @param  string|null  $seo_description
@@ -20,9 +20,9 @@ class ProductDTO extends Data
      * @param  float|null  $old_price
      * @param  UploadedFile|null  $image
      * @param  UploadedFile[]|string[]  $gallery
-     * @param  array  $whom
-     * @param  array  $occasion
-     * @param  array|null  $ingredients
+     * @param  string[]  $whom
+     * @param  string[]  $occasion
+     * @param  string[]|null  $ingredients
      * @param  bool  $is_active
      */
     public function __construct(

@@ -78,6 +78,8 @@ class ProductTest extends TestCase
         $this->assertFileExists(Storage::path('sitemap.xml'));
         $this->assertFileExists(Storage::disk('public')->path('feeds/vk.yml'));
         $this->assertFileExists(Storage::disk('public')->path('feeds/yandex.yml'));
+        $this->assertFileExists(Storage::disk('public')->path('product/'.basename($product->image)));
+        $this->assertFileExists(Storage::disk('public')->path('product/'.basename($product->gallery[0])));
     }
 
     /**
@@ -136,6 +138,8 @@ class ProductTest extends TestCase
         $this->assertFileExists(Storage::path('sitemap.xml'));
         $this->assertFileExists(Storage::disk('public')->path('feeds/vk.yml'));
         $this->assertFileExists(Storage::disk('public')->path('feeds/yandex.yml'));
+        $this->assertFileExists(Storage::disk('public')->path('product/'.basename($product->image)));
+        $this->assertFileExists(Storage::disk('public')->path('product/'.basename($product->gallery[0])));
     }
 
     public function test_update_ingredients()

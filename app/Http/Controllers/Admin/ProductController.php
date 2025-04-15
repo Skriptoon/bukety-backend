@@ -156,6 +156,10 @@ class ProductController extends Controller
         return redirect()->route('products.index');
     }
 
+    /**
+     * @param Request $request
+     * @return Collection<int, ProductIngredient>
+     */
     public function getIngredients(Request $request): Collection
     {
         return ProductIngredient::where('name', 'ilike', '%' . $request->get('query') . '%')

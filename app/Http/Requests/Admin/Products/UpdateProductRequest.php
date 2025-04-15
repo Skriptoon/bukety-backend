@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Admin\Products;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\Rules\Unique;
 
 /**
@@ -11,6 +12,9 @@ use Illuminate\Validation\Rules\Unique;
  */
 class UpdateProductRequest extends StoreProductRequest
 {
+    /**
+     * @return array<string, ValidationRule|array<ValidationRule|string|Unique>|string>
+     */
     public function rules(): array
     {
         $rules = parent::rules();
@@ -21,7 +25,7 @@ class UpdateProductRequest extends StoreProductRequest
             'name' => [
                 'required',
                 'string',
-                (new Unique('products', 'name'))->ignore($product),
+                new Unique('products', 'name')->ignore($product),
             ],
             'image' => [
                 'image',

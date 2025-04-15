@@ -8,6 +8,9 @@ trait OptionsTrait
 {
     abstract public function label(): string;
 
+    /**
+     * @return array<array<string, string>>
+     */
     public static function getOptions(): array
     {
         $cases = self::cases();

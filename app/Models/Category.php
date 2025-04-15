@@ -55,7 +55,7 @@ use Storage;
  * @method static Builder|Category whereUpdatedAt($value)
  * @method static Builder|Category whereSlug($value)
  * @method static Builder|Category active()
- * @method static Builder|Category filter(array $values, string $group = '__default')
+ * @method static Builder|Category filter(mixed[] $values, string $group = '__default')
  * @method static Builder|Category filterByQueryString(string $group = '__default')
  * @method static Builder|Category whereIsHidden($value)
  * @method static Builder|Category visible()
@@ -65,6 +65,9 @@ use Storage;
  */
 class Category extends Model
 {
+    /**
+     * @use HasFactory<CategoryFactory>
+     */
     use HasFactory;
     use HasFilters;
 
@@ -83,10 +86,16 @@ class Category extends Model
         'is_hidden',
     ];
 
+    /**
+     * @var class-string[]
+     */
     protected array $filters = [
         IsMain::class,
     ];
 
+    /**
+     * @return BelongsToMany<Product, $this>
+     */
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class);
@@ -97,23 +106,37 @@ class Category extends Model
         return $this->image ? Storage::disk('public')->url($this->image) : null;
     }
 
+    /**
+     * @param Builder<self> $query
+     * @return Builder<self>
+     */
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
     }
 
+    /**
+     * @param Builder<self> $query
+     * @return Builder<self>
+     */
     public function scopeVisible(Builder $query): Builder
     {
         return $query->where('is_hidden', false);
     }
 
+    /**
+     * @return HasMany<self, $this>
+     */
     public function children(): HasMany
     {
-        return $this->hasMany(__CLASS__, 'parent_id', 'id');
+        return $this->hasMany(self::class, 'parent_id', 'id');
     }
 
+    /**
+     * @return HasOne<self, $this>
+     */
     public function parent(): HasOne
     {
-        return $this->hasOne(__CLASS__, 'id', 'parent_id');
+        return $this->hasOne(self::class, 'id', 'parent_id');
     }
 }

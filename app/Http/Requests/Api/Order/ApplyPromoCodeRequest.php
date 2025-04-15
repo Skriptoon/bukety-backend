@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Api\Order;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -13,6 +14,9 @@ use Illuminate\Foundation\Http\FormRequest;
  */
 class ApplyPromoCodeRequest extends FormRequest
 {
+    /**
+     * @return array<string, ValidationRule|array<ValidationRule|string>|string>
+     */
     public function rules(): array
     {
         return [
@@ -23,6 +27,7 @@ class ApplyPromoCodeRequest extends FormRequest
             'phone' => [
                 'required',
                 'string',
+                'regex:/^\+7 \([0-9]{3}\) [0-9]{3} [0-9]{2}-[0-9]{2}$/',
             ],
             'product_id' => [
                 'required',
@@ -31,6 +36,9 @@ class ApplyPromoCodeRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function attributes(): array
     {
         return [

@@ -29,14 +29,14 @@ use Storage;
  * @property string|null $seo_description
  * @property float $price
  * @property string $image
- * @property array $gallery
+ * @property array<string> $gallery
  * @property bool $is_active
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string $image_url
  * @property string $gallery_urls
- * @property array $whom
- * @property array $occasion
+ * @property array<string> $whom
+ * @property array<string> $occasion
  * @property int|null $main_category_id
  * @property float $old_price
  * @property-read Collection<int, Category> $categories
@@ -61,7 +61,7 @@ use Storage;
  * @method static Builder|Product whereVkUrl($value)
  * @method static Builder|Product whereSeoDescription($value)
  * @method static Builder|Product active()
- * @method static Builder|Product filter(array $values, string $group = '__default')
+ * @method static Builder|Product filter(mixed[] $values, string $group = '__default')
  * @method static Builder|Product filterByQueryString(string $group = '__default')
  * @method static Builder|Product whereOccasion($value)
  * @method static Builder|Product whereWhom($value)
@@ -72,6 +72,9 @@ use Storage;
  */
 class Product extends Model
 {
+    /**
+     * @use HasFactory<ProductFactory>
+     */
     use HasFactory;
     use HasFilters;
 
@@ -100,21 +103,33 @@ class Product extends Model
         'is_active' => 'bool',
     ];
 
+    /**
+     * @var array<class-string>
+     */
     protected array $filters = [
         CategoryFilter::class,
         Name::class,
     ];
 
+    /**
+     * @return BelongsToMany<Category, $this>
+     */
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
     }
 
+    /**
+     * @return BelongsToMany<ProductIngredient, $this>
+     */
     public function ingredients(): BelongsToMany
     {
         return $this->belongsToMany(ProductIngredient::class);
     }
 
+    /**
+     * @return BelongsTo<Category, $this>
+     */
     public function mainCategory(): BelongsTo
     {
         return $this->belongsTo(Category::class);
@@ -125,6 +140,9 @@ class Product extends Model
         return Storage::disk('public')->url($this->image);
     }
 
+    /**
+     * @return array<string>
+     */
     public function getGalleryUrlsAttribute(): array
     {
         $gallery = [];
@@ -135,6 +153,10 @@ class Product extends Model
         return $gallery;
     }
 
+    /**
+     * @param Builder<self> $builder
+     * @return Builder<self>
+     */
     public function scopeActive(Builder $builder): Builder
     {
         return $builder->where('is_active', true);

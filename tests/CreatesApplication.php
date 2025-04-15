@@ -17,6 +17,8 @@ trait CreatesApplication
 
         $app->make(Kernel::class)->bootstrap();
 
+        mkdir(storage_path('app/public/test'));
+
         return $app;
     }
 }

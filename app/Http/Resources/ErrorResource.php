@@ -12,6 +12,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class ErrorResource extends JsonResource
 {
+    /**
+     * @param Request $request
+     * @return array<string, mixed>
+     */
     public function toArray(Request $request): array
     {
         return [

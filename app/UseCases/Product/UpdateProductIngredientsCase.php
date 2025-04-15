@@ -9,6 +9,11 @@ use App\Models\ProductIngredient;
 
 class UpdateProductIngredientsCase
 {
+    /**
+     * @param Product $product
+     * @param array<string>|null $ingredients
+     * @return void
+     */
     public function handle(Product $product, ?array $ingredients): void
     {
         $ingredientsIds = [];

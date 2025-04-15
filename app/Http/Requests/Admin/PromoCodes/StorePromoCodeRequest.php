@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Admin\PromoCodes;
 
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePromoCodeRequest extends FormRequest
 {
+    /**
+     * @return array<string, Rule|array<Rule|string>|string>
+     */
     public function rules(): array
     {
         return [

@@ -30,6 +30,9 @@ use Illuminate\Support\Carbon;
  */
 class ProductIngredient extends Model
 {
+    /**
+     * @use HasFactory<ProductIngredientFactory>
+     */
     use HasFactory;
 
     protected $guarded = [];

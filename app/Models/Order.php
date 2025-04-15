@@ -46,6 +46,9 @@ use Illuminate\Support\Carbon;
  */
 class Order extends Model
 {
+    /**
+     * @use HasFactory<OrderFactory>
+     */
     use HasFactory;
 
     protected $fillable = [
@@ -65,6 +68,9 @@ class Order extends Model
         'date' => 'date',
     ];
 
+    /**
+     * @return BelongsTo<Product, $this>
+     */
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);

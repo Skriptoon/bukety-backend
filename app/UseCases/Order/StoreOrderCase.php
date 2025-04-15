@@ -99,12 +99,20 @@ readonly class StoreOrderCase
             'date' => $orderDto->date,
         ]);
 
+        $this->notify($order);
+
+        return $order;
+    }
+
+    /** @infection-ignore-all */
+    private function notify(Order $order): void
+    {
         $message = 'Новый заказ
-Букет: ' . route('products.edit', $orderDto->product_id) . "
+Букет: ' . route('products.edit', $order->product_id) . "
 Дата: {$order->date?->format('d.m.Y')}
-Цена с учетом скидок: $price ₽
-Телефон: {$orderDto->phone}
-Способ связи: " . $orderDto->communication_method->label();
+Цена с учетом скидок: {$order->price} ₽
+Телефон: {$order->phone}
+Способ связи: " . $order->communication_method->label();
 
         if (app()->isProduction()) {
             $this->vkApiClient->messages()->send(config('api_keys.vk_api_key'), [
@@ -119,7 +127,5 @@ readonly class StoreOrderCase
                 'message' => $message,
             ]);
         }
-
-        return $order;
     }
 }

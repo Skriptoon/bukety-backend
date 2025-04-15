@@ -43,6 +43,9 @@ use Illuminate\Support\Carbon;
  */
 class PromoCode extends Model
 {
+    /**
+     * @use HasFactory<PromoCodeFactory>
+     */
     use HasFactory;
 
     protected $guarded = [];
@@ -52,6 +55,9 @@ class PromoCode extends Model
         'bool' => 'boolean',
     ];
 
+    /**
+     * @return HasMany<Order, $this>
+     */
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);

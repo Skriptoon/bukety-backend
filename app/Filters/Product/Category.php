@@ -5,11 +5,16 @@ declare(strict_types=1);
 namespace App\Filters\Product;
 
 use App\Models\Category as CategoryModel;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Lacodix\LaravelModelFilter\Filters\Filter;
 
 class Category extends Filter
 {
+    /**
+     * @param Builder<Product> $query
+     * @return Builder<Product>
+     */
     public function apply(Builder $query): Builder
     {
         $value = $this->values[0] ?? null;
@@ -25,6 +30,10 @@ class Category extends Filter
         });
     }
 
+    /**
+     * @param CategoryModel $category
+     * @return array<int>
+     */
     private function getChildrenCategoriesIds(CategoryModel $category): array
     {
         $ids = [];

@@ -7,6 +7,8 @@ namespace App\UseCases\Product;
 use App\DTO\Product\ProductDTO;
 use App\Models\Product;
 use App\UseCases\Image\ImageOptimizeCase;
+use App\UseCases\Product\Feeds\GenerateVkYmlCase;
+use App\UseCases\Product\Feeds\GenerateYandexYmlCase;
 use App\UseCases\Sitemap\SitemapGenerator;
 use Nette\Utils\ImageException;
 use Nette\Utils\UnknownImageFileException;

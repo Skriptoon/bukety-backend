@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Admin\Products;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Validator;
 
 class StoreProductRequest extends FormRequest
 {
+    /**
+     * @return array<string, ValidationRule|list<mixed>|string>
+     */
     public function rules(): array
     {
         return [

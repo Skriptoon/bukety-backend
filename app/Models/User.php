@@ -44,6 +44,10 @@ use Laravel\Sanctum\PersonalAccessToken;
 class User extends Authenticatable
 {
     use HasApiTokens;
+
+    /**
+     * @use HasFactory<UserFactory>
+     */
     use HasFactory;
 
     protected $fillable = ['name', 'email', 'password'];
