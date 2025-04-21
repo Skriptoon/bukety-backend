@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UseCases\Image;
 
+use App\DTO\ImageDTO;
 use Nette\Utils\Image;
 use Nette\Utils\ImageException;
 use Nette\Utils\UnknownImageFileException;
@@ -15,15 +16,19 @@ class ImageOptimizeCase
      * @throws ImageException
      * @throws UnknownImageFileException
      */
-    public function handle(string $imagePath, string $outputPath): string
+    public function handle(ImageDTO $imageData, string $outputPath): string
     {
-        if (! Storage::disk('public')->exists($outputPath)) {
+        if (!Storage::disk('public')->exists($outputPath)) {
             Storage::disk('public')->makeDirectory($outputPath);
         }
 
-        $img = Image::fromFile($imagePath);
+        $img = Image::fromFile($imageData->file->path());
 
-        $filename = $outputPath.'/'.uniqid('', true).'.webp';
+        if ($imageData->left && $imageData->top && $imageData->height && $imageData->width) {
+            $img->crop($imageData->left, $imageData->top, $imageData->width, $imageData->height);
+        }
+
+        $filename = $outputPath . '/' . uniqid('', true) . '.webp';
         $img->save(Storage::disk('public')->path($filename));
 
         return $filename;

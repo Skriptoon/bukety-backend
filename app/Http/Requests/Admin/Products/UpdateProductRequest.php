@@ -28,8 +28,29 @@ class UpdateProductRequest extends StoreProductRequest
                 new Unique('products', 'name')->ignore($product),
             ],
             'image' => [
+                'nullable',
+                'array',
+            ],
+            'image.file' => [
                 'image',
                 'nullable',
+                'dimensions:min_width=1200,min_height=1200'
+            ],
+            'image.top' => [
+                'nullable',
+                'integer',
+            ],
+            'image.left' => [
+                'nullable',
+                'integer',
+            ],
+            'image.width' => [
+                'nullable',
+                'integer',
+            ],
+            'image.height' => [
+                'nullable',
+                'integer',
             ],
             'gallery' => [
                 'array',

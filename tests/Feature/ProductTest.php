@@ -34,8 +34,8 @@ class ProductTest extends TestCase
         Storage::disk('public')->delete('feeds/yandex.yml');
 
         $categories = Category::factory(4)->create();
-        $whom = array_map(static fn (WhomEnum $whom): string => $whom->value, WhomEnum::cases());
-        $occasion = array_map(static fn (OccasionEnum $occasion): string => $occasion->value, OccasionEnum::cases());
+        $whom = array_map(static fn(WhomEnum $whom): string => $whom->value, WhomEnum::cases());
+        $occasion = array_map(static fn(OccasionEnum $occasion): string => $occasion->value, OccasionEnum::cases());
 
         $productData = [
             'name' => $this->faker->word,
@@ -47,8 +47,10 @@ class ProductTest extends TestCase
             'price' => $this->faker->randomFloat(2),
             'whom' => $this->faker->randomElements($whom),
             'occasion' => $this->faker->randomElements($occasion),
-            'image' => UploadedFile::fake()->image('test.png'),
-            'gallery' => [UploadedFile::fake()->image('test.png')],
+            'image' => [
+                'file' => UploadedFile::fake()->image('test.png'),
+            ],
+            'gallery' => [['file' => UploadedFile::fake()->image('test.png'),]],
             'is_active' => $this->faker->boolean(),
             'old_price' => $this->faker->randomFloat(2),
             'ingredients' => ['тест'],
@@ -78,8 +80,8 @@ class ProductTest extends TestCase
         $this->assertFileExists(Storage::path('sitemap.xml'));
         $this->assertFileExists(Storage::disk('public')->path('feeds/vk.yml'));
         $this->assertFileExists(Storage::disk('public')->path('feeds/yandex.yml'));
-        $this->assertFileExists(Storage::disk('public')->path('product/'.basename($product->image)));
-        $this->assertFileExists(Storage::disk('public')->path('product/'.basename($product->gallery[0])));
+        $this->assertFileExists(Storage::disk('public')->path('product/' . basename($product->image)));
+        $this->assertFileExists(Storage::disk('public')->path('product/' . basename($product->gallery[0])));
     }
 
     /**
@@ -94,8 +96,8 @@ class ProductTest extends TestCase
 
         $categories = Category::factory(4)->create();
         $product = Product::factory()->create(['gallery' => []]);
-        $whom = array_map(static fn (WhomEnum $whom): string => $whom->value, WhomEnum::cases());
-        $occasion = array_map(static fn (OccasionEnum $occasion): string => $occasion->value, OccasionEnum::cases());
+        $whom = array_map(static fn(WhomEnum $whom): string => $whom->value, WhomEnum::cases());
+        $occasion = array_map(static fn(OccasionEnum $occasion): string => $occasion->value, OccasionEnum::cases());
 
         $productData = [
             'name' => $this->faker->word,
@@ -107,8 +109,10 @@ class ProductTest extends TestCase
             'price' => $this->faker->randomFloat(2),
             'whom' => $this->faker->randomElements($whom),
             'occasion' => $this->faker->randomElements($occasion),
-            'image' => UploadedFile::fake()->image('test.png'),
-            'gallery' => [UploadedFile::fake()->image('test.png')],
+            'image' => [
+                'file' => UploadedFile::fake()->image('test.png'),
+            ],
+            'gallery' => [['file' => UploadedFile::fake()->image('test.png')]],
             'is_active' => $this->faker->boolean(),
             'old_price' => $this->faker->randomFloat(2),
             'ingredients' => ['тест'],
@@ -138,8 +142,8 @@ class ProductTest extends TestCase
         $this->assertFileExists(Storage::path('sitemap.xml'));
         $this->assertFileExists(Storage::disk('public')->path('feeds/vk.yml'));
         $this->assertFileExists(Storage::disk('public')->path('feeds/yandex.yml'));
-        $this->assertFileExists(Storage::disk('public')->path('product/'.basename($product->image)));
-        $this->assertFileExists(Storage::disk('public')->path('product/'.basename($product->gallery[0])));
+        $this->assertFileExists(Storage::disk('public')->path('product/' . basename($product->image)));
+        $this->assertFileExists(Storage::disk('public')->path('product/' . basename($product->gallery[0])));
     }
 
     public function test_update_ingredients()

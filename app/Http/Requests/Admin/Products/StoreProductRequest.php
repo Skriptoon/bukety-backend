@@ -6,7 +6,6 @@ namespace App\Http\Requests\Admin\Products;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Validator;
 
 class StoreProductRequest extends FormRequest
 {
@@ -58,11 +57,31 @@ class StoreProductRequest extends FormRequest
                 'gt:price',
             ],
             'image' => [
-                'image',
                 'required',
+                'array',
+            ],
+            'image.file' => [
+                'nullable',
+                'dimensions:min_width=1200,min_height=1200',
+            ],
+            'image.top' => [
+                'nullable',
+                'integer',
+            ],
+            'image.left' => [
+                'nullable',
+                'integer',
+            ],
+            'image.width' => [
+                'nullable',
+                'integer',
+            ],
+            'image.height' => [
+                'nullable',
+                'integer',
             ],
             'gallery' => [
-                'required',
+                'nullable',
                 'array',
                 'min:1',
             ],
@@ -87,15 +106,17 @@ class StoreProductRequest extends FormRequest
             'ingredients.*' => [
                 'string',
             ],
-            'gallery.*' => [
-                function ($attribute, $value, $fail) {
-                    $isImage = Validator::make(['value' => $value], ['value' => 'image'])->passes();
-                    $isString = Validator::make(['value' => $value], ['value' => 'string'])->passes();
-
-                    if (! $isImage && ! $isString) {
-                        $fail($attribute.' должен быть изображением');
-                    }
-                },
+            'gallery.*.file' => [
+                'nullable',
+                'image',
+                'dimensions:min_width=1200,min_height=1200',
+            ],
+            'uploaded_gallery_images' => [
+                'required',
+                'array',
+            ],
+            'uploaded_gallery_images.*' => [
+                'string',
             ],
             'is_active' => [
                 'required',

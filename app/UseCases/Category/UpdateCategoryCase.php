@@ -28,7 +28,7 @@ readonly class UpdateCategoryCase
     {
         $image = null;
         if ($data->image) {
-            $image = $this->imageOptimize->handle($data->image->path(), 'category');
+            $image = $this->imageOptimize->handle($data->image, 'category');
         }
 
         $category->update([

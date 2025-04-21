@@ -46,19 +46,15 @@ readonly class StoreProductCase
         ]);
 
         if ($data->image) {
-            $imagePath = $this->imageOptimizeCase->handle($data->image->path(), 'product');
+            $imagePath = $this->imageOptimizeCase->handle($data->image, 'product');
             $product->image = $imagePath;
         }
 
         if ($data->gallery) {
             $gallery = [];
             foreach ($data->gallery as $image) {
-                if (is_string($image)) {
-                    $gallery[] = $image;
-                } else {
-                    $imagePath = $this->imageOptimizeCase->handle($image->path(), 'product');
-                    $gallery[] = $imagePath;
-                }
+                $imagePath = $this->imageOptimizeCase->handle($image, 'product');
+                $gallery[] = $imagePath;
             }
 
             $product->gallery = $gallery;

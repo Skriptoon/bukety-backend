@@ -36,7 +36,9 @@ class CategoryTest extends TestCase
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
             'seo_description' => $this->faker->sentence(),
-            'image' => UploadedFile::fake()->image('test.png'),
+            'image' => [
+                'file' => UploadedFile::fake()->image('test.png'),
+            ],
             'is_active' => $this->faker->boolean(),
             'show_in_main' => $this->faker->boolean(),
             'is_hidden' => $this->faker->boolean(),
@@ -77,7 +79,9 @@ class CategoryTest extends TestCase
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
             'seo_description' => $this->faker->sentence(),
-            'image' => UploadedFile::fake()->image('test.png'),
+            'image' => [
+                'file' => UploadedFile::fake()->image('test.png'),
+            ],
             'is_active' => !$category->is_active,
             'show_in_main' => !$category->show_in_main,
             'is_hidden' => !$category->is_hidden,
@@ -116,7 +120,9 @@ class CategoryTest extends TestCase
             'description' => $this->faker->sentence(),
             'seo_description' => $this->faker->sentence(),
             'parent_id' => $parentCategory->id,
-            'image' => UploadedFile::fake()->image('test.png'),
+            'image' => [
+                'file' => UploadedFile::fake()->image('test.png'),
+            ],
             'is_active' => $this->faker->boolean(),
             'show_in_main' => $this->faker->boolean(),
             'is_hidden' => $this->faker->boolean(),
@@ -155,7 +161,9 @@ class CategoryTest extends TestCase
             'description' => $this->faker->sentence(),
             'seo_description' => $this->faker->sentence(),
             'parent_id' => $parentCategory->id,
-            'image' => UploadedFile::fake()->image('test.png'),
+            'image' => [
+                'file' => UploadedFile::fake()->image('test.png'),
+            ],
             'is_active' => !$category->is_active,
             'show_in_main' => !$category->show_in_main,
             'is_hidden' => !$category->is_hidden,

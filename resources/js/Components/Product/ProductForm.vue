@@ -1,18 +1,18 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3'
+import {useForm} from '@inertiajs/vue3'
 import SpInput from '@/Components/Form/SpInput.vue'
 import SpFileInput from '@/Components/Form/SpFileInput.vue'
 import SpCheckbox from '@/Components/Form/SpCheckbox.vue'
 import Button from 'primevue/button'
 import Image from 'primevue/image'
 import Icon from '@/Components/Icon.vue'
-import { ref } from 'vue'
+import {ref} from 'vue'
 import SpMultiSelect from '@/Components/Form/SpMultiSelect.vue'
 import SpTextarea from '@/Components/Form/SpTextarea.vue'
 import SpAutocomplete from '@/Components/Form/SpAutocomplete.vue'
 import axios from 'axios'
 import SpDropdown from '@/Components/Form/SpDropdown.vue'
-import SpEditor from '@/Components/Form/SpEditor.vue';
+import SpEditor from '@/Components/Form/SpEditor.vue'
 
 const props = defineProps({
   product: Object,
@@ -39,19 +39,13 @@ const form = useForm({
   whom: props.product?.whom ?? null,
   occasion: props.product?.occasion ?? null,
   redirect_url: props.previousUrl,
+  uploaded_gallery_images: props.product?.gallery ?? [],
   _method: undefined,
 })
 
-const gallery = ref(props.product?.gallery ?? [])
 const ingredients = ref([])
 
 function sendForm() {
-  const tempGallery = [...form.gallery]
-  form.gallery = [
-    ...form.gallery,
-    ...gallery.value,
-  ]
-
   if (props.product?.id) {
     form._method = 'PUT'
     form.post(route('products.update', props.product.id))
@@ -59,26 +53,24 @@ function sendForm() {
     form._method = 'POST'
     form.post(route('products.store'))
   }
-
-  form.gallery = [...tempGallery]
 }
 
 function imageUp(index) {
-  const tmp = gallery.value[index]
+  const tmp = form.uploaded_gallery_images[index]
 
-  gallery.value[index] = gallery.value[index - 1]
-  gallery.value[index - 1] = tmp
+  form.uploaded_gallery_images[index] = form.uploaded_gallery_images[index - 1]
+  form.uploaded_gallery_images[index - 1] = tmp
 }
 
 function imageDown(index) {
-  const tmp = gallery.value[index]
+  const tmp = form.uploaded_gallery_images[index]
 
-  gallery.value[index] = gallery.value[index + 1]
-  gallery.value[index + 1] = tmp
+  form.uploaded_gallery_images[index] = form.uploaded_gallery_images[index + 1]
+  form.uploaded_gallery_images[index + 1] = tmp
 }
 
 function deleteImage(index) {
-  gallery.value.splice(index, 1)
+  form.uploaded_gallery_images.splice(index, 1)
 }
 
 async function searchIngredients(event) {
@@ -222,10 +214,10 @@ async function searchIngredients(event) {
     <div class="mt-5">
       <SpFileInput
         v-model="form.image"
-        :error="form.errors.image"
+        :error="form.errors"
         label="Превью"
         name="image"
-        @reset-validation="form.errors.image = null"
+        @reset-validation="form.clearErrors()"
       />
       <Image
         v-if="product?.image"
@@ -238,14 +230,14 @@ async function searchIngredients(event) {
     <div class="mt-5">
       <SpFileInput
         v-model="form.gallery"
-        :error="form.errors.gallery"
+        :error="form.errors"
         label="Галерея"
         multiple
         name="gallery"
-        @reset-validation="form.errors.gallery = null"
+        @reset-validation="form.clearErrors()"
       />
       <div
-        v-for="(galleryImage, index) in gallery"
+        v-for="(galleryImage, index) in form.uploaded_gallery_images"
         :key="index"
         class="grid align-items-center mt-2"
       >
@@ -266,7 +258,7 @@ async function searchIngredients(event) {
               <Icon icon="caret-up"/>
             </Button>
             <Button
-              v-if="index + 1 !== gallery.length"
+              v-if="index + 1 !== form.uploaded_gallery_images.length"
               @click="imageDown(index)"
             >
               <Icon icon="caret-down"/>

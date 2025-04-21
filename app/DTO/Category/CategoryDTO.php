@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\DTO\Category;
 
-use Illuminate\Http\UploadedFile;
+use App\DTO\ImageDTO;
 use Spatie\LaravelData\Data;
 
 class CategoryDTO extends Data
@@ -14,7 +14,7 @@ class CategoryDTO extends Data
         public ?string $description,
         public ?string $seo_description,
         public ?int $parent_id,
-        public ?UploadedFile $image,
+        public ?ImageDTO $image,
         public bool $is_active,
         public bool $show_in_main,
         public bool $is_hidden,

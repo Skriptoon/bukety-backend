@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Factories;
+
 use App\Enums\CommunicationsMethodsEnum;
 use App\Enums\OrderStatusEnum;
 use App\Models\Order;

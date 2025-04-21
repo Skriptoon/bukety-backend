@@ -49,20 +49,19 @@ readonly class UpdateProductCase
         if ($data->image !== null) {
             Storage::disk('public')->delete($product->image);
 
-            $imagePath = $this->imageOptimizeCase->handle($data->image->path(), 'product');
+            $imagePath = $this->imageOptimizeCase->handle($data->image, 'product');
             $product->image = $imagePath;
         }
 
         $gallery = [];
         $savedFiles = [];
-        foreach ($data->gallery as $image) {
-            if (is_string($image)) {
-                $gallery[] = $image;
-                $savedFiles[] = $image;
-            } else {
-                $imagePath = $this->imageOptimizeCase->handle($image->path(), 'product');
-                $gallery[] = $imagePath;
-            }
+        foreach ($data->uploaded_gallery_images ?? [] as $image) {
+            $gallery[] = $image;
+            $savedFiles[] = $image;
+        }
+        foreach ($data->gallery ?? [] as $image) {
+            $imagePath = $this->imageOptimizeCase->handle($image, 'product');
+            $gallery[] = $imagePath;
         }
 
         $deletedFiles = array_diff($product->gallery, $savedFiles);
