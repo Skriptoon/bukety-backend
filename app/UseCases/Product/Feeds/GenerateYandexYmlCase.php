@@ -57,7 +57,7 @@ class GenerateYandexYmlCase
             $offer?->addChild('name', $productModel->name);
             $offer?->addChild('url', config('app.frontend_url') . '/product/' . $productModel->slug);
 
-            $description = strip_tags($productModel->description) . "\n\n" . $productModel->vk_description;
+            $description = html_entity_decode(strip_tags($productModel->description)) . "\n\n" . $productModel->vk_description;
             $offer?->addChild('description', $description);
 
             foreach ($productModel->gallery_urls as $gallery_url) {

@@ -61,7 +61,7 @@ class GenerateVkYmlCase
             $offer?->addChild('name', $productModel->name);
             $offer?->addChild('url', config('app.frontend_url') . '/product/' . $productModel->slug);
 
-            $description = strip_tags($productModel->description) . "\n\n" . $productModel->vk_description .
+            $description = html_entity_decode(strip_tags($productModel->description)) . "\n\n" . $productModel->vk_description .
                 "\n\nБукет можно забрать самовывозом или мы отправим его Вам Яндекс доставкой к нужному времени.\n\n"
                 . "Цена - $productModel->price рублей действительна на " . date('d.m.Y') .
                 " и может быть выше или ниже в зависимости от ваших пожеланий по составу и размера букета.\n\n"
