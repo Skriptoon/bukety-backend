@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\CommunicationsMethodsEnum;
 use App\Enums\OrderStatusEnum;
+use App\Models\Product\Product;
 use Database\Factories\OrderFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;

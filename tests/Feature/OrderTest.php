@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\DTO\Order\OrderDTO;
 use App\Enums\CommunicationsMethodsEnum;
-use App\Models\Product;
+use App\Models\Product\Product;
 use App\Models\PromoCode;
 use App\UseCases\Order\StoreOrderCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;

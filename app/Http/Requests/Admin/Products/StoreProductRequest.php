@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Admin\Products;
 
+use App\Enums\UnitEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {
@@ -56,6 +58,18 @@ class StoreProductRequest extends FormRequest
                 'integer',
                 'gt:price',
             ],
+            'weight' => [
+                'required',
+                'integer',
+            ],
+            'height' => [
+                'required',
+                'integer',
+            ],
+            'width' => [
+                'required',
+                'integer',
+            ],
             'image' => [
                 'required',
                 'array',
@@ -100,11 +114,29 @@ class StoreProductRequest extends FormRequest
                 'string',
             ],
             'ingredients' => [
-                'nullable',
+                'required',
                 'array',
             ],
             'ingredients.*' => [
+                'required',
                 'string',
+            ],
+            'ingredient_values' => [
+                'required',
+                'array',
+            ],
+            'ingredient_values.*' => [
+                'required',
+                'integer',
+            ],
+            'ingredient_units' => [
+                'required',
+                'array',
+            ],
+            'ingredient_units.*' => [
+                'required',
+                'string',
+                Rule::enum(UnitEnum::class),
             ],
             'gallery.*.file' => [
                 'nullable',

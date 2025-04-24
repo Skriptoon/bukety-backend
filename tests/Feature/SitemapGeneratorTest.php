@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Category;
-use App\Models\Product;
+use App\Models\Product\Product;
 use App\UseCases\Sitemap\SitemapGenerator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Storage;

@@ -6,8 +6,8 @@ use App\DTO\Product\ProductDTO;
 use App\Enums\OccasionEnum;
 use App\Enums\WhomEnum;
 use App\Models\Category;
-use App\Models\Product;
-use App\Models\ProductIngredient;
+use App\Models\Product\Product;
+use App\Models\Product\ProductIngredient;
 use App\UseCases\Product\StoreProductCase;
 use App\UseCases\Product\UpdateProductCase;
 use App\UseCases\Product\UpdateProductIngredientsCase;
@@ -31,7 +31,7 @@ class ProductTest extends TestCase
     {
         Storage::delete('sitemap.xml');
         Storage::disk('public')->delete('feeds/vk.yml');
-        Storage::disk('public')->delete('feeds/yandex.yml');
+        Storage::disk('public')->delete('feeds/yandex.xml');
 
         $categories = Category::factory(4)->create();
         $whom = array_map(static fn(WhomEnum $whom): string => $whom->value, WhomEnum::cases());
@@ -54,6 +54,12 @@ class ProductTest extends TestCase
             'is_active' => $this->faker->boolean(),
             'old_price' => $this->faker->randomFloat(2),
             'ingredients' => ['тест'],
+            'ingredient_units' => [$this->faker->randomElement(\App\Enums\UnitEnum::cases())],
+            'ingredient_values' => [$this->faker->numberBetween(1, 100)],
+            'weight' => $this->faker->numberBetween(1, 100),
+            'width' => $this->faker->numberBetween(1, 100),
+            'height' => $this->faker->numberBetween(1, 100),
+            'for_flowwow' => $this->faker->boolean(),
         ];
 
         $dto = ProductDTO::from($productData);
@@ -92,7 +98,7 @@ class ProductTest extends TestCase
     {
         Storage::delete('sitemap.xml');
         Storage::disk('public')->delete('feeds/vk.yml');
-        Storage::disk('public')->delete('feeds/yandex.yml');
+        Storage::disk('public')->delete('feeds/yandex.xml');
 
         $categories = Category::factory(4)->create();
         $product = Product::factory()->create(['gallery' => []]);
@@ -116,6 +122,12 @@ class ProductTest extends TestCase
             'is_active' => $this->faker->boolean(),
             'old_price' => $this->faker->randomFloat(2),
             'ingredients' => ['тест'],
+            'ingredient_units' => [$this->faker->randomElement(\App\Enums\UnitEnum::cases())],
+            'ingredient_values' => [$this->faker->numberBetween(1, 100)],
+            'weight' => $this->faker->numberBetween(1, 100),
+            'width' => $this->faker->numberBetween(1, 100),
+            'height' => $this->faker->numberBetween(1, 100),
+            'for_flowwow' => $this->faker->boolean(),
         ];
 
         $dto = ProductDTO::from($productData);
@@ -154,7 +166,12 @@ class ProductTest extends TestCase
         /** @var UpdateProductIngredientsCase $case */
         $case = app(UpdateProductIngredientsCase::class);
 
-        $case->handle($product, ['Состав', 'Ингредиенты', $ingredient->name]);
+        $case->handle(
+            $product,
+            ['Состав', 'Ингредиенты', $ingredient->name],
+            [100, 100, 100],
+            [\App\Enums\UnitEnum::g, \App\Enums\UnitEnum::g, \App\Enums\UnitEnum::g]
+        );
         $ingredients = $product->ingredients()->pluck('name');
 
         $this->assertTrue($ingredients->contains('состав'));

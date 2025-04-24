@@ -9,6 +9,7 @@ defineProps({
   categories: Array,
   whomOptions: Array,
   occasionOptions: Array,
+  units: Array,
 })
 
 const breadcrumbs = computed(() => {
@@ -39,6 +40,7 @@ const breadcrumbs = computed(() => {
           :categories="categories"
           :occasion-options="occasionOptions"
           :whom-options="whomOptions"
+          :units="units"
       />
     </Block>
   </AuthenticatedLayout>

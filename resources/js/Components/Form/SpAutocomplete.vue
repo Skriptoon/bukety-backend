@@ -1,7 +1,7 @@
 <script setup>
 import AutoComplete from 'primevue/autocomplete'
 import FloatLabel from 'primevue/floatlabel'
-import { computed } from 'vue'
+import {computed} from 'vue'
 
 const props = defineProps({
   modelValue: Object,
@@ -9,6 +9,7 @@ const props = defineProps({
   label: String,
   items: Array,
   error: String,
+  multiple: Boolean,
 })
 
 const emit = defineEmits(['complete', 'update:modelValue'])
@@ -29,7 +30,8 @@ const model = computed({
       <AutoComplete
         v-model="model"
         :suggestions="items"
-        multiple
+        :multiple="multiple"
+        :invalid="Boolean(error)"
         @complete="$emit('complete', $event)"
       />
       <label :for="name">{{ label }}</label>

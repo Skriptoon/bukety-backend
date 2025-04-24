@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\DTO\PromoCode\PromoCodeDTO;
 use App\Exceptions\PromoCodeException;
 use App\Models\Order;
-use App\Models\Product;
+use App\Models\Product\Product;
 use App\Models\PromoCode;
 use App\UseCases\PromoCode\ApplyPromoCodeCase;
 use App\UseCases\PromoCode\StorePromoCodeCase;

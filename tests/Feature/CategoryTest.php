@@ -6,7 +6,7 @@ namespace Tests\Feature;
 
 use App\DTO\Category\CategoryDTO;
 use App\Models\Category;
-use App\Models\Product;
+use App\Models\Product\Product;
 use App\UseCases\Category\StoreCategoryCase;
 use App\UseCases\Category\UpdateCategoryCase;
 use Illuminate\Database\Eloquent\Collection;

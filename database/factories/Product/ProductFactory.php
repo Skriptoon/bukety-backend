@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Database\Factories;
+namespace Database\Factories\Product;
 
 use App\Enums\OccasionEnum;
 use App\Enums\WhomEnum;
-use App\Models\Product;
+use App\Models\Product\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Str;
 
@@ -37,6 +37,10 @@ class ProductFactory extends Factory
             'gallery' => [],
             'is_active' => $this->faker->boolean(),
             'old_price' => $this->faker->randomFloat(2),
+            'weight' => $this->faker->numberBetween(1, 1000),
+            'width' => $this->faker->numberBetween(1, 1000),
+            'height' => $this->faker->numberBetween(1, 1000),
+            'for_flowwow' => $this->faker->boolean(),
         ];
     }
 }

@@ -7,7 +7,7 @@ namespace App\Http\Resources\Product;
 use App\Enums\OccasionEnum;
 use App\Enums\WhomEnum;
 use App\Http\Resources\Category\CategoryListResource;
-use App\Models\Product;
+use App\Models\Product\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -52,6 +52,10 @@ class ProductResource extends JsonResource
             'ingredients' => $this->resource->ingredients->pluck('name'),
             'updated_at' => $this->resource->updated_at,
             'is_new' => $this->resource->created_at > now()->subDays(7),
+            'weight' => $this->resource->weight,
+            'height' => $this->resource->height,
+            'width' => $this->resource->width,
+            'for_flowwow' => $this->resource->for_flowwow
         ];
     }
 }

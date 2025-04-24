@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\UseCases\Product;
 
 use App\DTO\Product\ProductDTO;
-use App\Models\Product;
+use App\Models\Product\Product;
 use App\UseCases\Image\ImageOptimizeCase;
-use App\UseCases\Product\Feeds\GenerateVkYmlCase;
-use App\UseCases\Product\Feeds\GenerateYandexYmlCase;
+use App\UseCases\Product\Feeds\Strategies\FlowwowYmlFeedStrategy;
+use App\UseCases\Product\Feeds\Strategies\VkYmlFeedStrategy;
+use App\UseCases\Product\Feeds\Strategies\YandexYmlFeedStrategy;
+use App\UseCases\Product\Feeds\YmlFeedGenerator;
 use App\UseCases\Sitemap\SitemapGenerator;
 use Nette\Utils\ImageException;
 use Nette\Utils\UnknownImageFileException;
@@ -20,8 +22,7 @@ readonly class UpdateProductCase
     public function __construct(
         private ImageOptimizeCase $imageOptimizeCase,
         private SitemapGenerator $sitemapGenerator,
-        private GenerateVkYmlCase $generateVkYmlCase,
-        private GenerateYandexYmlCase $generateYandexYmlCase,
+        private YmlFeedGenerator $ymlFeedGenerator,
         private UpdateProductIngredientsCase $updateProductIngredientsCase,
     ) {
     }
@@ -44,6 +45,10 @@ readonly class UpdateProductCase
             'whom' => $data->whom,
             'occasion' => $data->occasion,
             'is_active' => $data->is_active,
+            'weight' => $data->weight,
+            'width' => $data->width,
+            'height' => $data->height,
+            'for_flowwow' => $data->for_flowwow,
         ]);
 
         if ($data->image !== null) {
@@ -59,6 +64,7 @@ readonly class UpdateProductCase
             $gallery[] = $image;
             $savedFiles[] = $image;
         }
+
         foreach ($data->gallery ?? [] as $image) {
             $imagePath = $this->imageOptimizeCase->handle($image, 'product');
             $gallery[] = $imagePath;
@@ -72,9 +78,21 @@ readonly class UpdateProductCase
         $product->save();
         $product->categories()->withoutGlobalScope('visible')->sync($data->categories);
 
-        $this->updateProductIngredientsCase->handle($product, $data->ingredients);
+        $this->updateProductIngredientsCase->handle(
+            $product,
+            $data->ingredients,
+            $data->ingredient_values,
+            $data->ingredient_units
+        );
         $this->sitemapGenerator->handle();
-        $this->generateVkYmlCase->handle();
-        $this->generateYandexYmlCase->handle();
+        $this->generateFeed();
+    }
+
+    private function generateFeed(): void
+    {
+        $this->ymlFeedGenerator->addStrategy(new VkYmlFeedStrategy());
+        $this->ymlFeedGenerator->addStrategy(new YandexYmlFeedStrategy());
+        $this->ymlFeedGenerator->addStrategy(new FlowwowYmlFeedStrategy());
+        $this->ymlFeedGenerator->generate();
     }
 }

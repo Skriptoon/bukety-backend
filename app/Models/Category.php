@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Filters\Category\IsMain;
+use App\Models\Product\Product;
 use Database\Factories\CategoryFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -61,6 +62,8 @@ use Storage;
  * @method static Builder|Category visible()
  * @method static CategoryFactory factory($count = null, $state = [])
  * @method static Builder|Category whereParentId($value)
+ * @property-read Collection<int, Product> $mainProducts
+ * @property-read int|null $main_products_count
  * @mixin Eloquent
  */
 class Category extends Model
@@ -99,6 +102,14 @@ class Category extends Model
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class);
+    }
+
+    /**
+     * @return HasMany<Product, $this>
+     */
+    public function mainProducts(): HasMany
+    {
+        return $this->hasMany(Product::class, 'main_category_id', 'id');
     }
 
     public function getImageUrlAttribute(): ?string

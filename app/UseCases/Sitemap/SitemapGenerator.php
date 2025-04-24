@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\UseCases\Sitemap;
 
 use App\Models\Category;
-use App\Models\Product;
+use App\Models\Product\Product;
 use SimpleXMLElement;
 use Storage;
 

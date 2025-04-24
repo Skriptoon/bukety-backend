@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Database\Factories;
+namespace Database\Factories\Product;
 
-use App\Models\ProductIngredient;
+use App\Models\Product\ProductIngredient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

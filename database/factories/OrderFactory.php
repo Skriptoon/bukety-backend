@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Enums\CommunicationsMethodsEnum;
 use App\Enums\OrderStatusEnum;
 use App\Models\Order;
-use App\Models\Product;
+use App\Models\Product\Product;
 use App\Models\PromoCode;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

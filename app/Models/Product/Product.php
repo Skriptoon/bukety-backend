@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace App\Models\Product;
 
 use App\Filters\Product\Category as CategoryFilter;
 use App\Filters\Product\Name;
-use Database\Factories\ProductFactory;
+use App\Models\Category;
+use Database\Factories\Product\ProductFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -34,16 +35,21 @@ use Storage;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string $image_url
- * @property string $gallery_urls
+ * @property array<string> $gallery_urls
  * @property array<string> $whom
  * @property array<string> $occasion
  * @property int|null $main_category_id
  * @property float $old_price
+ * @property int|null $width
+ * @property int|null $height
+ * @property int|null $weight
+ * @property bool $for_flowwow
  * @property-read Collection<int, Category> $categories
  * @property-read int|null $categories_count
  * @property-read Collection<int, ProductIngredient> $ingredients
  * @property-read int|null $ingredients_count
  * @property-read Category|null $mainCategory
+ * @property-read ProductProductIngredient|null $pivot
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()
  * @method static Builder|Product query()
@@ -68,6 +74,11 @@ use Storage;
  * @method static Builder|Product whereVkDescription($value)
  * @method static ProductFactory factory($count = null, $state = [])
  * @method static Builder|Product whereMainCategoryId($value)
+ * @method static Builder<static>|Product whereHeight($value)
+ * @method static Builder<static>|Product whereOldPrice($value)
+ * @method static Builder<static>|Product whereWeight($value)
+ * @method static Builder<static>|Product whereWidth($value)
+ * @method static Builder<static>|Product whereForFlowwow($value)
  * @mixin Eloquent
  */
 class Product extends Model
@@ -92,6 +103,10 @@ class Product extends Model
         'image',
         'gallery',
         'is_active',
+        'weight',
+        'width',
+        'height',
+        'for_flowwow',
     ];
 
     protected $casts = [
@@ -120,11 +135,13 @@ class Product extends Model
     }
 
     /**
-     * @return BelongsToMany<ProductIngredient, $this>
+     * @return BelongsToMany<ProductIngredient, $this, ProductProductIngredient>
      */
     public function ingredients(): BelongsToMany
     {
-        return $this->belongsToMany(ProductIngredient::class);
+        return $this->belongsToMany(ProductIngredient::class)
+            ->using(ProductProductIngredient::class)
+            ->withPivot(['unit', 'value']);
     }
 
     /**

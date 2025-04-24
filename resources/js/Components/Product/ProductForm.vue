@@ -13,12 +13,15 @@ import SpAutocomplete from '@/Components/Form/SpAutocomplete.vue'
 import axios from 'axios'
 import SpDropdown from '@/Components/Form/SpDropdown.vue'
 import SpEditor from '@/Components/Form/SpEditor.vue'
+import InputGroup from 'primevue/inputgroup'
+import InputGroupAddon from 'primevue/inputgroupaddon'
 
 const props = defineProps({
   product: Object,
   categories: Array,
   whomOptions: Array,
   occasionOptions: Array,
+  units: Array,
   previousUrl: String,
 })
 
@@ -31,6 +34,8 @@ const form = useForm({
   price: props.product?.price ?? null,
   old_price: props.product?.old_price ?? null,
   ingredients: props.product?.ingredients?.map(ingredient => ingredient.name) ?? null,
+  ingredient_values: props.product?.ingredients?.map(ingredient => ingredient.pivot.value) ?? null,
+  ingredient_units: props.product?.ingredients?.map(ingredient => ingredient.pivot.unit) ?? null,
   image: null,
   gallery: [],
   is_active: props.product?.is_active ?? false,
@@ -40,6 +45,10 @@ const form = useForm({
   occasion: props.product?.occasion ?? null,
   redirect_url: props.previousUrl,
   uploaded_gallery_images: props.product?.gallery ?? [],
+  weight: props.product?.weight ?? null,
+  width: props.product?.width ?? null,
+  height: props.product?.height ?? null,
+  for_flowwow: props.product?.for_flowwow ?? false,
   _method: undefined,
 })
 
@@ -85,6 +94,18 @@ async function searchIngredients(event) {
   if (ingredients.value?.find(ingredient => ingredient === event.query) === undefined) {
     ingredients.value.unshift(event.query)
   }
+}
+
+function deleteIngredient(index) {
+  form.ingredients.splice(index, 1)
+  form.ingredient_values.splice(index, 1)
+  form.ingredient_units.splice(index, 1)
+}
+
+function addIngredient() {
+  form.ingredients.push(null)
+  form.ingredient_values.push(null)
+  form.ingredient_units.push(null)
 }
 </script>
 
@@ -201,14 +222,89 @@ async function searchIngredients(event) {
       />
     </div>
     <div class="mt-5">
-      <SpAutocomplete
-        v-model="form.ingredients"
-        :error="form.errors.ingredients"
-        :items="ingredients"
-        label="Состав"
-        name="ingredients"
-        @complete="searchIngredients"
-        @reset-validation="form.errors.ingredients = null"
+      <label>Состав</label>
+      <InputGroup
+        v-for="(_, index) in form.ingredients"
+        class="mt-5"
+        :key="index"
+      >
+        <SpAutocomplete
+          v-model="form.ingredients[index]"
+          :error="form.errors['ingredients.' + index]"
+          :items="ingredients"
+          label="Ингридиент"
+          :name="'ingredients.' + index"
+          @complete="searchIngredients"
+          @reset-validation="form.errors['ingredients.' + index] = null"
+        />
+        <SpInput
+          v-model="form.ingredient_values[index]"
+          class="w-[120px]"
+          label="Количество"
+          :name="'ingredient_values.' + index"
+          :error="form.errors['ingredient_values.' + index]"
+          number
+          @reset-validation="form.errors['ingredient_values.' + index] = null"
+        />
+        <SpDropdown
+          v-model="form.ingredient_units[index]"
+          class="w-[100px]"
+          :name="'ingredient_units.' + index"
+          :error="form.errors['ingredient_units.' + index]"
+          :options="units"
+          @reset-validation="form.errors['ingredient_units.' + index] = null"
+        />
+        <InputGroupAddon>
+          <Button severity="secondary" @click="deleteIngredient(index)">
+            <Icon :icon="['fa', 'trash']" />
+          </Button>
+        </InputGroupAddon>
+      </InputGroup>
+      <Button
+        class="mt-5"
+        severity="success"
+        @click="addIngredient"
+      >
+        <Icon :icon="['fa', 'plus']" />
+      </Button>
+    </div>
+    <div class="mt-5">
+      <InputGroup>
+        <SpInput
+          v-model="form.width"
+          :error="form.errors.width"
+          label="Ширина"
+          name="weight"
+          number
+          @reset-validation="form.errors.width = null"
+        />
+        <InputGroupAddon>
+          см
+        </InputGroupAddon>
+        <InputGroupAddon>
+          x
+        </InputGroupAddon>
+        <SpInput
+          v-model="form.height"
+          :error="form.errors.height"
+          label="Высота"
+          name="height"
+          number
+          @reset-validation="form.errors.height = null"
+        />
+        <InputGroupAddon>
+          см
+        </InputGroupAddon>
+      </InputGroup>
+    </div>
+    <div class="mt-5">
+      <SpInput
+        v-model="form.weight"
+        :error="form.errors.weight"
+        label="Вес"
+        name="weight"
+        number
+        @reset-validation="form.errors.weight = null"
       />
     </div>
     <div class="mt-5">
@@ -255,13 +351,13 @@ async function searchIngredients(event) {
               v-if="index !== 0"
               @click="imageUp(index)"
             >
-              <Icon icon="caret-up"/>
+              <Icon icon="caret-up" />
             </Button>
             <Button
               v-if="index + 1 !== form.uploaded_gallery_images.length"
               @click="imageDown(index)"
             >
-              <Icon icon="caret-down"/>
+              <Icon icon="caret-down" />
             </Button>
           </div>
         </div>
@@ -270,7 +366,7 @@ async function searchIngredients(event) {
             severity="danger"
             @click="deleteImage(index)"
           >
-            <Icon icon="trash"/>
+            <Icon icon="trash" />
           </Button>
         </div>
       </div>
@@ -283,6 +379,16 @@ async function searchIngredients(event) {
         name="is_active"
         switcher
         @reset-validation="form.errors.is_active = null"
+      />
+    </div>
+    <div class="mt-5">
+      <SpCheckbox
+        v-model="form.for_flowwow"
+        :error="form.errors.for_flowwow"
+        label="Добавить на flowwow"
+        name="for_flowwow"
+        switcher
+        @reset-validation="form.errors.for_flowwow = null"
       />
     </div>
     <Button

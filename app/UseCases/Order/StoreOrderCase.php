@@ -8,7 +8,7 @@ use App\DTO\Order\OrderDTO;
 use App\Enums\OrderStatusEnum;
 use App\Exceptions\PromoCodeException;
 use App\Models\Order;
-use App\Models\Product;
+use App\Models\Product\Product;
 use App\UseCases\PromoCode\ApplyPromoCodeCase;
 use VK\Client\VKApiClient;
 use VK\Exceptions\Api\VKApiMessagesCantFwdException;

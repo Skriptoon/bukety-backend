@@ -6,13 +6,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\DTO\Product\ProductDTO;
 use App\Enums\OccasionEnum;
+use App\Enums\UnitEnum;
 use App\Enums\WhomEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Products\StoreProductRequest;
 use App\Http\Requests\Admin\Products\UpdateProductRequest;
 use App\Models\Category;
-use App\Models\Product;
-use App\Models\ProductIngredient;
+use App\Models\Product\Product;
+use App\Models\Product\ProductIngredient;
 use App\UseCases\Product\GenerateImageWithDescriptionCase;
 use App\UseCases\Product\StoreProductCase;
 use App\UseCases\Product\UpdateProductCase;
@@ -45,7 +46,7 @@ class ProductController extends Controller
 
         $categories = Category::orderBy('sort')
             ->get(['id', 'name'])
-            ->map(fn ($category) => [
+            ->map(fn($category) => [
                 'id' => $category->id,
                 'name' => $category->name,
             ]);
@@ -91,6 +92,7 @@ class ProductController extends Controller
             'whomOptions' => WhomEnum::getOptions(),
             'occasionOptions' => OccasionEnum::getOptions(),
             'previousUrl' => $previousUrl,
+            'units' => UnitEnum::getOptions(),
         ]);
     }
 
@@ -133,6 +135,7 @@ class ProductController extends Controller
             'categories' => $categories,
             'whomOptions' => WhomEnum::getOptions(),
             'occasionOptions' => OccasionEnum::getOptions(),
+            'units' => UnitEnum::getOptions(),
         ]);
     }
 

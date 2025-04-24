@@ -1,6 +1,6 @@
 <script setup>
 import Editor from '@tinymce/tinymce-vue'
-import { computed } from 'vue'
+import {computed} from 'vue'
 
 const props = defineProps({
   modelValue: String,
@@ -22,7 +22,7 @@ const model = computed({
 </script>
 
 <template>
-  <label for="name">{{ label }}</label>
+  <label :for="name">{{ label }}</label>
   <Editor
     :id="name"
     v-model="model"

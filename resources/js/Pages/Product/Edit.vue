@@ -10,6 +10,7 @@ const props = defineProps({
   categories: Array,
   whomOptions: Array,
   occasionOptions: Array,
+  units: Array,
   previousUrl: String,
 })
 
@@ -42,6 +43,7 @@ const breadcrumbs = computed(() => {
           :categories="categories"
           :occasion-options="occasionOptions"
           :whom-options="whomOptions"
+          :units="units"
           :previous-url="previousUrl"
       />
     </Block>

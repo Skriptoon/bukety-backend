@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Storage;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -12,7 +13,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function tearDown(): void
     {
-        \Storage::disk('public')->deleteDirectory('.');
+        Storage::disk('public')->deleteDirectory('.');
 
         parent::tearDown();
     }

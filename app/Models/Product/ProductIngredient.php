@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace App\Models\Product;
 
-use Database\Factories\ProductIngredientFactory;
+use Database\Factories\Product\ProductIngredientFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +18,7 @@ use Illuminate\Support\Carbon;
  * @property string $name
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read ProductProductIngredient|null $pivot
  * @method static Builder|ProductIngredient newModelQuery()
  * @method static Builder|ProductIngredient newQuery()
  * @method static Builder|ProductIngredient query()

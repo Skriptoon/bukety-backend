@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\UseCases\Product;
 
-use App\Models\Product;
+use App\Models\Product\Product;
 use Nette\Utils\Image;
 use Nette\Utils\ImageColor;
 use Nette\Utils\ImageException;
