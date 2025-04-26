@@ -24,7 +24,7 @@ class ImageOptimizeCase
 
         $img = Image::fromFile($imageData->file->path());
 
-        if ($imageData->left && $imageData->top && $imageData->height && $imageData->width) {
+        if ($imageData->left !== null && $imageData->top !== null && $imageData->height !== null && $imageData->width !== null) {
             $img->crop($imageData->left, $imageData->top, $imageData->width, $imageData->height);
         }
 
