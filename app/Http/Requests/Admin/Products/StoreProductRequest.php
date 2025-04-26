@@ -144,7 +144,7 @@ class StoreProductRequest extends FormRequest
                 'dimensions:min_width=1200,min_height=1200',
             ],
             'uploaded_gallery_images' => [
-                'required',
+                'nullable',
                 'array',
             ],
             'uploaded_gallery_images.*' => [
