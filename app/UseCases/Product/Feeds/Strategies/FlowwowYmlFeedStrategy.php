@@ -6,7 +6,6 @@ namespace App\UseCases\Product\Feeds\Strategies;
 
 use App\Models\Category;
 use App\Models\Product\Product;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use SimpleXMLElement;
 use Storage;
@@ -25,12 +24,6 @@ class FlowwowYmlFeedStrategy extends BaseFeedStrategy
     protected function getCategories(): Collection
     {
         return Category::active()
-            ->whereHas('mainProducts', function (Builder $query) {
-                /** @var Builder<Product>|Product $query*/
-                /* @phpstan-ignore varTag.nativeType */
-                $query->active()
-                    ->whereForFlowwow(true);
-            })
             ->get();
     }
 
