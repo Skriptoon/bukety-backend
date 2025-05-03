@@ -3,16 +3,15 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Image from 'primevue/image'
 import Button from 'primevue/button'
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-import {useConfirm} from 'primevue/useconfirm'
-import {router} from '@inertiajs/vue3'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { useConfirm } from 'primevue/useconfirm'
+import { router } from '@inertiajs/vue3'
 import ConfirmPopup from 'primevue/confirmpopup'
 import Tag from 'primevue/tag'
-import Dropdown from 'primevue/dropdown'
-import {onMounted, ref} from 'vue'
-import {FilterMatchMode} from '@primevue/core/api'
+import { onMounted, ref } from 'vue'
+import { FilterMatchMode } from '@primevue/core/api'
 import InputText from 'primevue/inputtext'
-import {Inertia} from '@inertiajs/inertia'
+import { Inertia } from '@inertiajs/inertia'
 import Checkbox from 'primevue/checkbox'
 
 defineProps({
@@ -95,78 +94,84 @@ function page(data) {
 <template>
   <div class="flex items-center gap-2">
     <Checkbox
-        v-model="withDisabled"
-        id="withDisabled"
-        binary
-        @update:modelValue="filter"
+      v-model="withDisabled"
+      id="withDisabled"
+      binary
+      @update:modelValue="filter"
     />
     <label for="withDisabled">Показать скрытые товары</label>
   </div>
   <DataTable
-      v-model:filters="filters"
-      :value="products.data"
-      :rows="products.per_page"
-      :first="products.from"
-      :rowsPerPageOptions="[5, 10, 20, 50]"
-      :total-records="products.total"
-      filterDisplay="row"
-      paginator
-      lazy
-      @filter="filter"
-      @page="page"
+    v-model:filters="filters"
+    :value="products.data"
+    :rows="products.per_page"
+    :first="products.from"
+    :rowsPerPageOptions="[5, 10, 20, 50]"
+    :total-records="products.total"
+    filterDisplay="row"
+    paginator
+    lazy
+    @filter="filter"
+    @page="page"
   >
     <Column
-        field="image"
-        style="width: 100px"
+      field="image"
+      style="width: 100px"
     >
       <template #body="{ data }">
         <a :href="route('get-image-with-description', data.id)" target="_blank">
           <Image
-              :src="'/storage/' + data.image"
-              image-class="max-w-none"
-              width="70"
-              height="70"
+            :src="'/storage/' + data.image"
+            image-class="max-w-none"
+            width="70"
+            height="70"
           />
         </a>
       </template>
     </Column>
     <Column
-        :show-filter-menu="false"
-        field="name"
-        header="Название"
+      :show-filter-menu="false"
+      field="name"
+      header="Название"
     >
       <template #filter="{ filterModel, filterCallback }">
         <InputText ref="nameFilterInput" v-model="filterModel.value" @input="filterCallback" />
       </template>
       <template #body="{ data }">
-        <h4><FontAwesomeIcon v-if="!data.is_active" :icon="['fas', 'eye-slash']" /> {{ data.name }}</h4>
-        <p>Цена: {{ data.price }}₽</p>
+        <Link :href="route('products.edit', data.id)">
+          <h4>
+            <FontAwesomeIcon v-if="!data.is_active" :icon="['fas', 'eye-slash']" />
+            {{ data.name }}
+          </h4>
+          <p>Цена: {{ data.price }}₽</p>
+        </Link>
       </template>
     </Column>
     <Column
-        :show-filter-menu="false"
-        field="category"
-        header="Категории"
+      :show-filter-menu="false"
+      field="category"
+      header="Категории"
     >
       <template #filter="{ filterModel, filterCallback }">
-        <Dropdown
-            v-model="filterModel.value"
-            :options="categories"
-            option-label="name"
-            option-value="id"
-            placeholder="Выбрать категорию"
-            class="p-column-filter"
-            style="min-width: 12rem"
-            :showClear="true"
-            @change="filterCallback()"
+        <Select
+          v-model="filterModel.value"
+          :options="categories"
+          option-label="name"
+          option-value="id"
+          placeholder="Выбрать категорию"
+          class="p-column-filter"
+          style="min-width: 12rem"
+          :showClear="true"
+          filter
+          @change="filterCallback()"
         >
-        </Dropdown>
+        </Select>
       </template>
       <template #body="{ data }">
         <div class="flex gap-1 flex-wrap">
           <Tag
-              v-for="(category, index) in data.categories"
-              :key="index"
+            v-for="(category, index) in data.categories"
+            :key="index"
           >
             {{ category.name }}
           </Tag>
@@ -177,8 +182,8 @@ function page(data) {
       <template #body="{ data }">
         <Link :href="route('products.edit', data.id)">
           <Button
-              v-tooltip.bottom="'Измеить'"
-              class="p-button-primary"
+            v-tooltip.bottom="'Измеить'"
+            class="p-button-primary"
           >
             <template #icon>
               <FontAwesomeIcon icon="edit" />
@@ -186,10 +191,10 @@ function page(data) {
           </Button>
         </Link>
         <Button
-            v-tooltip.bottom="'Удалить'"
-            class="ml-2"
-            severity="danger"
-            @click="deleteConfirm($event, data.id)"
+          v-tooltip.bottom="'Удалить'"
+          class="ml-2"
+          severity="danger"
+          @click="deleteConfirm($event, data.id)"
         >
           <template #icon>
             <FontAwesomeIcon icon="trash" />

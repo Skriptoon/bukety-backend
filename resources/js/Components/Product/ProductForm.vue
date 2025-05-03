@@ -1,12 +1,12 @@
 <script setup>
-import {useForm} from '@inertiajs/vue3'
+import { useForm } from '@inertiajs/vue3'
 import SpInput from '@/Components/Form/SpInput.vue'
 import SpFileInput from '@/Components/Form/SpFileInput.vue'
 import SpCheckbox from '@/Components/Form/SpCheckbox.vue'
 import Button from 'primevue/button'
 import Image from 'primevue/image'
 import Icon from '@/Components/Icon.vue'
-import {ref} from 'vue'
+import { ref } from 'vue'
 import SpMultiSelect from '@/Components/Form/SpMultiSelect.vue'
 import SpTextarea from '@/Components/Form/SpTextarea.vue'
 import SpAutocomplete from '@/Components/Form/SpAutocomplete.vue'
@@ -15,6 +15,7 @@ import SpDropdown from '@/Components/Form/SpDropdown.vue'
 import SpEditor from '@/Components/Form/SpEditor.vue'
 import InputGroup from 'primevue/inputgroup'
 import InputGroupAddon from 'primevue/inputgroupaddon'
+import Popover from 'primevue/popover'
 
 const props = defineProps({
   product: Object,
@@ -53,6 +54,7 @@ const form = useForm({
 })
 
 const ingredients = ref([])
+const popover = ref()
 
 function sendForm() {
   if (props.product?.id) {
@@ -106,6 +108,10 @@ function addIngredient() {
   form.ingredients.push(null)
   form.ingredient_values.push(null)
   form.ingredient_units.push(null)
+}
+
+function togglePopover(event) {
+  popover.value.toggle(event)
 }
 </script>
 
@@ -381,7 +387,7 @@ function addIngredient() {
         @reset-validation="form.errors.is_active = null"
       />
     </div>
-    <div class="mt-5">
+    <div class="mt-5 flex items-end gap-2">
       <SpCheckbox
         v-model="form.for_flowwow"
         :error="form.errors.for_flowwow"
@@ -390,6 +396,19 @@ function addIngredient() {
         switcher
         @reset-validation="form.errors.for_flowwow = null"
       />
+      <div class="cursor-pointer" @click="togglePopover">
+        <Icon :icon="['fas', 'circle-info']"/>
+      </div>
+      <Popover ref="popover">
+        <h4 class="font-bold text-lg">Нельзя добавлять:</h4>
+        <ul class="list-disc pl-5">
+          <li>Букеты из конфет.</li>
+          <li>Корзины с фруктами.</li>
+          <li>Алкоголь.</li>
+          <li>Цветы (кроме декора).</li>
+          <li>Чужие товары</li>
+        </ul>
+      </Popover>
     </div>
     <Button
       class="mt-2"
