@@ -13,6 +13,7 @@ import { FilterMatchMode } from '@primevue/core/api'
 import InputText from 'primevue/inputtext'
 import { Inertia } from '@inertiajs/inertia'
 import Checkbox from 'primevue/checkbox'
+import Select from 'primevue/select'
 
 defineProps({
   products: {
