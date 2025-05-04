@@ -59,15 +59,18 @@ class StoreProductRequest extends FormRequest
                 'gt:price',
             ],
             'weight' => [
-                'required',
+                'required_if:for_flowwow,true',
+                'nullable',
                 'integer',
             ],
             'height' => [
-                'required',
+                'required_if:for_flowwow,true',
+                'nullable',
                 'integer',
             ],
             'width' => [
-                'required',
+                'required_if:for_flowwow,true',
+                'nullable',
                 'integer',
             ],
             'image' => [
