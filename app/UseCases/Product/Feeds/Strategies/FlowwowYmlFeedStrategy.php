@@ -53,9 +53,9 @@ class FlowwowYmlFeedStrategy extends BaseFeedStrategy
         $offer->addChild('weight', (string)($product->weight / 1000));
 
         foreach ($product->ingredients as $ingredient) {
-            $consist = $offer->addChild('consist', (string)$ingredient->pivot_value);
+            $consist = $offer->addChild('consist', (string)$ingredient->pivot->value);
             $consist->addAttribute('name', $ingredient->name);
-            $consist->addAttribute('unit', $ingredient->pivot_unit->label());
+            $consist->addAttribute('unit', $ingredient->pivot->unit->label());
         }
     }
 }
