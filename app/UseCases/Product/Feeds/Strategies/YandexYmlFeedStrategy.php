@@ -27,7 +27,7 @@ class YandexYmlFeedStrategy extends BaseFeedStrategy
 
     protected function getOfferCategories(Product $product): array
     {
-        return [$product->main_category_id ?? 0];
+        return [$product->main_category_id];
     }
 
     protected function getDescription(Product $product): string

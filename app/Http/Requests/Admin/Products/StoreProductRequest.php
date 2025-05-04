@@ -122,19 +122,23 @@ class StoreProductRequest extends FormRequest
                 'string',
             ],
             'ingredient_values' => [
-                'required',
+                'required_if:for_flowwow,true',
+                'nullable',
                 'array',
             ],
             'ingredient_values.*' => [
-                'required',
+                'required_if:for_flowwow,true',
+                'nullable',
                 'integer',
             ],
             'ingredient_units' => [
-                'required',
+                'required_if:for_flowwow,true',
+                'nullable',
                 'array',
             ],
             'ingredient_units.*' => [
-                'required',
+                'required_if:for_flowwow,true',
+                'nullable',
                 'string',
                 Rule::enum(UnitEnum::class),
             ],
@@ -151,6 +155,10 @@ class StoreProductRequest extends FormRequest
                 'string',
             ],
             'is_active' => [
+                'required',
+                'boolean',
+            ],
+            'for_flowwow' => [
                 'required',
                 'boolean',
             ],

@@ -38,7 +38,7 @@ use Storage;
  * @property array<string> $gallery_urls
  * @property array<string> $whom
  * @property array<string> $occasion
- * @property int|null $main_category_id
+ * @property int $main_category_id
  * @property float $old_price
  * @property int|null $width
  * @property int|null $height

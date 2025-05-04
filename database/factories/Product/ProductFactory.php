@@ -6,6 +6,7 @@ namespace Database\Factories\Product;
 
 use App\Enums\OccasionEnum;
 use App\Enums\WhomEnum;
+use App\Models\Category;
 use App\Models\Product\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Str;
@@ -20,9 +21,10 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->word();
+        $name = $this->faker->unique()->word();
         $whom = array_map(static fn (WhomEnum $whom): string => $whom->value, WhomEnum::cases());
         $occasion = array_map(static fn (OccasionEnum $occasion): string => $occasion->value, OccasionEnum::cases());
+
 
         return [
             'name' => $name,
@@ -41,6 +43,7 @@ class ProductFactory extends Factory
             'width' => $this->faker->numberBetween(1, 1000),
             'height' => $this->faker->numberBetween(1, 1000),
             'for_flowwow' => $this->faker->boolean(),
+            'main_category_id' => Category::factory(),
         ];
     }
 }
