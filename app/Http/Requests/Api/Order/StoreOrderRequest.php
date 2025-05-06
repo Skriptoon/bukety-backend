@@ -41,6 +41,10 @@ class StoreOrderRequest extends FormRequest
                 'nullable',
                 'string',
             ],
+            'date' => [
+                'required',
+                'date',
+            ],
         ];
     }
 
