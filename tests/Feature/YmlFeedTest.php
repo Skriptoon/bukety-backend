@@ -63,7 +63,7 @@ class YmlFeedTest extends TestCase
         $product->categories()->attach($category);
         $product->ingredients()->attach($ingredient, ['value' => 100, 'unit' => \App\Enums\UnitEnum::g]);
 
-        $productIngredient = $product->ingredients->first();
+        $productIngredient = $product->ingredients->firstOrFail();
         $productIngredient->save();
 
         $generator = app(YmlFeedGenerator::class);
@@ -90,13 +90,20 @@ class YmlFeedTest extends TestCase
             'Ширина, См' => $product->width,
             'Высота, См' => $product->height,
         ];
+        $checkedParams = [];
         foreach ($feed->shop->offers->offer[0]->param as $param) {
             $paramName = (string)$param->attributes()->name;
             if (isset($paramMap[$paramName])) {
                 $this->assertEquals($paramMap[$paramName], (string)$param);
+                $checkedParams[] = $paramName;
+
+                continue;
             }
+
+            $this->fail('unknown param');
         }
 
+        $this->assertEmpty(array_diff(array_keys($paramMap), $checkedParams));
         $this->assertYmlFeed($feed, $product);
     }
 

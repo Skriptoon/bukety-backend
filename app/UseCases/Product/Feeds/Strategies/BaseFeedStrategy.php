@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\UseCases\Product\Feeds\Strategies;
 
 use App\Exceptions\FeedGeneratorException;
@@ -75,7 +77,7 @@ abstract class BaseFeedStrategy implements FeedGenerationStrategyInterface
 
         foreach ($categoryModels as $categoryModel) {
             $category = $categories->addChild('category', $categoryModel->name);
-            $category->addAttribute('id', $categoryModel->id);
+            $category->addAttribute('id', (string)$categoryModel->id);
         }
     }
 
@@ -102,7 +104,7 @@ abstract class BaseFeedStrategy implements FeedGenerationStrategyInterface
 
             $offer->addChild('name', $productModel->name);
             $offer->addChild('url', config('app.frontend_url') . '/product/' . $productModel->slug);
-            $offer->addChild('price', (int)$productModel->price);
+            $offer->addChild('price', (string)$productModel->price);
             if ($productModel->old_price) {
                 $offer->addChild('oldprice', (string)$productModel->old_price);
             }

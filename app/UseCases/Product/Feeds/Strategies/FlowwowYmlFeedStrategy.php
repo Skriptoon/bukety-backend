@@ -17,7 +17,7 @@ class FlowwowYmlFeedStrategy extends BaseFeedStrategy
     {
         return Product::active()
             ->whereForFlowwow(true)
-            ->with(['ingredients'])
+            ->with('ingredients')
             ->get();
     }
 
@@ -53,8 +53,10 @@ class FlowwowYmlFeedStrategy extends BaseFeedStrategy
         $offer->addChild('weight', (string)($product->weight / 1000));
 
         foreach ($product->ingredients as $ingredient) {
+            /** @phpstan-ignore property.nonObject */
             $consist = $offer->addChild('consist', (string)$ingredient->pivot->value);
             $consist->addAttribute('name', $ingredient->name);
+            /** @phpstan-ignore property.nonObject, method.nonObject */
             $consist->addAttribute('unit', $ingredient->pivot->unit->label());
         }
     }
