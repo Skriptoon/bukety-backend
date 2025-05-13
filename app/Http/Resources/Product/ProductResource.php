@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Resources\Product;
 
 use App\Enums\OccasionEnum;
+use App\Enums\UnitEnum;
 use App\Enums\WhomEnum;
 use App\Http\Resources\Category\CategoryListResource;
 use App\Models\Product\Product;
@@ -42,14 +43,17 @@ class ProductResource extends JsonResource
             'image' => $this->resource->image_url,
             'gallery' => $this->resource->gallery_urls,
             'whom' => array_map(
-                static fn (string $item): string => WhomEnum::from($item)->label(),
+                static fn(string $item): string => WhomEnum::from($item)->label(),
                 $this->resource->whom
             ),
             'occasion' => array_map(
-                static fn (string $item): string => OccasionEnum::from($item)->label(),
+                static fn(string $item): string => OccasionEnum::from($item)->label(),
                 $this->resource->occasion
             ),
             'ingredients' => $this->resource->ingredients->pluck('name'),
+            'ingredient_values' => $this->resource->ingredients->pluck('pivot.value'),
+            'ingredient_units' => $this->resource->ingredients->pluck('pivot.unit')
+                ->map(static fn(?UnitEnum $item): ?string => $item?->label()),
             'updated_at' => $this->resource->updated_at,
             'is_new' => $this->resource->created_at > now()->subDays(7),
             'weight' => $this->resource->weight,

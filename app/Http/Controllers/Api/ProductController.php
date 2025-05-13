@@ -19,7 +19,7 @@ class ProductController extends Controller
         $page = $request->get('page', 1);
         $products = Product::active()
             ->filter($request->toArray())
-            ->with('categories', 'ingredients')
+            ->with(['categories', 'ingredients', 'mainCategory'])
             ->paginate(20, page: $page);
 
         return ProductResource::collection($products);
@@ -28,7 +28,7 @@ class ProductController extends Controller
     public function show(string $product): ProductResource
     {
         $productModel = Product::active()
-            ->with('categories', 'ingredients')
+            ->with(['categories', 'ingredients', 'mainCategory'])
             ->where('slug', $product)
             ->firstOrFail();
 
@@ -43,7 +43,7 @@ class ProductController extends Controller
             ->whereHas('categories', static function (Builder $query) use ($categoryIds) {
                 $query->whereIn('categories.id', $categoryIds);
             })
-            ->with('categories', 'ingredients')
+            ->with(['categories', 'ingredients', 'mainCategory'])
             ->whereNot('id', $product->id)
             ->orderBy(new Expression('RANDOM()'))
             ->limit(10)
