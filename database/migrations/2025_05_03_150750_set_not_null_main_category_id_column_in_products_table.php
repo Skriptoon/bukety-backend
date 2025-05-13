@@ -14,10 +14,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
+        $products = Product::whereNull(self::COLUMN_NAME)->get();
+        foreach ($products as $product) {
+            $product->main_category_id = $product->categories->first()->id;
+            $product->save();
+        }
+
         Schema::table(self::TABLE_NAME, function (Blueprint $table): void {
-            DB::table(self::TABLE_NAME)->update([
-                self::COLUMN_NAME => Product::select('id')->first()?->id
-            ]);
             $table->bigInteger(self::COLUMN_NAME)->nullable(false)->change();
         });
     }
