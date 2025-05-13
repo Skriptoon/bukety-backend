@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Product\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,12 +13,6 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        $products = Product::whereNull(self::COLUMN_NAME)->get();
-        foreach ($products as $product) {
-            $product->main_category_id = $product->categories->first()->id;
-            $product->save();
-        }
-
         Schema::table(self::TABLE_NAME, function (Blueprint $table): void {
             $table->bigInteger(self::COLUMN_NAME)->nullable(false)->change();
         });
