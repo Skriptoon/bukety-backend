@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Product;
 
 use App\Filters\Product\Category as CategoryFilter;
+use App\Filters\Product\Ids;
 use App\Filters\Product\Name;
 use App\Models\Category;
 use Database\Factories\Product\ProductFactory;
@@ -124,6 +125,7 @@ class Product extends Model
     protected array $filters = [
         CategoryFilter::class,
         Name::class,
+        Ids::class,
     ];
 
     /**
