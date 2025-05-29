@@ -46,7 +46,7 @@ function updateFiles() {
 }
 
 function onChange({canvas, coordinates}) {
-  croppedImages.value[croppingImageIndex.value] = canvas.toDataURL()
+  croppedImages.value[croppingImageIndex.value] = canvas
   croppedImagesData.value[croppingImageIndex.value] = coordinates
 }
 
@@ -137,7 +137,7 @@ function getError(index) {
                         class="cursor-pointer"
                         role="presentation"
                         :alt="file.name"
-                        :src="showCroppedImage ? croppedImages[index] : file.objectURL"
+                        :src="showCroppedImage ? croppedImages[index].toDataURL() : file.objectURL"
                         width="100"
                         height="50"
                         @click="openCropper(index, file)"
