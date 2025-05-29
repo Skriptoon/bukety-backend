@@ -1,8 +1,8 @@
 <script setup>
 import FileUpload from 'primevue/fileupload'
-import {ref} from 'vue'
-import {Cropper} from 'vue-advanced-cropper'
-import {Button, Dialog} from 'primevue'
+import { ref } from 'vue'
+import { Cropper } from 'vue-advanced-cropper'
+import { Button, Dialog } from 'primevue'
 import Icon from '@/Components/Icon.vue'
 
 const props = defineProps({
@@ -24,6 +24,7 @@ const croppedImages = ref([])
 const croppedImagesData = ref([])
 const croppingImage = ref(null)
 const croppingImageIndex = ref(null)
+const showCroppedImage = ref(false)
 
 function updateFiles() {
   const filesList = [...files.value.files]
@@ -53,6 +54,7 @@ function openCropper(index, file) {
   croppingImage.value = file.objectURL
   croppingImageIndex.value = index
   modalVisible.value = true
+  showCroppedImage.value = false
 }
 
 function saveCrop() {
@@ -68,6 +70,7 @@ function saveCrop() {
   emit('update:modelValue', props.multiple ? filesList : filesList[0])
 
   modalVisible.value = false
+  showCroppedImage.value = true
 }
 
 function cancelCrop() {
@@ -134,7 +137,7 @@ function getError(index) {
                         class="cursor-pointer"
                         role="presentation"
                         :alt="file.name"
-                        :src="croppedImages[index] ?? file.objectURL"
+                        :src="showCroppedImage ? croppedImages[index] : file.objectURL"
                         width="100"
                         height="50"
                         @click="openCropper(index, file)"
