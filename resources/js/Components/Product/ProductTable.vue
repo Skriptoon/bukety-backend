@@ -14,6 +14,7 @@ import InputText from 'primevue/inputtext'
 import { Inertia } from '@inertiajs/inertia'
 import Checkbox from 'primevue/checkbox'
 import Select from 'primevue/select'
+import { debounce } from 'lodash'
 
 defineProps({
   products: {
@@ -75,11 +76,11 @@ function getRouteParams() {
   return params
 }
 
-function filter() {
+const filter= debounce(() => {
   router.get(route('products.index'), getRouteParams(), {
     only: ['products'],
   })
-}
+}, 1000)
 
 function page(data) {
   const params = getRouteParams()
