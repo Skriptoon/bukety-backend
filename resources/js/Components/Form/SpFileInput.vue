@@ -2,7 +2,7 @@
 import FileUpload from 'primevue/fileupload'
 import { ref } from 'vue'
 import { Cropper } from 'vue-advanced-cropper'
-import { Button, Dialog } from 'primevue'
+import { Button, Dialog, Message } from 'primevue'
 import Icon from '@/Components/Icon.vue'
 
 const props = defineProps({
@@ -143,9 +143,9 @@ function getError(index) {
                         @click="openCropper(index, file)"
                     />
                   </div>
-                  <span class="font-semibold text-ellipsis max-w-60 whitespace-nowrap overflow-hidden">{{
-                      file.name
-                    }}</span>
+                  <span class="font-semibold text-ellipsis max-w-60 whitespace-nowrap overflow-hidden">
+                    {{ file.name }}
+                  </span>
                   <small
                       v-if="getError(index)"
                       :id="name"

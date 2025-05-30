@@ -37,7 +37,7 @@ export default {
   },
 
   props: {
-    modelValue: Object,
+    modelValue: [String, Number],
     name: {
       type: String,
       required: true,

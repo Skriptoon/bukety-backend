@@ -1,10 +1,10 @@
 <script setup>
 import AutoComplete from 'primevue/autocomplete'
 import FloatLabel from 'primevue/floatlabel'
-import {computed} from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps({
-  modelValue: Object,
+  modelValue: [String, Number],
   name: String,
   label: String,
   items: Array,

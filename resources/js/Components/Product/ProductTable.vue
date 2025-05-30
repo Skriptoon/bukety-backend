@@ -18,7 +18,7 @@ import { debounce } from 'lodash'
 
 defineProps({
   products: {
-    type: Array,
+    type: Object,
     required: true,
   },
   categories: {

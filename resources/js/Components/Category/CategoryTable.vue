@@ -12,6 +12,7 @@ import Checkbox from 'primevue/checkbox'
 
 const props = defineProps({
   categories: Array,
+  isChild: Boolean,
 })
 
 const confirm = useConfirm()
@@ -52,12 +53,11 @@ function onRowReorder(event) {
 </script>
 
 <template>
-  <div class="flex items-center gap-2">
+  <div v-if="!isChild" class="flex items-center gap-2">
     <Checkbox
       v-model="withDisabled"
       id="withDisabled"
       binary
-      @update:modelValue="filter"
     />
     <label for="withDisabled">Показать скрытые категории</label>
   </div>
@@ -114,7 +114,7 @@ function onRowReorder(event) {
     </Column>
     <template #expansion="{ data }">
       <div class="border-1 border-400 border-round-lg">
-        <CategoryTable :categories="data.children" />
+        <CategoryTable :categories="data.children" is-child/>
       </div>
     </template>
   </DataTable>

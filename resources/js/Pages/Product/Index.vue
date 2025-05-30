@@ -1,5 +1,5 @@
 <script setup>
-import {Head} from '@inertiajs/vue3'
+import { Head } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import ProductTable from '@/Components/Product/ProductTable.vue'
 import Block from '@/Components/Block.vue'
@@ -7,7 +7,7 @@ import ActionButtonGroup from '@/Components/ActionButtonGroup.vue'
 import Button from 'primevue/button'
 
 defineProps({
-  products: Array,
+  products: Object,
   categories: Array,
   vkProductFeed: String,
 })

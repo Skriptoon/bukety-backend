@@ -52,7 +52,7 @@ export default {
   },
 
   props: {
-    modelValue: Object,
+    modelValue: Boolean,
 
     name: {
       type: String,
