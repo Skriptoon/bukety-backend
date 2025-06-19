@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdditionalProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
@@ -24,9 +25,9 @@ Route::domain(env('APP_DOMAIN'))->group(static function () {
             return Inertia::render('Dashboard');
         })->name('dashboard');
 
-        Route::get('/products/{product}/image-with-description', [ProductController::class, 'getImageWithDescription'])
+        Route::get('products/{product}/image-with-description', [ProductController::class, 'getImageWithDescription'])
         ->name('get-image-with-description');
-        Route::get('/products/ingredients', [ProductController::class, 'getIngredients'])->name('products.ingredients');
+        Route::get('products/ingredients', [ProductController::class, 'getIngredients'])->name('products.ingredients');
         Route::resource('products', ProductController::class);
 
         Route::patch('categories/update-sort', [CategoryController::class, 'updateSort'])
@@ -37,6 +38,8 @@ Route::domain(env('APP_DOMAIN'))->group(static function () {
         Route::patch('orders/{order}/complete', [OrderController::class, 'complete'])->name('orders.complete');
 
         Route::resource('promo-codes', PromoCodeController::class);
+
+        Route::resource('additional-products', AdditionalProductController::class);
     });
 
     require __DIR__ . '/auth.php';

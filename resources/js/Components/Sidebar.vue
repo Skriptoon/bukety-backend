@@ -31,7 +31,7 @@
 
 <script>
 import Icon from '@/Components/Icon.vue'
-import Drawer from 'primevue/drawer';
+import Drawer from 'primevue/drawer'
 
 export default {
   name: 'Sidebar',
@@ -73,6 +73,11 @@ export default {
       {
         url: route('products.index'),
         title: 'Товары',
+        icon: 'shopping-bag',
+      },
+      {
+        url: route('additional-products.index'),
+        title: 'Дополнительные товары',
         icon: 'shopping-bag',
       },
       {

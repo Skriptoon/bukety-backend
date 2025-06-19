@@ -167,6 +167,13 @@ function getError(index) {
           </div>
         </template>
       </FileUpload>
+      <small
+        v-if="error && files.files.length === 0"
+        :id="name"
+        class="text-rose-600"
+      >
+        {{ error }}
+      </small>
     </div>
     <Dialog v-model:visible="modalVisible" :style="{ width: '80%' }" modal>
       <Cropper

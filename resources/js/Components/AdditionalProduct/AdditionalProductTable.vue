@@ -11,20 +11,18 @@ import { computed, ref } from 'vue'
 import Checkbox from 'primevue/checkbox'
 
 const props = defineProps({
-  categories: Array,
-  isChild: Boolean,
+  additionalProducts: Array,
 })
 
 const confirm = useConfirm()
-const expandedRows = ref([])
 const withDisabled = ref(false)
 
 const categoriesArray = computed(() => {
   if (!withDisabled.value) {
-    return props.categories.filter(category => category.is_active && !category.is_hidden)
+    return props.additionalProducts.filter(additionalProduct => additionalProduct.is_active)
   }
 
-  return props.categories
+  return props.additionalProducts
 })
 
 function deleteConfirm(event, id) {
@@ -37,39 +35,25 @@ function deleteConfirm(event, id) {
     defaultFocus: 'none',
     acceptClass: 'p-button-danger',
     accept: () => {
-      router.delete(route('categories.destroy', id))
+      router.delete(route('additional-products.destroy', id))
     },
   })
-}
-
-function onRowReorder(event) {
-  categoriesArray.value = event.value
-
-  axios.patch(route('categories.update-sort'), {
-    category_ids: event.value.map(category => category.id),
-  })
-
-  expandedRows.value = []
 }
 </script>
 
 <template>
-  <div v-if="!isChild" class="flex items-center gap-2">
+  <div class="flex items-center gap-2">
     <Checkbox
       v-model="withDisabled"
       id="withDisabled"
       binary
     />
-    <label for="withDisabled">Показать скрытые категории</label>
+    <label for="withDisabled">Показать скрытые товары</label>
   </div>
   <DataTable
-    v-model:expandedRows="expandedRows"
     dataKey="id"
     :value="categoriesArray"
-    @rowReorder="onRowReorder"
   >
-    <Column rowReorder headerStyle="width: 3rem" :reorderableColumn="false" />
-    <Column expander style="width: 5rem" />
     <Column
       field="image"
       style="width: 100px"
@@ -84,14 +68,14 @@ function onRowReorder(event) {
     >
       <template #body="{ data }">
         <Link :href="route('categories.edit', data.id)">
-          <FontAwesomeIcon v-if="data.is_hidden" :icon="['fas', 'eye-slash']" />
+          <FontAwesomeIcon v-if="!data.is_active" :icon="['fas', 'eye-slash']" />
           {{ data.name }}
         </Link>
       </template>
     </Column>
     <Column style="width: 200px">
       <template #body="{ data }">
-        <Link :href="route('categories.edit', data.id)">
+        <Link :href="route('additional-products.edit', data.id)">
           <Button
             v-tooltip.bottom="'Измеить'"
             class="p-button-primary"
@@ -113,11 +97,6 @@ function onRowReorder(event) {
         </Button>
       </template>
     </Column>
-    <template #expansion="{ data }">
-      <div class="border-1 border-400 border-round-lg">
-        <CategoryTable :categories="data.children" is-child/>
-      </div>
-    </template>
   </DataTable>
   <ConfirmPopup />
 </template>
