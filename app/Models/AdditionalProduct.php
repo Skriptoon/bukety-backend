@@ -8,17 +8,19 @@ use App\Enums\AdditionalProductTypeEnum;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
  * @property AdditionalProductTypeEnum $type
  * @property string $price
  * @property string $image
+ * @property bool $is_active
  * @property Carbon|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -30,6 +32,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|AdditionalProduct whereDeletedAt($value)
  * @method static Builder<static>|AdditionalProduct whereId($value)
  * @method static Builder<static>|AdditionalProduct whereImage($value)
+ * @method static Builder<static>|AdditionalProduct whereIsActive($value)
  * @method static Builder<static>|AdditionalProduct whereName($value)
  * @method static Builder<static>|AdditionalProduct wherePrice($value)
  * @method static Builder<static>|AdditionalProduct whereType($value)
@@ -47,4 +50,12 @@ class AdditionalProduct extends Model
     protected $casts = [
         'type' => AdditionalProductTypeEnum::class,
     ];
+
+    /**
+     * @return BelongsToMany<Order, $this>
+     */
+    public function orders(): BelongsToMany
+    {
+        return $this->belongsToMany(Order::class, 'orders_additional_products');
+    }
 }

@@ -8,6 +8,7 @@ use App\Filters\Product\Category as CategoryFilter;
 use App\Filters\Product\Ids;
 use App\Filters\Product\Name;
 use App\Models\Category;
+use App\Models\Order;
 use Database\Factories\Product\ProductFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Lacodix\LaravelModelFilter\Traits\HasFilters;
 use Storage;
@@ -27,59 +29,62 @@ use Storage;
  * @property string $name
  * @property string $slug
  * @property string $description
- * @property string|null $vk_description
  * @property string|null $seo_description
  * @property float $price
  * @property string $image
- * @property array<string> $gallery
+ * @property array<array-key, mixed> $gallery
  * @property bool $is_active
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string $image_url
- * @property array<string> $gallery_urls
- * @property array<string> $whom
- * @property array<string> $occasion
+ * @property array<array-key, mixed> $whom
+ * @property array<array-key, mixed> $occasion
+ * @property string|null $vk_description
  * @property int $main_category_id
- * @property float $old_price
+ * @property float|null $old_price
  * @property int|null $width
  * @property int|null $height
  * @property int|null $weight
- * @property bool $for_flowwow
+ * @property bool|null $for_flowwow
+ * @property Carbon|null $deleted_at
  * @property-read Collection<int, Category> $categories
  * @property-read int|null $categories_count
+ * @property-read array<string> $gallery_urls
+ * @property-read string $image_url
+ * @property-read ProductProductIngredient|null $pivot
  * @property-read Collection<int, ProductIngredient> $ingredients
  * @property-read int|null $ingredients_count
- * @property-read Category|null $mainCategory
- * @property-read ProductProductIngredient|null $pivot
- * @method static Builder|Product newModelQuery()
- * @method static Builder|Product newQuery()
- * @method static Builder|Product query()
- * @method static Builder|Product whereCreatedAt($value)
- * @method static Builder|Product whereDescription($value)
- * @method static Builder|Product whereGallery($value)
- * @method static Builder|Product whereId($value)
- * @method static Builder|Product whereImage($value)
- * @method static Builder|Product whereIsActive($value)
- * @method static Builder|Product whereName($value)
- * @method static Builder|Product wherePreviewDescription($value)
- * @method static Builder|Product wherePrice($value)
- * @method static Builder|Product whereSlug($value)
- * @method static Builder|Product whereUpdatedAt($value)
- * @method static Builder|Product whereVkUrl($value)
- * @method static Builder|Product whereSeoDescription($value)
- * @method static Builder|Product active()
- * @method static Builder|Product filter(mixed[] $values, string $group = '__default')
- * @method static Builder|Product filterByQueryString(string $group = '__default')
- * @method static Builder|Product whereOccasion($value)
- * @method static Builder|Product whereWhom($value)
- * @method static Builder|Product whereVkDescription($value)
+ * @property-read Category $mainCategory
+ * @method static Builder<static>|Product active()
  * @method static ProductFactory factory($count = null, $state = [])
- * @method static Builder|Product whereMainCategoryId($value)
- * @method static Builder<static>|Product whereHeight($value)
- * @method static Builder<static>|Product whereOldPrice($value)
- * @method static Builder<static>|Product whereWeight($value)
- * @method static Builder<static>|Product whereWidth($value)
+ * @method static Builder<static>|Product filter(mixed[] $values, string $group = '__default')
+ * @method static Builder<static>|Product filterByQueryString(string $group = '__default')
+ * @method static Builder<static>|Product newModelQuery()
+ * @method static Builder<static>|Product newQuery()
+ * @method static Builder<static>|Product onlyTrashed()
+ * @method static Builder<static>|Product query()
+ * @method static Builder<static>|Product whereCreatedAt($value)
+ * @method static Builder<static>|Product whereDeletedAt($value)
+ * @method static Builder<static>|Product whereDescription($value)
  * @method static Builder<static>|Product whereForFlowwow($value)
+ * @method static Builder<static>|Product whereGallery($value)
+ * @method static Builder<static>|Product whereHeight($value)
+ * @method static Builder<static>|Product whereId($value)
+ * @method static Builder<static>|Product whereImage($value)
+ * @method static Builder<static>|Product whereIsActive($value)
+ * @method static Builder<static>|Product whereMainCategoryId($value)
+ * @method static Builder<static>|Product whereName($value)
+ * @method static Builder<static>|Product whereOccasion($value)
+ * @method static Builder<static>|Product whereOldPrice($value)
+ * @method static Builder<static>|Product wherePrice($value)
+ * @method static Builder<static>|Product whereSeoDescription($value)
+ * @method static Builder<static>|Product whereSlug($value)
+ * @method static Builder<static>|Product whereUpdatedAt($value)
+ * @method static Builder<static>|Product whereVkDescription($value)
+ * @method static Builder<static>|Product whereWeight($value)
+ * @method static Builder<static>|Product whereWhom($value)
+ * @method static Builder<static>|Product whereWidth($value)
+ * @method static Builder<static>|Product withTrashed()
+ * @method static Builder<static>|Product withoutTrashed()
  * @mixin Eloquent
  */
 class Product extends Model
@@ -89,6 +94,7 @@ class Product extends Model
      */
     use HasFactory;
     use HasFilters;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -144,6 +150,12 @@ class Product extends Model
         return $this->belongsToMany(ProductIngredient::class)
             ->using(ProductProductIngredient::class)
             ->withPivot(['unit', 'value']);
+    }
+
+    /** @return BelongsTo<Order, $this> */
+    public function orders(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
     }
 
     /**

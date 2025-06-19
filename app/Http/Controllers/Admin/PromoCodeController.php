@@ -42,8 +42,11 @@ class PromoCodeController extends Controller
         return redirect()->route('promo-codes.index');
     }
 
-    public function update(UpdatePromoCodeRequest $request, PromoCode $promoCode, UpdatePromoCodeCase $case): RedirectResponse
-    {
+    public function update(
+        UpdatePromoCodeRequest $request,
+        PromoCode $promoCode,
+        UpdatePromoCodeCase $case
+    ): RedirectResponse {
         $dto = PromoCodeDTO::from($request);
         $case->handle($promoCode, $dto);
 
@@ -52,7 +55,11 @@ class PromoCodeController extends Controller
 
     public function destroy(PromoCode $promoCode): RedirectResponse
     {
-        $promoCode->delete();
+        if ($promoCode->orders()->exists()) {
+            $promoCode->delete();
+        } else {
+            $promoCode->forceDelete();
+        }
 
         return redirect()->route('promo-codes.index');
     }

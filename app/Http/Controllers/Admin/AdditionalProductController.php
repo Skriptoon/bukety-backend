@@ -17,6 +17,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Nette\Utils\ImageException;
 use Nette\Utils\UnknownImageFileException;
+use Storage;
 
 class AdditionalProductController extends Controller
 {
@@ -67,6 +68,18 @@ class AdditionalProductController extends Controller
     ): RedirectResponse {
         $dto = AdditionalProductDTO::from($request);
         $case->handle($additionalProduct, $dto);
+
+        return redirect()->route('additional-products.index');
+    }
+
+    public function destroy(AdditionalProduct $additionalProduct): RedirectResponse
+    {
+        if ($additionalProduct->orders()->exists()) {
+            Storage::disk('public')->delete($additionalProduct->image);
+            $additionalProduct->delete();
+        } else {
+            $additionalProduct->forceDelete();
+        }
 
         return redirect()->route('additional-products.index');
     }

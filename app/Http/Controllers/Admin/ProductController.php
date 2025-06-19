@@ -14,6 +14,7 @@ use App\Http\Requests\Admin\Products\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product\Product;
 use App\Models\Product\ProductIngredient;
+use App\UseCases\Product\DestroyProductCase;
 use App\UseCases\Product\GenerateImageWithDescriptionCase;
 use App\UseCases\Product\StoreProductCase;
 use App\UseCases\Product\UpdateProductCase;
@@ -152,9 +153,9 @@ class ProductController extends Controller
         return redirect()->route('products.index');
     }
 
-    public function destroy(Product $product): RedirectResponse
+    public function destroy(Product $product, DestroyProductCase $case): RedirectResponse
     {
-        $product->delete();
+        $case->handle($product);
 
         return redirect()->route('products.index');
     }

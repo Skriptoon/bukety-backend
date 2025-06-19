@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Tests\Feature;
+
 use App\DTO\PromoCode\PromoCodeDTO;
 use App\Exceptions\PromoCodeException;
 use App\Models\Order;
@@ -11,6 +13,7 @@ use App\UseCases\PromoCode\ApplyPromoCodeCase;
 use App\UseCases\PromoCode\StorePromoCodeCase;
 use App\UseCases\PromoCode\UpdatePromoCodeCase;
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -89,13 +92,13 @@ class PromoCodeTest extends TestCase
         );
 
         $this->assertThrows(
-            static fn () => $case->handle('test', 'test', $product->id),
+            static fn() => $case->handle('test', 'test', $product->id),
             PromoCodeException::class,
         );
 
         $promoCode = PromoCode::factory()->create(['expired_at' => now()->subDay(), 'is_active' => true]);
         $this->assertThrows(
-            static fn () => $case->handle($promoCode->promo_code, 'test', $product->id),
+            static fn() => $case->handle($promoCode->promo_code, 'test', $product->id),
             PromoCodeException::class,
         );
 
@@ -105,13 +108,13 @@ class PromoCodeTest extends TestCase
         $order = Order::factory()->create(['promo_code_id' => $promoCode->id]);
 
         $this->assertThrows(
-            static fn () => $case->handle($promoCode->promo_code, $order->phone, $product->id),
+            static fn() => $case->handle($promoCode->promo_code, $order->phone, $product->id),
             PromoCodeException::class,
         );
 
         $product = Product::factory()->create(['old_price' => 123]);
         $this->assertThrows(
-            static fn () => $case->handle($promoCode->promo_code, $order->phone, $product->id),
+            static fn() => $case->handle($promoCode->promo_code, $order->phone, $product->id),
             PromoCodeException::class,
         );
     }

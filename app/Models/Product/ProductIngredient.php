@@ -9,6 +9,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -19,14 +20,14 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read ProductProductIngredient|null $pivot
- * @method static Builder|ProductIngredient newModelQuery()
- * @method static Builder|ProductIngredient newQuery()
- * @method static Builder|ProductIngredient query()
- * @method static Builder|ProductIngredient whereCreatedAt($value)
- * @method static Builder|ProductIngredient whereId($value)
- * @method static Builder|ProductIngredient whereName($value)
- * @method static Builder|ProductIngredient whereUpdatedAt($value)
  * @method static ProductIngredientFactory factory($count = null, $state = [])
+ * @method static Builder<static>|ProductIngredient newModelQuery()
+ * @method static Builder<static>|ProductIngredient newQuery()
+ * @method static Builder<static>|ProductIngredient query()
+ * @method static Builder<static>|ProductIngredient whereCreatedAt($value)
+ * @method static Builder<static>|ProductIngredient whereId($value)
+ * @method static Builder<static>|ProductIngredient whereName($value)
+ * @method static Builder<static>|ProductIngredient whereUpdatedAt($value)
  * @mixin Eloquent
  */
 class ProductIngredient extends Model
@@ -37,4 +38,12 @@ class ProductIngredient extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    /**
+     * @return BelongsToMany<Product, $this>
+     */
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

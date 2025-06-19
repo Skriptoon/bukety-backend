@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
+namespace Tests\Feature;
+
 use App\DTO\Order\OrderDTO;
 use App\Enums\CommunicationsMethodsEnum;
 use App\Models\Product\Product;
 use App\Models\PromoCode;
 use App\UseCases\Order\StoreOrderCase;
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Carbon;
@@ -28,7 +31,7 @@ class OrderTest extends TestCase
             'phone' => $this->faker->phoneNumber(),
             'communication_method' => $this->faker->randomElement(CommunicationsMethodsEnum::cases()),
             'product_id' => $product->id,
-            'date' => (new Carbon($this->faker->date()))->format('Y-m-d 00:00:00'),
+            'date' => new Carbon($this->faker->date())->format('Y-m-d 00:00:00'),
         ];
 
         $dto = OrderDTO::from($data);
@@ -54,7 +57,7 @@ class OrderTest extends TestCase
             'phone' => $this->faker->phoneNumber(),
             'communication_method' => $this->faker->randomElement(CommunicationsMethodsEnum::cases()),
             'product_id' => $product->id,
-            'date' => (new Carbon($this->faker->date()))->format('Y-m-d 00:00:00'),
+            'date' => new Carbon($this->faker->date())->format('Y-m-d 00:00:00'),
             'promo_code' => $promoCode->promo_code,
         ];
 

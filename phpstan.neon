@@ -13,4 +13,4 @@ parameters:
 #        - '#PHPDoc tag @var#'
 #
     excludePaths:
-        - ./app/Console/Commands/TestCommand.php
+        - ./app/Console/Commands/TestCommand.php (?)

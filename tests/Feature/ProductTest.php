@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+namespace Tests\Feature;
+
 use App\DTO\Product\ProductDTO;
 use App\Enums\OccasionEnum;
+use App\Enums\UnitEnum;
 use App\Enums\WhomEnum;
 use App\Models\Category;
 use App\Models\Product\Product;
@@ -16,6 +19,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Nette\Utils\ImageException;
 use Nette\Utils\UnknownImageFileException;
+use Storage;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
@@ -54,7 +58,7 @@ class ProductTest extends TestCase
             'is_active' => $this->faker->boolean(),
             'old_price' => $this->faker->randomFloat(2),
             'ingredients' => ['тест'],
-            'ingredient_units' => [$this->faker->randomElement(\App\Enums\UnitEnum::cases())],
+            'ingredient_units' => [$this->faker->randomElement(UnitEnum::cases())],
             'ingredient_values' => [$this->faker->numberBetween(1, 100)],
             'weight' => $this->faker->numberBetween(1, 100),
             'width' => $this->faker->numberBetween(1, 100),
@@ -122,7 +126,7 @@ class ProductTest extends TestCase
             'is_active' => $this->faker->boolean(),
             'old_price' => $this->faker->randomFloat(2),
             'ingredients' => ['тест'],
-            'ingredient_units' => [$this->faker->randomElement(\App\Enums\UnitEnum::cases())],
+            'ingredient_units' => [$this->faker->randomElement(UnitEnum::cases())],
             'ingredient_values' => [$this->faker->numberBetween(1, 100)],
             'weight' => $this->faker->numberBetween(1, 100),
             'width' => $this->faker->numberBetween(1, 100),
@@ -170,7 +174,7 @@ class ProductTest extends TestCase
             $product,
             ['Состав', 'Ингредиенты', $ingredient->name],
             [100, 100, 100],
-            [\App\Enums\UnitEnum::g, \App\Enums\UnitEnum::g, \App\Enums\UnitEnum::g]
+            [UnitEnum::g, UnitEnum::g, UnitEnum::g]
         );
         $ingredients = $product->ingredients()->pluck('name');
 

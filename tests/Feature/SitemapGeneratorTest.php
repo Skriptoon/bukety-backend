@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\Category;
@@ -32,11 +34,11 @@ class SitemapGeneratorTest extends TestCase
 
         $sitemap = Storage::get('sitemap.xml');
 
-        $this->assertStringContainsString(config('app.frontend_url').'/contacts', $sitemap);
-        $this->assertStringContainsString(config('app.frontend_url').'/delivery', $sitemap);
-        $this->assertStringContainsString(config('app.frontend_url').'/catalog', $sitemap);
-        $this->assertStringContainsString(config('app.frontend_url').'/'.$category->slug, $sitemap);
-        $this->assertStringContainsString(config('app.frontend_url').'/product/'.$product->slug, $sitemap);
+        $this->assertStringContainsString(config('app.frontend_url') . '/contacts', $sitemap);
+        $this->assertStringContainsString(config('app.frontend_url') . '/delivery', $sitemap);
+        $this->assertStringContainsString(config('app.frontend_url') . '/catalog', $sitemap);
+        $this->assertStringContainsString(config('app.frontend_url') . '/' . $category->slug, $sitemap);
+        $this->assertStringContainsString(config('app.frontend_url') . '/product/' . $product->slug, $sitemap);
         $this->assertStringContainsString('<priority>', $sitemap);
         $this->assertStringContainsString('<lastmod>', $sitemap);
         $this->assertStringContainsString('<changefreq>', $sitemap);

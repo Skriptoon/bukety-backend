@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace Tests\Feature;
+
+use App\Enums\UnitEnum;
 use App\Models\Category;
 use App\Models\Product\Product;
 use App\Models\Product\ProductIngredient;
@@ -9,8 +12,11 @@ use App\UseCases\Product\Feeds\Strategies\FlowwowYmlFeedStrategy;
 use App\UseCases\Product\Feeds\Strategies\VkYmlFeedStrategy;
 use App\UseCases\Product\Feeds\Strategies\YandexYmlFeedStrategy;
 use App\UseCases\Product\Feeds\YmlFeedGenerator;
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use SimpleXMLElement;
+use Storage;
 use Tests\TestCase;
 
 class YmlFeedTest extends TestCase
@@ -61,7 +67,7 @@ class YmlFeedTest extends TestCase
             'for_flowwow' => true,
         ]);
         $product->categories()->attach($category);
-        $product->ingredients()->attach($ingredient, ['value' => 100, 'unit' => \App\Enums\UnitEnum::g]);
+        $product->ingredients()->attach($ingredient, ['value' => 100, 'unit' => UnitEnum::g]);
 
         $productIngredient = $product->ingredients->firstOrFail();
         $productIngredient->save();
@@ -77,7 +83,7 @@ class YmlFeedTest extends TestCase
         $this->assertEquals($description, (string)$feed->shop->offers->offer[0]->description);
         $this->assertEquals(100, (string)$feed->shop->offers->offer[0]->consist[0]);
         $this->assertEquals(
-            \App\Enums\UnitEnum::g->label(),
+            UnitEnum::g->label(),
             (string)$feed->shop->offers->offer[0]->consist[0]->attributes()->unit
         );
         $this->assertEquals(
@@ -112,7 +118,6 @@ class YmlFeedTest extends TestCase
      */
     public function testVkFeedGeneration(): void
     {
-        $ingredient = ProductIngredient::factory()->create();
         $category = Category::factory()->create(['is_active' => true]);
         $product = Product::factory()->create([
             'main_category_id' => $category->id,

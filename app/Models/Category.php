@@ -24,46 +24,46 @@ use Storage;
  *
  * @property int $id
  * @property string $name
- * @property string $description
+ * @property string $slug
+ * @property string|null $description
  * @property string|null $image
  * @property string|null $seo_description
- * @property int|null $parent_id
  * @property int $sort
  * @property bool $is_active
  * @property bool $show_in_main
+ * @property bool $is_hidden
  * @property Carbon|null $created_at
- * @property string $slug
  * @property Carbon|null $updated_at
- * @property bool|null $is_hidden
- * @property-read Collection<int, Product> $products
- * @property-read int|null $products_count
- * @property-read string|null $image_url
+ * @property int|null $parent_id
  * @property-read Collection<int, Category> $children
  * @property-read int|null $children_count
- * @property-read Category|null $parent
- * @method static Builder|Category newModelQuery()
- * @method static Builder|Category newQuery()
- * @method static Builder|Category query()
- * @method static Builder|Category whereCreatedAt($value)
- * @method static Builder|Category whereDescription($value)
- * @method static Builder|Category whereId($value)
- * @method static Builder|Category whereImage($value)
- * @method static Builder|Category whereIsActive($value)
- * @method static Builder|Category whereName($value)
- * @method static Builder|Category whereSeoDescription($value)
- * @method static Builder|Category whereShowInMain($value)
- * @method static Builder|Category whereSort($value)
- * @method static Builder|Category whereUpdatedAt($value)
- * @method static Builder|Category whereSlug($value)
- * @method static Builder|Category active()
- * @method static Builder|Category filter(mixed[] $values, string $group = '__default')
- * @method static Builder|Category filterByQueryString(string $group = '__default')
- * @method static Builder|Category whereIsHidden($value)
- * @method static Builder|Category visible()
- * @method static CategoryFactory factory($count = null, $state = [])
- * @method static Builder|Category whereParentId($value)
+ * @property-read string|null $image_url
  * @property-read Collection<int, Product> $mainProducts
  * @property-read int|null $main_products_count
+ * @property-read Category|null $parent
+ * @property-read Collection<int, Product> $products
+ * @property-read int|null $products_count
+ * @method static Builder<static>|Category active()
+ * @method static CategoryFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Category filter(mixed[] $values, string $group = '__default')
+ * @method static Builder<static>|Category filterByQueryString(string $group = '__default')
+ * @method static Builder<static>|Category newModelQuery()
+ * @method static Builder<static>|Category newQuery()
+ * @method static Builder<static>|Category query()
+ * @method static Builder<static>|Category visible()
+ * @method static Builder<static>|Category whereCreatedAt($value)
+ * @method static Builder<static>|Category whereDescription($value)
+ * @method static Builder<static>|Category whereId($value)
+ * @method static Builder<static>|Category whereImage($value)
+ * @method static Builder<static>|Category whereIsActive($value)
+ * @method static Builder<static>|Category whereIsHidden($value)
+ * @method static Builder<static>|Category whereName($value)
+ * @method static Builder<static>|Category whereParentId($value)
+ * @method static Builder<static>|Category whereSeoDescription($value)
+ * @method static Builder<static>|Category whereShowInMain($value)
+ * @method static Builder<static>|Category whereSlug($value)
+ * @method static Builder<static>|Category whereSort($value)
+ * @method static Builder<static>|Category whereUpdatedAt($value)
  * @mixin Eloquent
  */
 class Category extends Model
