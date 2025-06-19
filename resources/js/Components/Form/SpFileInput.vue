@@ -1,8 +1,8 @@
 <script setup>
 import FileUpload from 'primevue/fileupload'
-import { ref } from 'vue'
-import { Cropper } from 'vue-advanced-cropper'
-import { Button, Dialog, Message } from 'primevue'
+import {ref} from 'vue'
+import {Cropper} from 'vue-advanced-cropper'
+import {Button, Dialog, Message} from 'primevue'
 import Icon from '@/Components/Icon.vue'
 
 const props = defineProps({
@@ -137,7 +137,7 @@ function getError(index) {
                         class="cursor-pointer"
                         role="presentation"
                         :alt="file.name"
-                        :src="showCroppedImage ? croppedImages[index].toDataURL() : file.objectURL"
+                        :src="showCroppedImage && croppedImages[index] ? croppedImages[index].toDataURL() : file.objectURL"
                         width="100"
                         height="50"
                         @click="openCropper(index, file)"
