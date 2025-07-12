@@ -1,8 +1,8 @@
 <script setup>
 import FileUpload from 'primevue/fileupload'
-import {ref} from 'vue'
-import {Cropper} from 'vue-advanced-cropper'
-import {Button, Dialog, Message} from 'primevue'
+import { ref } from 'vue'
+import { Cropper } from 'vue-advanced-cropper'
+import { Button, Dialog, Message } from 'primevue'
 import Icon from '@/Components/Icon.vue'
 
 const props = defineProps({
@@ -168,7 +168,7 @@ function getError(index) {
         </template>
       </FileUpload>
       <small
-        v-if="error && files.files.length === 0"
+        v-if="error && files?.files?.length === 0"
         :id="name"
         class="text-rose-600"
       >
