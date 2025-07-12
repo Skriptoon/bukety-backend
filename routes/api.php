@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AdditionalProductController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
@@ -32,6 +33,8 @@ Route::domain($domain)->group(static function (): void {
 
             Route::post('order/apply-promo-code', [OrderController::class, 'applyPromoCode']);
             Route::post('order', [OrderController::class, 'store']);
+
+            Route::get('additional-products', [AdditionalProductController::class, 'index']);
         });
     });
 });

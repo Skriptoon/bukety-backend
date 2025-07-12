@@ -7,10 +7,12 @@ namespace App\Models;
 use App\Enums\AdditionalProductTypeEnum;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use Storage;
 
 /**
  *
@@ -18,8 +20,9 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property string $name
  * @property AdditionalProductTypeEnum $type
- * @property string $price
+ * @property float $price
  * @property string $image
+ * @property string $image_url
  * @property bool $is_active
  * @property Carbon|null $deleted_at
  * @property Carbon|null $created_at
@@ -44,11 +47,13 @@ use Illuminate\Support\Carbon;
 class AdditionalProduct extends Model
 {
     use SoftDeletes;
+    use HasFactory;
 
     protected $guarded = [];
 
     protected $casts = [
         'type' => AdditionalProductTypeEnum::class,
+        'price' => 'float',
     ];
 
     /**
@@ -57,5 +62,11 @@ class AdditionalProduct extends Model
     public function orders(): BelongsToMany
     {
         return $this->belongsToMany(Order::class, 'orders_additional_products');
+    }
+
+    public function getImageUrlAttribute(): string
+    {
+
+        return Storage::disk('public')->url($this->image);
     }
 }

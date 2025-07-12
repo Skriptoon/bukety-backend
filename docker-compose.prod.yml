@@ -17,6 +17,8 @@ services:
       - "traefik.http.routers.${PROJECT}-tls.entrypoints=websecure"
       - "traefik.http.routers.${PROJECT}-tls.tls=true"
       - "traefik.http.routers.${PROJECT}-tls.tls.certresolver=le"
+      - "traefik.http.services.${PROJECT}.loadbalancer.server.port=80"
+      - "traefik.http.services.${PROJECT}-tls.loadbalancer.server.port=80"
     volumes:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./:/app:delegated
