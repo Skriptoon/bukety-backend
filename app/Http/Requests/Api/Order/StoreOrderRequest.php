@@ -44,6 +44,22 @@ class StoreOrderRequest extends FormRequest
             'date' => [
                 'required',
                 'date',
+                'after:today',
+            ],
+            'topper_id' => [
+                'nullable',
+                RUle::exists('additional_products', 'id')->where('is_active', true),
+                'integer',
+            ],
+            'cart_id' => [
+                'nullable',
+                Rule::exists('additional_products', 'id')->where('is_active', true),
+                'integer',
+            ],
+            'card_text' => [
+                'nullable',
+                'string',
+                'exclude_without:card_id',
             ],
         ];
     }
@@ -57,6 +73,7 @@ class StoreOrderRequest extends FormRequest
             'name' => 'Имя',
             'phone' => 'Телефон',
             'communication_method' => 'Способ связи',
+            'date' => 'Дата',
         ];
     }
 }

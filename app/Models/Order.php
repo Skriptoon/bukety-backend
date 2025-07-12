@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -25,7 +26,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property int|null $promo_code_id
- * @property string|null $price
+ * @property float $price
  * @property Carbon|null $date
  * @property-read Product $product
  * @method static OrderFactory factory($count = null, $state = [])
@@ -67,6 +68,7 @@ class Order extends Model
         'status' => OrderStatusEnum::class,
         'communication_method' => CommunicationsMethodsEnum::class,
         'date' => 'date',
+        'price' => 'float',
     ];
 
     /**
@@ -75,5 +77,13 @@ class Order extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * @return BelongsToMany<AdditionalProduct, $this>
+     */
+    public function additionalProducts(): BelongsToMany
+    {
+        return $this->belongsToMany(AdditionalProduct::class);
     }
 }

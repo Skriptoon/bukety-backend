@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\AdditionalProductTypeEnum;
+use Database\Factories\AdditionalProductFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,6 +48,9 @@ use Storage;
 class AdditionalProduct extends Model
 {
     use SoftDeletes;
+    /**
+     * @use HasFactory<AdditionalProductFactory>
+     */
     use HasFactory;
 
     protected $guarded = [];

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Database\Factories;
@@ -8,17 +9,10 @@ use App\Models\AdditionalProduct;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @template TModel of AdditionalProduct
- *
- * @extends Factory<TModel>
+ * @extends Factory<AdditionalProduct>
  */
 class AdditionalProductFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var class-string<TModel>
-     */
     protected $model = AdditionalProduct::class;
 
     /**

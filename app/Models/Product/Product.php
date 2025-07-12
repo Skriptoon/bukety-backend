@@ -55,7 +55,6 @@ use Storage;
  * @property-read int|null $ingredients_count
  * @property-read Category $mainCategory
  * @method static Builder<static>|Product active()
- * @method static ProductFactory factory($count = null, $state = [])
  * @method static Builder<static>|Product filter(mixed[] $values, string $group = '__default')
  * @method static Builder<static>|Product filterByQueryString(string $group = '__default')
  * @method static Builder<static>|Product newModelQuery()

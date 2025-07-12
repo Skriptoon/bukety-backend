@@ -1,27 +1,25 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\AdditionalProduct\AdditionalProductResource;
+use App\Http\Resources\AdditionalProductResource;
 use App\Models\AdditionalProduct;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class AdditionalProductController extends Controller
 {
     /**
-     * Возвращает список всех активных дополнительных товаров.
+     * Получить все активные дополнительные товары.
      *
-     * @return JsonResponse
+     * @return ResourceCollection
      */
-    public function index(): JsonResponse
+    public function index(): ResourceCollection
     {
-        $activeProducts = AdditionalProduct::where('is_active', true)
-            ->withTrashed() // опционально — если нужно включить мягко удалённые
-            ->get();
+        $additionalProducts = AdditionalProduct::where('is_active', true)->get();
 
-        return response()->json([
-            'data' => AdditionalProductResource::collection($activeProducts),
-        ], 200);
+        return AdditionalProductResource::collection($additionalProducts);
     }
 }

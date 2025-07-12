@@ -25,7 +25,7 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        Schema::create('orders_' . self::TABLE_NAME, function (Blueprint $table) {
+        Schema::create( 'additional_product_order', function (Blueprint $table) {
             $table->foreignId('order_id')
                 ->constrained('orders')
                 ->cascadeOnDelete();
@@ -34,7 +34,7 @@ return new class extends Migration {
                 ->constrained(self::TABLE_NAME)
                 ->cascadeOnDelete();
 
-            $table->text('value');
+            $table->text('value')->nullable();
         });
     }
 
@@ -43,7 +43,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders_' . self::TABLE_NAME);
+        Schema::dropIfExists('additional_product_order');
         Schema::dropIfExists(self::TABLE_NAME);
     }
 };

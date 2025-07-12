@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace App\UseCases\Order;
 
 use App\DTO\Order\OrderDTO;
+use App\Enums\AdditionalProductTypeEnum;
 use App\Enums\OrderStatusEnum;
 use App\Exceptions\PromoCodeException;
+use App\Models\AdditionalProduct;
 use App\Models\Order;
 use App\Models\Product\Product;
 use App\UseCases\PromoCode\ApplyPromoCodeCase;
+use Exception;
 use VK\Client\VKApiClient;
 
 readonly class StoreOrderCase
@@ -55,16 +58,48 @@ readonly class StoreOrderCase
             'date' => $orderDto->date,
         ]);
 
+        $this->addAdditionalProducts($order, $orderDto);
+
         $this->notify($order);
 
         return $order;
     }
 
-    /** @infection-ignore-all */
+    private function addAdditionalProducts(Order $order, OrderDTO $orderDto): void
+    {
+        if ($orderDto->topper_id) {
+            $topper = AdditionalProduct::findOrFail($orderDto->topper_id);
+            $order->additionalProducts()->attach($topper);
+            $order->price += $topper->price;
+        }
+
+        if ($orderDto->card_id) {
+            $card = AdditionalProduct::findOrFail($orderDto->card_id);
+            $order->additionalProducts()->attach($card, ['value' => $orderDto->card_text]);
+            $order->price += $card->price;
+        }
+
+        $order->save();
+    }
+
+    /**
+     * @infection-ignore-all
+     * @throws Exception
+     */
     private function notify(Order $order): void
     {
+        $topper = $order->additionalProducts()->where('type', AdditionalProductTypeEnum::Topper)->first();
+        $card = $order->additionalProducts()
+            ->where('type', AdditionalProductTypeEnum::Postcard)
+            ->withPivot('value')
+            ->first();
+
         $message = 'Новый заказ
-Букет: ' . route('products.edit', $order->product_id) . "
+Букет: ' . route('products.edit', $order->product_id) .
+            ($topper ? "\nТоппер: " . route('additional-products.edit', $topper->id) : '') .
+            ($card ? "\nОткрытка: " . route('additional-products.edit', $card->id) : '') .
+            /** @phpstan-ignore-next-line property.notFound */
+            ($card?->pivot?->value ? "\nТекст: {$card->pivot->value}" : '') . "
 Дата: {$order->date?->format('d.m.Y')}
 Цена с учетом скидок: {$order->price} ₽
 Телефон: {$order->phone}

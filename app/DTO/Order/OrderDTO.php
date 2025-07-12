@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DTO\Order;
 
 use App\Enums\CommunicationsMethodsEnum;
+use Carbon\Carbon;
 use Spatie\LaravelData\Data;
 
 class OrderDTO extends Data
@@ -15,7 +16,10 @@ class OrderDTO extends Data
         public int $product_id,
         public CommunicationsMethodsEnum $communication_method,
         public ?string $promo_code,
-        public ?string $date,
+        public Carbon $date,
+        public ?int $topper_id,
+        public ?int $card_id,
+        public ?string $card_text,
     ) {
     }
 }
