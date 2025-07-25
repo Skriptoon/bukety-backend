@@ -76,8 +76,14 @@ class YmlFeedTest extends TestCase
         $generator->addStrategy(new FlowwowYmlFeedStrategy());
         $generator->generate();
 
+        $description = html_entity_decode(strip_tags($product->description)) . "\n \n";
+        if ($product->storage_conditions) {
+            $description .= html_entity_decode(strip_tags($product->storage_conditions)) . "\n \n ";
+        } else {
+            $description .= ' ';
+        }
+
         $feed = new SimpleXMLElement(Storage::disk('public')->get('/feeds/flowwow.yml') ?? '');
-        $description = html_entity_decode(strip_tags($product->description)) . "\n\n";
 
         $this->assertFileExists(Storage::disk('public')->path('/feeds/flowwow.yml'));
         $this->assertEquals($description, (string)$feed->shop->offers->offer[0]->description);
