@@ -19,9 +19,9 @@ class ProductDTO extends Data
      * @param string|null $seo_description
      * @param float $price
      * @param float|null $old_price
-     * @param int $weight
-     * @param int $width
-     * @param int $height
+     * @param int|null $weight
+     * @param int|null $width
+     * @param int|null $height
      * @param ImageDTO|null $image
      * @param array<ImageDTO> $gallery
      * @param string[] $whom
@@ -32,6 +32,7 @@ class ProductDTO extends Data
      * @param array<string>|null $uploaded_gallery_images
      * @param bool $is_active
      * @param bool $for_flowwow
+     * @param string|null $storage_conditions
      */
     public function __construct(
         public string $name,
@@ -55,6 +56,7 @@ class ProductDTO extends Data
         public ?array $uploaded_gallery_images,
         public bool $is_active,
         public bool $for_flowwow,
+        public ?string $storage_conditions,
     ) {
     }
 }

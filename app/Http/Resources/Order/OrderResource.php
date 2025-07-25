@@ -21,6 +21,7 @@ class OrderResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
+            'price' => $this->resource->price,
         ];
     }
 }

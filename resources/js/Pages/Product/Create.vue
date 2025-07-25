@@ -1,15 +1,16 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import ProductForm from '@/Components/Product/ProductForm.vue'
-import {computed} from 'vue'
+import { computed } from 'vue'
 import Block from '@/Components/Block.vue'
-import {Head} from '@inertiajs/vue3'
+import { Head } from '@inertiajs/vue3'
 
 defineProps({
   categories: Array,
   whomOptions: Array,
   occasionOptions: Array,
   units: Array,
+  storageConditionsTemplates: Array,
 })
 
 const breadcrumbs = computed(() => {
@@ -37,10 +38,11 @@ const breadcrumbs = computed(() => {
     <h2>Создание товара</h2>
     <Block>
       <ProductForm
-          :categories="categories"
-          :occasion-options="occasionOptions"
-          :whom-options="whomOptions"
-          :units="units"
+        :categories="categories"
+        :occasion-options="occasionOptions"
+        :whom-options="whomOptions"
+        :units="units"
+        :storage-conditions-templates="storageConditionsTemplates"
       />
     </Block>
   </AuthenticatedLayout>

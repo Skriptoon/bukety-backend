@@ -86,6 +86,11 @@ export default {
         icon: 'list',
       },
       {
+        url: route('storage-conditions-templates.index'),
+        title: 'Шаблоны условий хранения',
+        icon: 'temperature-full',
+      },
+      {
         url: route('orders.index'),
         title: 'Заказы',
         icon: 'cart-shopping',

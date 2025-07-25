@@ -48,6 +48,7 @@ readonly class StoreProductCase
             'width' => $data->width,
             'height' => $data->height,
             'for_flowwow' => $data->for_flowwow,
+            'storage_conditions' => $data->storage_conditions,
         ]);
 
         if ($data->image) {

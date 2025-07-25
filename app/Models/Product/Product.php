@@ -46,6 +46,7 @@ use Storage;
  * @property int|null $weight
  * @property bool|null $for_flowwow
  * @property Carbon|null $deleted_at
+ * @property string|null $storage_conditions
  * @property-read Collection<int, Category> $categories
  * @property-read int|null $categories_count
  * @property-read array<string> $gallery_urls
@@ -95,25 +96,7 @@ class Product extends Model
     use HasFilters;
     use SoftDeletes;
 
-    protected $fillable = [
-        'name',
-        'slug',
-        'main_category_id',
-        'description',
-        'vk_description',
-        'seo_description',
-        'price',
-        'old_price',
-        'whom',
-        'occasion',
-        'image',
-        'gallery',
-        'is_active',
-        'weight',
-        'width',
-        'height',
-        'for_flowwow',
-    ];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'gallery' => 'array',

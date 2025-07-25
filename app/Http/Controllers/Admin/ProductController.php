@@ -14,6 +14,7 @@ use App\Http\Requests\Admin\Products\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product\Product;
 use App\Models\Product\ProductIngredient;
+use App\Models\StorageConditionsTemplate;
 use App\UseCases\Product\DestroyProductCase;
 use App\UseCases\Product\GenerateImageWithDescriptionCase;
 use App\UseCases\Product\StoreProductCase;
@@ -62,21 +63,7 @@ class ProductController extends Controller
     public function edit(int $product): Response
     {
         $productModel = Product::with('categories', 'ingredients')->find($product);
-        $categories = Category::orderBy('sort')
-            ->get(['id', 'name', 'parent_id'])
-            ->map(static function (Category $category) {
-                $names = [$category->name];
-                $currentCategory = $category;
-                while ($currentCategory->parent) {
-                    $names[] = $currentCategory->parent->name;
-                    $currentCategory = $currentCategory->parent;
-                }
-
-                return [
-                    'id' => $category->id,
-                    'name' => implode(' → ', array_reverse($names)),
-                ];
-            });
+        $categories = $this->getCategories();
 
         $previousUrl = null;
         if (str_contains(url()->previous(), route('products.index'))) {
@@ -87,6 +74,8 @@ class ProductController extends Controller
             $previousUrl = session()->previousUrl();
         }
 
+        $storageConditionsTemplates = StorageConditionsTemplate::all();
+
         return Inertia::render('Product/Edit', [
             'product' => $productModel,
             'categories' => $categories,
@@ -94,6 +83,7 @@ class ProductController extends Controller
             'occasionOptions' => OccasionEnum::getOptions(),
             'previousUrl' => $previousUrl,
             'units' => UnitEnum::getOptions(),
+            'storageConditionsTemplates' => $storageConditionsTemplates,
         ]);
     }
 
@@ -116,27 +106,16 @@ class ProductController extends Controller
 
     public function create(): Response
     {
-        $categories = Category::orderBy('sort')
-            ->get(['id', 'name', 'parent_id'])
-            ->map(static function (Category $category) {
-                $names = [$category->name];
-                $currentCategory = $category;
-                while ($currentCategory->parent) {
-                    $names[] = $currentCategory->parent->name;
-                    $currentCategory = $currentCategory->parent;
-                }
+        $categories = $this->getCategories();
 
-                return [
-                    'id' => $category->id,
-                    'name' => implode(' → ', array_reverse($names)),
-                ];
-            });
+        $storageConditionsTemplates = StorageConditionsTemplate::all();
 
         return Inertia::render('Product/Create', [
             'categories' => $categories,
             'whomOptions' => WhomEnum::getOptions(),
             'occasionOptions' => OccasionEnum::getOptions(),
             'units' => UnitEnum::getOptions(),
+            'storageConditionsTemplates' => $storageConditionsTemplates,
         ]);
     }
 
@@ -170,10 +149,33 @@ class ProductController extends Controller
             ->get();
     }
 
+    /**
+     * @throws ImageException
+     * @throws UnknownImageFileException
+     */
     public function getImageWithDescription(Product $product, GenerateImageWithDescriptionCase $case): StreamedResponse
     {
         $path = $case->handle($product);
 
         return Storage::download($path);
+    }
+
+    private function getCategories(): \Illuminate\Support\Collection
+    {
+        return Category::orderBy('sort')
+            ->get(['id', 'name', 'parent_id'])
+            ->map(static function (Category $category) {
+                $names = [$category->name];
+                $currentCategory = $category;
+                while ($currentCategory->parent) {
+                    $names[] = $currentCategory->parent->name;
+                    $currentCategory = $currentCategory->parent;
+                }
+
+                return [
+                    'id' => $category->id,
+                    'name' => implode(' → ', array_reverse($names)),
+                ];
+            });
     }
 }

@@ -168,11 +168,11 @@ function getError(index) {
         </template>
       </FileUpload>
       <small
-        v-if="error && files?.files?.length === 0"
+        v-if="error && error[props.name]?.file && files?.files?.length === 0"
         :id="name"
         class="text-rose-600"
       >
-        {{ error }}
+        {{ error[props.name]?.file }}
       </small>
     </div>
     <Dialog v-model:visible="modalVisible" :style="{ width: '80%' }" modal>

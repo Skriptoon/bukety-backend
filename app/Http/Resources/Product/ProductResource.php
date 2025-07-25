@@ -54,6 +54,7 @@ class ProductResource extends JsonResource
             'ingredient_values' => $this->resource->ingredients->pluck('pivot.value'),
             'ingredient_units' => $this->resource->ingredients->pluck('pivot.unit')
                 ->map(static fn(?UnitEnum $item): ?string => $item?->label()),
+            'storage_conditions' => $this->resource->storage_conditions,
             'updated_at' => $this->resource->updated_at,
             'is_new' => $this->resource->created_at > now()->subDays(7),
             'weight' => $this->resource->weight,

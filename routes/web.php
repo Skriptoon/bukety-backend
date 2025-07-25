@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\PromoCodeController;
+use App\Http\Controllers\Admin\StorageConditionsTemplateController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -40,6 +41,8 @@ Route::domain(env('APP_DOMAIN'))->group(static function () {
         Route::resource('promo-codes', PromoCodeController::class);
 
         Route::resource('additional-products', AdditionalProductController::class);
+
+        Route::resource('storage-conditions-templates', StorageConditionsTemplateController::class);
     });
 
     require __DIR__ . '/auth.php';

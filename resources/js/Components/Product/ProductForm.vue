@@ -16,6 +16,7 @@ import SpEditor from '@/Components/Form/SpEditor.vue'
 import InputGroup from 'primevue/inputgroup'
 import InputGroupAddon from 'primevue/inputgroupaddon'
 import Popover from 'primevue/popover'
+import StorageConditionsInput from '@/Components/Product/StorageConditionsInput.vue'
 
 const props = defineProps({
   product: Object,
@@ -24,6 +25,7 @@ const props = defineProps({
   occasionOptions: Array,
   units: Array,
   previousUrl: String,
+  storageConditionsTemplates: Array,
 })
 
 const form = useForm({
@@ -37,6 +39,7 @@ const form = useForm({
   ingredients: props.product?.ingredients?.map(ingredient => ingredient.name) ?? [],
   ingredient_values: props.product?.ingredients?.map(ingredient => ingredient.pivot.value) ?? [],
   ingredient_units: props.product?.ingredients?.map(ingredient => ingredient.pivot.unit) ?? [],
+  storage_conditions: props.product?.storage_conditions ?? null,
   image: null,
   gallery: [],
   is_active: props.product?.is_active ?? false,
@@ -274,6 +277,11 @@ function togglePopover(event) {
         <Icon :icon="['fa', 'plus']" />
       </Button>
     </div>
+    <StorageConditionsInput
+      v-model="form.storage_conditions"
+      :error="form.errors.storage_conditions"
+      :storage-conditions-templates="storageConditionsTemplates"
+    />
     <div class="mt-5">
       <InputGroup>
         <SpInput
@@ -397,7 +405,7 @@ function togglePopover(event) {
         @reset-validation="form.errors.for_flowwow = null"
       />
       <div class="cursor-pointer" @click="togglePopover">
-        <Icon :icon="['fas', 'circle-info']"/>
+        <Icon :icon="['fas', 'circle-info']" />
       </div>
       <Popover ref="popover">
         <h4 class="font-bold text-lg">Нельзя добавлять:</h4>

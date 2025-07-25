@@ -12,7 +12,6 @@ use Storage;
 
 class FlowwowYmlFeedStrategy extends BaseFeedStrategy
 {
-
     protected function getProducts(): Collection
     {
         return Product::active()
@@ -34,7 +33,15 @@ class FlowwowYmlFeedStrategy extends BaseFeedStrategy
 
     protected function getDescription(Product $product): string
     {
-        return html_entity_decode(strip_tags($product->description)) . "\n\n";
+        $description = html_entity_decode(strip_tags($product->description)) . "\n \n";
+
+        if ($product->storage_conditions) {
+            $description .= html_entity_decode(strip_tags($product->storage_conditions)) . "\n \n ";
+        } else {
+            $description .= ' ';
+        }
+
+        return $description;
     }
 
     protected function getPath(): string
